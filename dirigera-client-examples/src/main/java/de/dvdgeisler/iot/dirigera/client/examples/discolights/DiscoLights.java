@@ -1,9 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.examples.discolights;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.DeviceType;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightDevice;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightState;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightState.*;
+import static de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightState.*;
 
 /**
  * Randomly change color and light level
@@ -44,22 +44,19 @@ public class DiscoLights {
 
     @Bean
     public CommandLineRunner run() {
-        return (String... args) -> {
-            if (!this.api.hasAccessToken())
-                this.api.pair().block();
-        };
+        return (String... args) -> this.api.oauth.pairIfRequired().block();
     }
 
-    @Scheduled(fixedDelay = 2000)
+    @Scheduled(fixedDelay = 500)
     public void changeState() {
-        if(!this.api.hasAccessToken())
+        if(!this.api.oauth.isPaired())
             return;
 
-        this.api.devices() // fetch all devices from hub
+        this.api.device.devices() // fetch all devices from hub
                 .flatMapMany(Flux::fromIterable)
                 .filter(d -> d.deviceType == DeviceType.LIGHT) // filter by light devices
                 .cast(LightDevice.class)
-                .flatMap(d -> api.editDevice(d.id, this.randomState())) // edit device state
+                .flatMap(d -> api.device.editDevice(d.id, this.randomState())) // edit device state
                 .blockLast();
     }
 

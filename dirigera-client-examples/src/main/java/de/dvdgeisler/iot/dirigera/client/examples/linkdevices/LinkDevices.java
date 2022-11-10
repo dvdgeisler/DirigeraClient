@@ -1,14 +1,12 @@
 package de.dvdgeisler.iot.dirigera.client.examples.linkdevices;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.DeviceType;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.gateway.GatewayDevice;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightColorAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightDevice;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.lightcontroller.LightControllerDevice;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.motionsensor.MotionSensorDevice;
-import de.dvdgeisler.iot.dirigera.client.api.http.json.device.soundcontroller.SoundControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -16,16 +14,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Flux;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import static de.dvdgeisler.iot.dirigera.client.api.http.json.device.light.LightState.*;
 
 /**
  * Links to devices
@@ -45,12 +38,11 @@ public class LinkDevices {
             final int receivingDeviceIndex;
             final int controllingDeviceIndex;
 
+            api.oauth.pairIfRequired().block();
+
             in = new Scanner(System.in);
 
-            if (!api.hasAccessToken())
-                api.pair().block();
-
-            devices = api.devices().block();
+            devices = api.device.devices().block();
             receivingDevices = devices.stream()
                     .filter(d->!d.capabilities.canReceive.isEmpty())
                     .toList();
@@ -99,7 +91,7 @@ public class LinkDevices {
             System.out.print("Enter the number (No.) of the device that you want to set as the controlling device.: ");
             controllingDeviceIndex = in.nextInt();
 
-            api.updateRemoteLinks(
+            api.remoteLink.updateRemoteLinks(
                     controllingDevices.get(controllingDeviceIndex).id,
                     Map.of("targetIds", List.of(receivingDevices.get(receivingDeviceIndex).id)))
                     .doOnSuccess(v -> log.info("Devices successfully linked: controller={}, receiver={}",
