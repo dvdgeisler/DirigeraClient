@@ -1,32 +1,30 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device.outlet;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ASKVADERonoffswitch extends DeviceTest {
+class TRADFRISHORTCUTButton extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "e431f631-4459-4a74-9d99-6de93e866bb8_1",
-              "type" : "outlet",
-              "deviceType" : "outlet",
-              "createdAt" : "2022-11-11T14:54:20.000Z",
+              "id" : "92dbcea1-3d7e-4d6a-a009-bdf3a1ae6691_1",
+              "type" : "controller",
+              "deviceType" : "shortcutController",
+              "createdAt" : "2022-11-11T16:46:15.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-11T14:54:49.000Z",
+              "lastSeen" : "2022-11-11T16:47:24.000Z",
               "attributes" : {
-                "customName" : "Uttag 1",
-                "firmwareVersion" : "1.0.002",
+                "customName" : "Fjärrkontroll 1",
+                "firmwareVersion" : "2.3.015",
                 "hardwareVersion" : "1",
                 "manufacturer" : "IKEA of Sweden",
-                "model" : "ASKVADER on/off switch",
-                "productCode" : "E1836",
-                "serialNumber" : "003C84FFFE8AC2EE",
+                "model" : "TRADFRI SHORTCUT Button",
+                "productCode" : "E1812",
+                "serialNumber" : "84BA20FFFEAD3E56",
+                "batteryPercentage" : 100,
                 "isOn" : false,
-                "startupOnOff" : "startPrevious",
-                "lightLevel" : 100,
-                "identifyPeriod" : 0,
-                "identifyStarted" : "2000-01-01T00:00:00.000Z",
+                "lightLevel" : 1,
                 "permittingJoin" : false,
                 "otaPolicy" : "autoUpdate",
                 "otaProgress" : 0,
@@ -36,8 +34,8 @@ class ASKVADERonoffswitch extends DeviceTest {
                 "otaStatus" : "upToDate"
               },
               "capabilities" : {
-                "canSend" : [ ],
-                "canReceive" : [ "customName", "isOn", "lightLevel" ]
+                "canSend" : [ "isOn", "lightLevel", "blindsState" ],
+                "canReceive" : [ "customName" ]
               },
               "room" : {
                 "id" : "decd27b3-f54a-4211-9a8f-e7bf70f832eb",
@@ -48,22 +46,15 @@ class ASKVADERonoffswitch extends DeviceTest {
               "deviceSet" : [ ],
               "remoteLinks" : [ ],
               "isHidden" : false
-            } ],
-            "scenes" : [ ],
-            "rooms" : [ {
-              "id" : "decd27b3-f54a-4211-9a8f-e7bf70f832eb",
-              "name" : "A",
-              "color" : "ikea_green_no_65",
-              "icon" : "rooms_arm_chair"
             }
             """;
 
-    public ASKVADERonoffswitch() {
+    public TRADFRISHORTCUTButton() {
         super(JSON);
     }
 
     @Override
     public void validateDeserialize(final Device<?> device) {
-        assertTrue(device instanceof OutletDevice);
+        assertTrue(device instanceof ShortcutControllerDevice);
     }
 }
