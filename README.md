@@ -42,6 +42,8 @@ barely tested, and some are known as inoperable.
     * SYMFONISK Sound Controller
   * Motion-Sensor 
     * TRADFRI motion sensor
+  * Shortcut-Controller
+    * TRADFRI SHORTCUT Button
 * Check for firmware updates
 * Link devices (e.g., light controller with light bulb)
 * Create, manipulate, and delete Device-Sets
