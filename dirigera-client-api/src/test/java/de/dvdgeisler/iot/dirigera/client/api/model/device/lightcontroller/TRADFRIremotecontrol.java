@@ -1,47 +1,47 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller;
 
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TRADFRIonoffswitch extends DeviceTest {
+class TRADFRIremotecontrol extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "e1f8345d-6d3c-4b09-ae1e-282f20a691a5_1",
+              "id" : "58050dc9-8a41-43bb-8782-a1d6d284c9e5_1",
               "type" : "controller",
               "deviceType" : "lightController",
-              "createdAt" : "2022-11-07T17:02:57.000Z",
+              "createdAt" : "2022-11-06T13:56:47.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-09T08:14:31.000Z",
+              "lastSeen" : "2022-11-10T21:19:41.000Z",
               "attributes" : {
-                "customName" : "Fernbedienung Bad",
-                "model" : "TRADFRI on/off switch",
+                "customName" : "Fernbedienung Büro",
+                "model" : "TRADFRI remote control",
                 "manufacturer" : "IKEA of Sweden",
-                "firmwareVersion" : "24.4.5",
+                "firmwareVersion" : "1.2.214",
                 "hardwareVersion" : "1",
-                "productCode" : "E1743",
-                "batteryPercentage" : 100,
+                "productCode" : "E1524",
+                "batteryPercentage" : 2,
                 "isOn" : false,
                 "lightLevel" : 1,
-                "blindsCurrentLevel" : 0,
-                "blindsState" : "",
                 "permittingJoin" : false,
                 "otaStatus" : "upToDate",
-                "otaState" : "readyToCheck",
+                "otaState" : "updateComplete",
                 "otaProgress" : 0,
                 "otaPolicy" : "autoUpdate",
                 "otaScheduleStart" : "00:00",
                 "otaScheduleEnd" : "00:00"
               },
               "capabilities" : {
-                "canSend" : [ "isOn", "lightLevel", "blindsState" ],
+                "canSend" : [ "isOn", "lightLevel" ],
                 "canReceive" : [ "customName" ]
               },
               "room" : {
-                "id" : "d9b0676a-bc48-46f4-b806-191785c14418",
-                "name" : "Badezimmer",
-                "color" : "ikea_lilac_no_3",
-                "icon" : "rooms_bathtub"
+                "id" : "3aee21e2-1cae-475c-90e2-128888658f9c",
+                "name" : "Büro",
+                "color" : "ikea_green_no_65",
+                "icon" : "rooms_desk"
               },
               "deviceSet" : [ ],
               "remoteLinks" : [ ],
@@ -49,12 +49,12 @@ class TRADFRIonoffswitch extends DeviceTest {
             }
             """;
 
-    public TRADFRIonoffswitch() {
+    public TRADFRIremotecontrol() {
         super(JSON);
     }
 
     @Override
     public void validateDeserialize(final Device<?> device) {
-        assertInstanceOf(LightControllerDevice.class, device);
+        assertTrue(device instanceof LightControllerDevice);
     }
 }

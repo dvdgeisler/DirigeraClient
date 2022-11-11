@@ -1,31 +1,34 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller;
 
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TRADFRIremotecontrol extends DeviceTest {
+class RemoteControlN2 extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "58050dc9-8a41-43bb-8782-a1d6d284c9e5_1",
+              "id" : "26d8025a-1b5b-4248-991b-f85b250d6199_1",
               "type" : "controller",
               "deviceType" : "lightController",
-              "createdAt" : "2022-11-06T13:56:47.000Z",
+              "createdAt" : "2022-11-02T21:15:16.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-10T21:19:41.000Z",
+              "lastSeen" : "2022-11-10T03:05:55.000Z",
               "attributes" : {
-                "customName" : "Fernbedienung Büro",
-                "model" : "TRADFRI remote control",
+                "customName" : "Remote",
+                "model" : "Remote Control N2",
                 "manufacturer" : "IKEA of Sweden",
-                "firmwareVersion" : "1.2.214",
+                "firmwareVersion" : "1.0.024",
                 "hardwareVersion" : "1",
-                "productCode" : "E1524",
-                "batteryPercentage" : 2,
+                "serialNumber" : "84B4DBFFFE221943",
+                "productCode" : "E2001",
+                "batteryPercentage" : 100,
                 "isOn" : false,
                 "lightLevel" : 1,
                 "permittingJoin" : false,
                 "otaStatus" : "upToDate",
-                "otaState" : "updateComplete",
+                "otaState" : "readyToCheck",
                 "otaProgress" : 0,
                 "otaPolicy" : "autoUpdate",
                 "otaScheduleStart" : "00:00",
@@ -36,10 +39,10 @@ class TRADFRIremotecontrol extends DeviceTest {
                 "canReceive" : [ "customName" ]
               },
               "room" : {
-                "id" : "3aee21e2-1cae-475c-90e2-128888658f9c",
-                "name" : "Büro",
-                "color" : "ikea_green_no_65",
-                "icon" : "rooms_desk"
+                "id" : "300918c6-bd34-428c-8b86-c03e95ff981b",
+                "name" : "MyRoom",
+                "color" : "ikea_red_no_39",
+                "icon" : "none"
               },
               "deviceSet" : [ ],
               "remoteLinks" : [ ],
@@ -47,7 +50,7 @@ class TRADFRIremotecontrol extends DeviceTest {
             }
             """;
 
-    public TRADFRIremotecontrol() {
+    public RemoteControlN2() {
         super(JSON);
     }
 

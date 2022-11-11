@@ -1,29 +1,32 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller;
 
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-class RemoteControlN2 extends DeviceTest {
+class TRADFRIonoffswitch extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "26d8025a-1b5b-4248-991b-f85b250d6199_1",
+              "id" : "e1f8345d-6d3c-4b09-ae1e-282f20a691a5_1",
               "type" : "controller",
               "deviceType" : "lightController",
-              "createdAt" : "2022-11-02T21:15:16.000Z",
+              "createdAt" : "2022-11-07T17:02:57.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-10T03:05:55.000Z",
+              "lastSeen" : "2022-11-09T08:14:31.000Z",
               "attributes" : {
-                "customName" : "Remote",
-                "model" : "Remote Control N2",
+                "customName" : "Fernbedienung Bad",
+                "model" : "TRADFRI on/off switch",
                 "manufacturer" : "IKEA of Sweden",
-                "firmwareVersion" : "1.0.024",
+                "firmwareVersion" : "24.4.5",
                 "hardwareVersion" : "1",
-                "serialNumber" : "84B4DBFFFE221943",
-                "productCode" : "E2001",
+                "productCode" : "E1743",
                 "batteryPercentage" : 100,
                 "isOn" : false,
                 "lightLevel" : 1,
+                "blindsCurrentLevel" : 0,
+                "blindsState" : "",
                 "permittingJoin" : false,
                 "otaStatus" : "upToDate",
                 "otaState" : "readyToCheck",
@@ -33,14 +36,14 @@ class RemoteControlN2 extends DeviceTest {
                 "otaScheduleEnd" : "00:00"
               },
               "capabilities" : {
-                "canSend" : [ "isOn", "lightLevel" ],
+                "canSend" : [ "isOn", "lightLevel", "blindsState" ],
                 "canReceive" : [ "customName" ]
               },
               "room" : {
-                "id" : "300918c6-bd34-428c-8b86-c03e95ff981b",
-                "name" : "MyRoom",
-                "color" : "ikea_red_no_39",
-                "icon" : "none"
+                "id" : "d9b0676a-bc48-46f4-b806-191785c14418",
+                "name" : "Badezimmer",
+                "color" : "ikea_lilac_no_3",
+                "icon" : "rooms_bathtub"
               },
               "deviceSet" : [ ],
               "remoteLinks" : [ ],
@@ -48,12 +51,12 @@ class RemoteControlN2 extends DeviceTest {
             }
             """;
 
-    public RemoteControlN2() {
+    public TRADFRIonoffswitch() {
         super(JSON);
     }
 
     @Override
     public void validateDeserialize(final Device<?> device) {
-        assertTrue(device instanceof LightControllerDevice);
+        assertInstanceOf(LightControllerDevice.class, device);
     }
 }

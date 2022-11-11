@@ -1,5 +1,7 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor;
 
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
 

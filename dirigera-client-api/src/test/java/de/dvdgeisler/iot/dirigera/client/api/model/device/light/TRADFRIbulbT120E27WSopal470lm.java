@@ -1,29 +1,32 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.light;
 
+import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-class TRADFRIbulbE27WSglobeopal1055lm extends DeviceTest {
+class TRADFRIbulbT120E27WSopal470lm extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "672e6014-9c66-4e14-927e-bf55ab27fb46_1",
+              "id" : "69e38aac-6682-4962-af1c-05d75709b4b9_1",
               "type" : "light",
               "deviceType" : "light",
-              "createdAt" : "2022-11-06T14:05:11.000Z",
+              "createdAt" : "2022-11-06T14:18:05.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-10T22:44:54.000Z",
+              "lastSeen" : "2022-11-10T17:21:41.000Z",
               "attributes" : {
-                "customName" : "Wohnzimmer StehNeu",
-                "model" : "TRADFRIbulbE27WSglobeopal1055lm",
+                "customName" : "Licht Büro",
+                "model" : "TRADFRIbulbT120E27WSopal470lm",
                 "manufacturer" : "IKEA of Sweden",
                 "firmwareVersion" : "1.0.012",
                 "hardwareVersion" : "1",
-                "productCode" : "LED2003G10",
+                "serialNumber" : "540F57FFFE2066B4",
+                "productCode" : "LED1937T5",
                 "isOn" : false,
                 "startupOnOff" : "startOn",
-                "lightLevel" : 34,
-                "colorTemperature" : 2403,
+                "lightLevel" : 83,
+                "colorTemperature" : 2702,
                 "colorTemperatureMin" : 4000,
                 "colorTemperatureMax" : 2202,
                 "colorMode" : "temperature",
@@ -42,18 +45,18 @@ class TRADFRIbulbE27WSglobeopal1055lm extends DeviceTest {
                 "canReceive" : [ "customName", "isOn", "lightLevel", "colorTemperature" ]
               },
               "room" : {
-                "id" : "156c4c6e-4511-49e0-b71d-a91cf8298899",
-                "name" : "Wohnzimmer",
+                "id" : "3aee21e2-1cae-475c-90e2-128888658f9c",
+                "name" : "Büro",
                 "color" : "ikea_green_no_65",
-                "icon" : "rooms_sofa"
+                "icon" : "rooms_desk"
               },
               "deviceSet" : [ ],
-              "remoteLinks" : [ "1d59560b-8313-494a-be62-f7e7966b3acc_1" ],
+              "remoteLinks" : [ "58050dc9-8a41-43bb-8782-a1d6d284c9e5_1" ],
               "isHidden" : false
             }
             """;
 
-    public TRADFRIbulbE27WSglobeopal1055lm() {
+    public TRADFRIbulbT120E27WSopal470lm() {
         super(JSON);
     }
 
