@@ -1,6 +1,5 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -2,7 +2,7 @@ package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 class TRADFRIbulbT120E27WSopal470lm extends DeviceTest {
     final static String JSON = """
@@ -60,6 +60,6 @@ class TRADFRIbulbT120E27WSopal470lm extends DeviceTest {
 
     @Override
     public void validateDeserialize(final Device<?> device) {
-        assertTrue(device instanceof LightDevice);
+        assertInstanceOf(LightDevice.class, device);
     }
 }

@@ -1,9 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +55,6 @@ class TRADFRIDriver10W extends DeviceTest {
 
     @Override
     public void validateDeserialize(final Device<?> device) {
-        assertTrue(device instanceof LightDevice);
+        assertInstanceOf(LightDevice.class, device);
     }
 }
