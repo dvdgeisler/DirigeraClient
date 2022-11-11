@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCapabilities;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCategory.CONTROLLER;
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType.LIGHT_CONTROLLER;
 import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType.SHORTCUT_CONTROLLER;
 
 public class ShortcutControllerDevice extends Device<ShortcutControllerAttributes> {
