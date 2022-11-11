@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

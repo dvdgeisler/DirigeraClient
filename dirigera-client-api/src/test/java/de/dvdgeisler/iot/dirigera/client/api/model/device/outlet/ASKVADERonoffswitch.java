@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api.model.device.outlet;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
