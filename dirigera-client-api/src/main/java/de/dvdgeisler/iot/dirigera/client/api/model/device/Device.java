@@ -7,6 +7,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 
@@ -20,6 +21,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = LightControllerDevice.class, name = "lightController"),
         @JsonSubTypes.Type(value = SoundControllerDevice.class, name = "soundController"),
         @JsonSubTypes.Type(value = MotionSensorDevice.class, name = "motionSensor"),
+        @JsonSubTypes.Type(value = OutletDevice.class, name = "outlet"),
 })
 public class Device<_Attributes extends DeviceAttributes> extends Identifier {
     public DeviceCategory type;
