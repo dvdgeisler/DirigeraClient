@@ -1,4 +1,4 @@
-# DirigeraClient
+# Dirigera Client API
 
 Unofficial client API for IKEA's new Smarthome Hub
 [DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
