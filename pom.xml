@@ -19,6 +19,7 @@
     <modules>
         <module>./dirigera-client-api</module>
         <module>./dirigera-client-examples</module>
+        <module>./dirigera-client-dump</module>
     </modules>
 
 </project>

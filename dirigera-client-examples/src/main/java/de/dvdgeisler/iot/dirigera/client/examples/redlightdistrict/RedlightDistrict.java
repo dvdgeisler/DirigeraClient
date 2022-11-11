@@ -47,6 +47,4 @@ public class RedlightDistrict {
     public static void main(String[] args) {
         SpringApplication.run(RedlightDistrict.class, args).close();
     }
-
-
 }

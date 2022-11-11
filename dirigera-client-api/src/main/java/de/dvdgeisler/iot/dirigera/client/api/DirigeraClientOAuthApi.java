@@ -63,7 +63,7 @@ public class DirigeraClientOAuthApi extends AbstractApi {
             @Value("${dirigera.port:8443}") final short port,
             @Value("${dirigera.clientname:}") final String clientName,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/oauth", hostname, port), tokenStore);
+        super(String.format("https://%s:%d/v1/oauth/", hostname, port), tokenStore);
 
         this.clientName = Optional
                 .ofNullable(clientName)
@@ -170,7 +170,7 @@ public class DirigeraClientOAuthApi extends AbstractApi {
                 .doOnSuccess(authorize -> log.info("Press button on Dirigera Hub to finish pairing"))
                 .flatMap(authorize ->
                         this.tokenExchange(authorize, codeVerifier)
-                                .retryWhen(Retry.fixedDelay(10, Duration.ofSeconds(5)))
+                                .retryWhen(Retry.fixedDelay(40, Duration.ofSeconds(3)))
                                 .publishOn(Schedulers.boundedElastic())
                                 .doOnError(err -> {
                                     log.error(err.getMessage());
@@ -188,6 +188,7 @@ public class DirigeraClientOAuthApi extends AbstractApi {
                 return Mono.error(e);
             }
         }
+        log.info("No access token found. Pairing required.");
         return this.pair();
     }
     private static String defaultClientName() {

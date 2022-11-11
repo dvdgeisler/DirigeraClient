@@ -44,10 +44,10 @@ public class DirigeraClientGatewayApi extends AbstractApi {
                 .onStatus(HttpStatus::isError, this::onError)
                 .bodyToMono(Void.class);
     }
-    public Mono<Void> installFirmwareUpdate(final String id) {
+    public Mono<Void> installFirmwareUpdate() {
         return this.webClient
                 .put()
-                .uri(uri -> uri.path("ota/update").build(id))
+                .uri(uri -> uri.path("ota/update").build())
                 .headers(this.tokenStore::setBearerAuth)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()

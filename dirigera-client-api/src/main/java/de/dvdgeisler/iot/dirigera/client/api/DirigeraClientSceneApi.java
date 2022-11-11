@@ -32,13 +32,13 @@ public class DirigeraClientSceneApi extends AbstractApi {
     /**
      * TODO: fails if any trigger or action is set: "triggers[0]" does not match any of the allowed types, "actions[0]" does not match any of the allowed types
      */
-    public Mono<Identifier> createScene(final Scene scene) {
+    public Mono<Identifier> createScene(final SceneAttributes attributes) {
         return this.webClient
                 .post()
                 .uri(UriBuilder::build)
                 .headers(this.tokenStore::setBearerAuth)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(scene)
+                .bodyValue(attributes)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .onStatus(HttpStatus::isError, this::onError)

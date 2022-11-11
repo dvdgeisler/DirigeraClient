@@ -68,6 +68,17 @@ public class DirigeraClientRoomApi extends AbstractApi {
                 });
     }
 
+    public Mono<Room> getRoom(final String id) {
+        return this.webClient
+                .get()
+                .uri(uri -> uri.path("{id}").build(id))
+                .headers(this.tokenStore::setBearerAuth)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .onStatus(HttpStatus::isError, this::onError)
+                .bodyToMono(Room.class);
+    }
+
     public Mono<Void> updateRoom(final String id, final RoomAttributes attributes) {
         return this.webClient
                 .put()

@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import reactor.core.publisher.Flux;
 
 /**
- *
+ * Monitor light status
  */
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {DirigeraClientApi.class})

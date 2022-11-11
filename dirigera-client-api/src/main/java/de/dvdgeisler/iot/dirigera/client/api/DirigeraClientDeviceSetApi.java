@@ -1,6 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
+import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,8 @@ import org.springframework.web.util.UriBuilder;
 import reactor.core.publisher.Mono;
 
 import javax.net.ssl.SSLException;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class DirigeraClientDeviceSetApi extends AbstractApi {
@@ -63,5 +67,4 @@ public class DirigeraClientDeviceSetApi extends AbstractApi {
                 .onStatus(HttpStatus::isError, this::onError)
                 .bodyToMono(Void.class);
     }
-
 }
