@@ -30,7 +30,7 @@ barely tested, and some are known as inoperable.
   * Sound-Controller (SYMFONISK Sound Controller)
   * Motion-Sensor (TRADFRI motion sensor)
 * Check for firmware updates
-* Link devices (i.e., light controller with light bulb)
+* Link devices (e.g., light controller with light bulb)
 * Create, manipulate, and delete Device-Sets
 * List music playlists and favorites
 * Create, manipulate, and delete rooms
@@ -55,7 +55,7 @@ public class MyApplication {
                     .flatMapMany(Flux::fromIterable)
                     .filter(d -> d.deviceType == DeviceType.LIGHT) // filter by light devices
                     .cast(LightDevice.class)
-                    .flatMap(d -> api.device.editDevice(d.id, List.of(LIGHT_ON, LIGHT_LEVEL_100))) // turn lights on
+                    .flatMap(d -> api.device.editDevice(d.id, List.of(LIGHT_ON, LIGHT_LEVEL_100))) // turn on lights
                     .blockLast();
         };
     }
@@ -71,7 +71,7 @@ public class MyApplication {
 * Everything which is not defined in API's Data-Model.
   * The API's data model is strictly typed, but there are still many 
     devices missing. Hence, it's very likely you have a device linked 
-    to your gateway, which is not depicted by API. In this case, the 
+    to your gateway, which is not depicted by the API. In this case, the 
     JSON deserialization will likely fail as soon as one of the endpoints
     returns the respective device data.
   * You may help us to overcome this limitation by providing us your 
@@ -83,7 +83,7 @@ public class MyApplication {
 ### How to contribute
 
 The most significant pain point is the limitation of the API data model. 
-You can help us to improve it to support progressively more devices.
+You can help us to improve it, and to support progressively more devices.
 
 To do so, run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java). 
 This application reads the data model of your DIRIGERA and outputs it as JSON. Based on the dump, 
@@ -96,7 +96,7 @@ incomplete. You may submit the generated dump as an issue to GitHub.
 java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
 ```
 
-## Other repos about to dig in
+## Other repos to dig in
 
 * [wjtje/DIRIGERA](https://github.com/wjtje/DIRIGERA)
 * [mattias73andersson/dirigera-client-poc](https://github.com/mattias73andersson/dirigera-client-poc)
