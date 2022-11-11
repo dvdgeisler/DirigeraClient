@@ -25,10 +25,25 @@ barely tested, and some are known as inoperable.
 * Dump DIRIGERA's data model
 * Fetch and edit devices, i.e.:
   * Gateway
-  * Light-Bulb (TRADFRI bulb E27 CWS 806lm)
-  * Light-Controller (Remote Control N2)
-  * Sound-Controller (SYMFONISK Sound Controller)
-  * Motion-Sensor (TRADFRI motion sensor)
+    * DIRIGERA Hub for smart products
+  * Light
+    * STOFTMOLN ceiling/wall lamp WW24
+    * TRADFRI bulb E27 CWS 806lm
+    * TRADFRI bulb E27 CWS opal 600lm
+    * TRADFRI bulb E27 WS globe opal 1055lm
+    * TRADFRI bulb E27 WS opal 980lm
+    * TRADFRI bulb T120 E27 WS opal 470lm
+    * TRADFRI Driver 10W
+  * Light-Controller
+    * Remote Control N2
+    * TRADFRI on/off switch
+    * TRADFRI remote control
+  * Sound-Controller 
+    * SYMFONISK Sound Controller
+  * Motion-Sensor 
+    * TRADFRI motion sensor
+  * Shortcut-Controller
+    * TRADFRI SHORTCUT Button
 * Check for firmware updates
 * Link devices (e.g., light controller with light bulb)
 * Create, manipulate, and delete Device-Sets
