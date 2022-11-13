@@ -26,7 +26,7 @@ barely tested, and some are known as inoperable.
 * Fetch and edit devices, i.e.:
   * Gateway
     * DIRIGERA Hub for smart products
-  * Light
+  * Light & Driver
     * STOFTMOLN ceiling/wall lamp WW24
     * TRADFRI bulb E27 CWS 806lm
     * TRADFRI bulb E27 CWS opal 600lm
@@ -34,6 +34,7 @@ barely tested, and some are known as inoperable.
     * TRADFRI bulb E27 WS opal 980lm
     * TRADFRI bulb T120 E27 WS opal 470lm
     * TRADFRI Driver 10W
+    * TRADFRI Driver 30W
   * Light-Controller
     * Remote Control N2
     * TRADFRI on/off switch
