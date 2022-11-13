@@ -28,14 +28,16 @@ barely tested, and some are known as inoperable.
     * DIRIGERA Hub for smart products
   * Repeater
     * TRADFRI signal repeater
-  * Light
+  * Light & Driver
     * STOFTMOLN ceiling/wall lamp WW24
     * TRADFRI bulb E27 CWS 806lm
     * TRADFRI bulb E27 CWS opal 600lm
     * TRADFRI bulb E27 WS globe opal 1055lm
     * TRADFRI bulb E27 WS opal 980lm
     * TRADFRI bulb T120 E27 WS opal 470lm
+    * TRADFRI bulb GU10 WS 400lm
     * TRADFRI Driver 10W
+    * TRADFRI Driver 30W
   * Light-Controller
     * Remote Control N2
     * TRADFRI on/off switch
