@@ -26,6 +26,8 @@ barely tested, and some are known as inoperable.
 * Fetch and edit devices, i.e.:
   * Gateway
     * DIRIGERA Hub for smart products
+  * Repeater
+    * TRADFRI signal repeater
   * Light & Driver
     * STOFTMOLN ceiling/wall lamp WW24
     * TRADFRI bulb E27 CWS 806lm
