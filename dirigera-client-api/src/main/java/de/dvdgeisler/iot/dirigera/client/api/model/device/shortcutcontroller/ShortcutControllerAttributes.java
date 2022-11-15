@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.ota.OtaAttributes;
 
-public class ShortcutControllerAttributes extends DeviceAttributes {
+public class ShortcutControllerAttributes extends DeviceAttributes<ShortcutControllerStateAttributes> {
     public String productCode;
     public Integer batteryPercentage;
     public Boolean permittingJoin;
     public Boolean isOn;
     public Integer lightLevel;
-
-    @JsonUnwrapped
-    public ShortcutControllerStateAttributes state;
 
     @JsonUnwrapped
     public OtaAttributes ota;
@@ -29,11 +26,10 @@ public class ShortcutControllerAttributes extends DeviceAttributes {
             final Boolean isOn,
             final Integer lightLevel,
             final OtaAttributes ota,
-            final ShortcutControllerStateAttributes stateAttributes) {
-        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber);
+            final ShortcutControllerStateAttributes state) {
+        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber, state);
         this.lightLevel = lightLevel;
         this.isOn = isOn;
-        this.state = stateAttributes;
         this.productCode = productCode;
         this.batteryPercentage = batteryPercentage;
         this.permittingJoin = permittingJoin;

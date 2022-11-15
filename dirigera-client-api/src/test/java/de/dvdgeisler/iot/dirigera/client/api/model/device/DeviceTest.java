@@ -21,11 +21,11 @@ public abstract class DeviceTest {
 
     @Test
     public void deserialize() throws JsonProcessingException {
-        final Device<?> device;
+        final Device<?,?> device;
 
         device = this.objectMapper.readValue(this.json, Device.class);
         this.validateDeserialize(device);
     }
 
-    public abstract void validateDeserialize(final Device<?> device);
+    public abstract void validateDeserialize(final Device<?,?> device);
 }

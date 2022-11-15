@@ -1,22 +1,25 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.gateway;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateAttributes;
+
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-public class GatewayStateAttributes {
-    public String customName;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class GatewayStateAttributes extends DeviceStateAttributes {
     public Boolean permittingJoin;
-    public List<Map<String, String>> userConsents;
+    public List<GatewayUserConsent> userConsents;
     public Integer logLevel;
     public LocalTime time;
     public TimeZone timezone;
     public String countryCode;
     public GatewayCoordinates coordinates;
 
-    public GatewayStateAttributes(final String customName, final Boolean permittingJoin, final List<Map<String, String>> userConsents, final Integer logLevel, final LocalTime time, final TimeZone timezone, final String countryCode, final GatewayCoordinates coordinates) {
-        this.customName = customName;
+    public GatewayStateAttributes(final String customName, final Boolean permittingJoin, final List<GatewayUserConsent> userConsents, final Integer logLevel, final LocalTime time, final TimeZone timezone, final String countryCode, final GatewayCoordinates coordinates) {
+        super(customName);
         this.permittingJoin = permittingJoin;
         this.userConsents = userConsents;
         this.logLevel = logLevel;

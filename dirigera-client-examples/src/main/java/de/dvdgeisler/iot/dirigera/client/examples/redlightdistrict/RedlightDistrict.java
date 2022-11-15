@@ -1,8 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.examples.redlightdistrict;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
+import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.LightDeviceApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,34 +12,30 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightState.*;
-
 /**
  * Iterates through all devices and turns all lights on and to red.
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {DirigeraApi.class})
 public class RedlightDistrict {
     private final static Logger log = LoggerFactory.getLogger(RedlightDistrict.class);
 
     @Bean
-    public CommandLineRunner run(final DirigeraClientApi api) {
+    public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-            api.oauth.pairIfRequired().block();
+            api.pairIfRequired().block();
 
-            api.device.devices() // fetch all devices from hub
+            api.device.light.all()
                     .flatMapMany(Flux::fromIterable)
-                    .filter(d -> d.deviceType == DeviceType.LIGHT) // filter by light devices
-                    .cast(LightDevice.class)
                     .doOnNext(d -> log.info("Found light '{}': isOn={}, hue={}, saturation={}, lightLevel={}",
                             d.attributes.state.customName,
                             d.attributes.state.isOn,
                             d.attributes.state.color.hue,
                             d.attributes.state.color.saturation,
                             d.attributes.state.lightLevel))
-                    .flatMap(d -> api.device.editDevice(d.id, List.of(LIGHT_ON, LIGHT_LEVEL_100, LIGHT_COLOR_RED))) // edit device state
+                    .flatMap(d -> api.device.light.turnOn(d))
+                    .flatMap(d -> api.device.light.setLevel(d, 100))
+                    .flatMap(d -> api.device.light.setColor(d, 360.0f, 1.0f))
                     .blockLast();
         };
     }

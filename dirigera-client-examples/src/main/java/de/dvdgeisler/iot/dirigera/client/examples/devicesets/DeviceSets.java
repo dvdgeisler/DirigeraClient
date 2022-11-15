@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.devicesets;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +18,12 @@ import java.util.Objects;
  * Create, edit, and delete a device-set
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {ClientApi.class})
 public class DeviceSets {
     private final static Logger log = LoggerFactory.getLogger(DeviceSets.class);
-    private final DirigeraClientApi api;
+    private final ClientApi api;
 
-    public DeviceSets(final DirigeraClientApi api) {
+    public DeviceSets(final ClientApi api) {
         this.api = api;
     }
 

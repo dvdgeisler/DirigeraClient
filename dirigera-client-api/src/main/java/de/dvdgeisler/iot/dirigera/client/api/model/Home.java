@@ -17,6 +17,8 @@ public class Home {
     public User user;
     public List<Scene> scenes;
     public List<Room> rooms;
+    public List<DeviceSet> deviceSets;
+    public Music music;
 
     public Home() {
     }
@@ -31,7 +33,4 @@ public class Home {
         this.deviceSets = deviceSets;
         this.music = music;
     }
-
-    public List<DeviceSet> deviceSets;
-    public Music music;
 }

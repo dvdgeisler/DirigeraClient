@@ -1,6 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.examples.lightmonitor;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import org.slf4j.Logger;
@@ -18,28 +19,28 @@ import reactor.core.publisher.Flux;
  * Monitor light status
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {DirigeraApi.class})
 @EnableScheduling
 public class LightMonitor {
     private final static Logger log = LoggerFactory.getLogger(LightMonitor.class);
 
-    private final DirigeraClientApi api;
+    private final DirigeraApi api;
 
-    public LightMonitor(final DirigeraClientApi api) {
+    public LightMonitor(final DirigeraApi api) {
         this.api = api;
     }
 
     @Bean
     public CommandLineRunner run() {
-        return (String... args) -> this.api.oauth.pairIfRequired().block();
+        return (String... args) -> this.api.pairIfRequired().block();
     }
 
     @Scheduled(fixedRate = 1000)
     public void monitor() {
-        if(!this.api.oauth.isPaired())
+        if(!this.api.isPaired())
             return;
 
-        this.api.device.devices()
+        this.api.device.light.all()
                 .flatMapMany(Flux::fromIterable)
                 .filter(d -> d.deviceType == DeviceType.LIGHT)
                 .cast(LightDevice.class)

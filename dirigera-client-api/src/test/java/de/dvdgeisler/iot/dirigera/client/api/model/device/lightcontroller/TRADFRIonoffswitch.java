@@ -55,7 +55,7 @@ class TRADFRIonoffswitch extends DeviceTest {
     }
 
     @Override
-    public void validateDeserialize(final Device<?> device) {
+    public void validateDeserialize(final Device<?,?> device) {
         assertInstanceOf(LightControllerDevice.class, device);
     }
 }

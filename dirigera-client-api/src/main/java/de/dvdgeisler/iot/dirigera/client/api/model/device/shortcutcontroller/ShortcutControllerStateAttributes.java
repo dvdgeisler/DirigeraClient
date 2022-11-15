@@ -1,10 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller;
 
-public class ShortcutControllerStateAttributes {
-    public String customName;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateAttributes;
+
+public class ShortcutControllerStateAttributes extends DeviceStateAttributes {
 
     public ShortcutControllerStateAttributes(final String customName) {
-        this.customName = customName;
+        super(customName);
     }
 
     public ShortcutControllerStateAttributes() {

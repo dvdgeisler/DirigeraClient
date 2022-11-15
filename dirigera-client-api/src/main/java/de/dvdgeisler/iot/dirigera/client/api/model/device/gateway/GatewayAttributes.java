@@ -6,14 +6,11 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.ota.OtaAttributes;
 
 import java.time.LocalDateTime;
 
-public class GatewayAttributes extends DeviceAttributes {
+public class GatewayAttributes extends DeviceAttributes<GatewayStateAttributes> {
     public LocalDateTime identifyStarted;
     public Integer identifyPeriod;
     public Boolean coredump;
     public Boolean isOn;
-
-    @JsonUnwrapped
-    public GatewayStateAttributes state;
 
     @JsonUnwrapped
     public OtaAttributes ota;
@@ -34,8 +31,7 @@ public class GatewayAttributes extends DeviceAttributes {
             final GatewayStateAttributes state,
             final OtaAttributes ota,
             final GatewayBackendAttributes backend) {
-        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber);
-        this.state = state;
+        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber, state);
         this.identifyStarted = identifyStarted;
         this.identifyPeriod = identifyPeriod;
         this.coredump = coredump;

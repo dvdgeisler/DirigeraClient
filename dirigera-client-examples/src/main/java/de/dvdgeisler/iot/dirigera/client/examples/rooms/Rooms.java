@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.rooms;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +17,12 @@ import java.time.Duration;
  * Create, edit, and delete a room
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {DirigeraApi.class})
 public class Rooms {
     private final static Logger log = LoggerFactory.getLogger(Rooms.class);
-    private final DirigeraClientApi api;
+    private final DirigeraApi api;
 
-    public Rooms(final DirigeraClientApi api) {
+    public Rooms(final DirigeraApi api) {
         this.api = api;
     }
 
@@ -30,30 +30,22 @@ public class Rooms {
     public CommandLineRunner run() {
         return (String... args) -> {
             Room room;
-            this.api.oauth.pairIfRequired().block();
+            this.api.pairIfRequired().block();
 
-            room = this.api.room.createRoom("My-First-Room", "Icon", "Color")
-                    .delayElement(Duration.ofSeconds(1))
-                    .map(i -> i.id)
-                    .flatMap(this.api.room::getRoom)
-                    .switchIfEmpty(Mono.error(new RuntimeException("Created Room not found")))
+            room = this.api.room.create("My-First-Room", "Icon", "Color")
                     .doOnSuccess(r -> log.info("Created Room {}: name={}, icon={}, color={}", r.id, r.attributes.name, r.attributes.icon, r.attributes.color))
                     .block();
 
-            room.attributes.name = "Updated Room name";
-            this.api.room.updateRoom(room.id, room.attributes)
-                    .block();
-            Thread.sleep(1000); // wait 1s to take effect
-            room = this.api.room.getRoom(room.id)
-                    .switchIfEmpty(Mono.error(new RuntimeException("Created Room not found")))
-                    .doOnSuccess(ds -> log.info("Updated Room {}: name={}, icon={}, color={}", ds.id, ds.attributes.name, ds.attributes.icon, ds.attributes.color))
+            room = this.api.room.update(room, "Updated Room name", "Icon", "Color")
+                    .doOnSuccess(r -> log.info("Updated Room {}: name={}, icon={}, color={}", r.id, r.attributes.name, r.attributes.icon, r.attributes.color))
                     .block();
 
-            this.api.room.deleteRoom(room.id)
-                    .delayElement(Duration.ofSeconds(1))
-                    .block();
-            Thread.sleep(1000); // wait 1s to take effect
-            room = this.api.room.getRoom(room.id)
+            this.api.room.delete(room)
+                    .thenReturn(room)
+                    .cache()
+                    .flatMap(this.api.room::refresh)
+                    .repeat(10)// repeat 10 times as deleting may take some time
+                    .last()
                     .doOnError(e -> log.info("Room deleted: {}", e.getMessage()))
                     .doOnSuccess(ds -> log.error("Deleted Room {} is still available: name={}, icon={}", ds.id, ds.attributes.name, ds.attributes.icon))
                     .onErrorResume(e -> Mono.empty())

@@ -53,7 +53,7 @@ class TRADFRIremotecontrol extends DeviceTest {
     }
 
     @Override
-    public void validateDeserialize(final Device<?> device) {
+    public void validateDeserialize(final Device<?,?> device) {
         assertTrue(device instanceof LightControllerDevice);
     }
 }
