@@ -8,15 +8,12 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundC
 
 import java.time.LocalDateTime;
 
-public class OutletAttributes extends DeviceAttributes {
+public class OutletAttributes extends DeviceAttributes<OutletStateAttributes> {
     public String productCode;
     public DeviceStartupMode startupOnOff;
     public Boolean permittingJoin;
     public Integer identifyPeriod;
     public LocalDateTime identifyStarted;
-
-    @JsonUnwrapped
-    public OutletStateAttributes state;
 
     @JsonUnwrapped
     public OtaAttributes ota;
@@ -34,13 +31,12 @@ public class OutletAttributes extends DeviceAttributes {
             final LocalDateTime identifyStarted,
             final OutletStateAttributes state,
             final OtaAttributes ota) {
-        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber);
+        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber, state);
         this.productCode = productCode;
         this.startupOnOff = startupOnOff;
         this.permittingJoin = permittingJoin;
         this.identifyPeriod = identifyPeriod;
         this.identifyStarted = identifyStarted;
-        this.state = state;
         this.ota = ota;
     }
 

@@ -1,9 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.examples.scenes;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,19 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
-import java.util.List;
-
 /**
  * Create, edit, and delete a scene
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {DirigeraApi.class})
 public class Scenes {
     private final static Logger log = LoggerFactory.getLogger(Scenes.class);
-    private final DirigeraClientApi api;
+    private final DirigeraApi api;
 
-    public Scenes(final DirigeraClientApi api) {
+    public Scenes(final DirigeraApi api) {
         this.api = api;
     }
 
@@ -33,35 +28,24 @@ public class Scenes {
     public CommandLineRunner run() {
         return (String... args) -> {
             Scene scene;
-            this.api.oauth.pairIfRequired().block();
+            this.api.pairIfRequired().block();
 
-            scene = this.api.scene.createScene(
-                    new SceneAttributes(new SceneInfo("My-First-Scene", "Icon"), List.of(), List.of()))
-                    .delayElement(Duration.ofSeconds(1))
-                    .map(i -> i.id)
-                    .flatMap(this.api.scene::getScene)
-                    .switchIfEmpty(Mono.error(new RuntimeException("Created Scene not found")))
-                    .doOnSuccess(r -> log.info("Created Scene {}: name={}, icon={}", r.id, r.attributes.info.name, r.attributes.info.icon))
+            scene = this.api.scene.create("My-First-Scene", "Icon")
+                    .doOnSuccess(s -> log.info("Created Scene {}: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))
                     .block();
 
-            scene.attributes.info.name = "Updated Scene name";
-            scene.attributes.actions = List.of();   // actions and triggers are not
-            scene.attributes.triggers = List.of();  // working right now
-            this.api.scene.updateScene(scene.id, scene.attributes)
-                    .block();
-            Thread.sleep(1000); // wait 1s to take effect
-            scene = this.api.scene.getScene(scene.id)
-                    .switchIfEmpty(Mono.error(new RuntimeException("Created Room not found")))
+            scene = this.api.scene.update(scene, "Updated Scene name", "Icon")
                     .doOnSuccess(ds -> log.info("Updated Scene {}: name={}, icon={}", ds.id, ds.attributes.info.name, ds.attributes.info.icon))
                     .block();
 
-            this.api.scene.deleteScene(scene.id)
-                    .delayElement(Duration.ofSeconds(1))
-                    .block();
-            Thread.sleep(1000); // wait 1s to take effect
-            scene = this.api.scene.getScene(scene.id)
+            this.api.scene.delete(scene)
+                    .thenReturn(scene)
+                    .cache()
+                    .flatMap(this.api.scene::refresh)
+                    .repeat(10)// repeat 10 times as deleting may take some time
+                    .last()
                     .doOnError(e -> log.info("Scene deleted: {}", e.getMessage()))
-                    .doOnSuccess(ds -> log.error("Deleted Scene {} is still available: name={}, icon={}", ds.id, ds.attributes.info.name, ds.attributes.info.icon))
+                    .doOnSuccess(s -> log.error("Deleted Scene {} is still available: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))
                     .onErrorResume(e -> Mono.empty())
                     .block();
         };

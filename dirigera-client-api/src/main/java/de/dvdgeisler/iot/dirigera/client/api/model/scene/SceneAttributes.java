@@ -1,7 +1,10 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.scene;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SceneAttributes {
     public SceneInfo info;
     public List<SceneTrigger> triggers;

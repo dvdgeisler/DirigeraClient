@@ -55,7 +55,7 @@ class SYMFONISKSoundController extends DeviceTest {
     }
 
     @Override
-    public void validateDeserialize(final Device<?> device) {
+    public void validateDeserialize(final Device<?,?> device) {
         assertTrue(device instanceof SoundControllerDevice);
     }
 }

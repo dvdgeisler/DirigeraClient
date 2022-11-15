@@ -1,9 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.listmusic;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,18 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Mono;
 
 /**
  * Dump everything
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {ClientApi.class})
 public class ListMusic {
     private final static Logger log = LoggerFactory.getLogger(ListMusic.class);
 
     @Bean
-    public CommandLineRunner run(final DirigeraClientApi api) {
+    public CommandLineRunner run(final ClientApi api) {
         return (String... args) -> {
             api.oauth.pairIfRequired().block();
 

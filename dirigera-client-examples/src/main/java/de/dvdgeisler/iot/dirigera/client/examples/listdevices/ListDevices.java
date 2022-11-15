@@ -3,7 +3,8 @@ package de.dvdgeisler.iot.dirigera.client.examples.listdevices;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import java.util.Map;
  * Lists all known devices
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {DirigeraApi.class})
 public class ListDevices {
     private final static Logger log = LoggerFactory.getLogger(ListDevices.class);
     private final ObjectWriter writer;
@@ -31,11 +32,11 @@ public class ListDevices {
     }
 
     @Bean
-    public CommandLineRunner runListDevices(final DirigeraClientApi api) {
+    public CommandLineRunner runListDevices(final DirigeraApi api) {
         return (String... args) -> {
-            api.oauth.pairIfRequired().block();
+            api.pairIfRequired().block();
 
-            api.device.devices() // fetch all devices from hub
+            api.device.all() // fetch all devices from hub
                     .flatMapMany(Flux::fromIterable)
                     .map(device -> Map.of(
                             "apiStatus", Device.class.equals(device.getClass()) ? "Not supported" : "Supported",

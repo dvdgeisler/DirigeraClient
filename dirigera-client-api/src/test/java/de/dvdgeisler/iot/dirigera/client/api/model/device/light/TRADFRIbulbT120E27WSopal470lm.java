@@ -60,7 +60,7 @@ class TRADFRIbulbT120E27WSopal470lm extends DeviceTest {
     }
 
     @Override
-    public void validateDeserialize(final Device<?> device) {
+    public void validateDeserialize(final Device<?,?> device) {
         assertInstanceOf(LightDevice.class, device);
     }
 }

@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.ota.OtaAttributes;
 
-public class MotionSensorAttributes extends DeviceAttributes {
+public class MotionSensorAttributes extends DeviceAttributes<MotionSensorStateAttributes> {
     public String productCode;
     public Integer batteryPercentage;
     public Boolean isOn;
     public Integer lightLevel;
     public Boolean permittingJoin;
     public MotionSensorConfig sensorConfig;
-    @JsonUnwrapped
-    public MotionSensorStateAttributes state;
+
     @JsonUnwrapped
     public OtaAttributes ota;
 
@@ -33,8 +32,7 @@ public class MotionSensorAttributes extends DeviceAttributes {
             final MotionSensorConfig sensorConfig,
             final MotionSensorStateAttributes state,
             final OtaAttributes ota) {
-        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber);
-        this.state = state;
+        super(model, manufacturer, firmwareVersion, hardwareVersion, serialNumber,state);
         this.productCode = productCode;
         this.batteryPercentage = batteryPercentage;
         this.isOn = isOn;

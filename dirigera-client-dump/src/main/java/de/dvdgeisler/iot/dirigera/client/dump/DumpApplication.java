@@ -3,7 +3,7 @@ package de.dvdgeisler.iot.dirigera.client.dump;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +19,7 @@ import java.util.Map;
  * Dump everything
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {ClientApi.class})
 public class DumpApplication {
     private final static Logger log = LoggerFactory.getLogger(DumpApplication.class);
     private final ObjectWriter writer;
@@ -29,7 +29,7 @@ public class DumpApplication {
     }
 
     @Bean
-    public CommandLineRunner run(final DirigeraClientApi api) {
+    public CommandLineRunner run(final ClientApi api) {
         return (String... args) -> {
             api.oauth.pairIfRequired().block();
 

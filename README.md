@@ -6,20 +6,6 @@ uses DIRIGERA's REST interface at port 8443. The vast majority
 of interfaces have been implemented. However, most are
 barely tested, and some are known as inoperable.
 
-| API                                                                                                                                     | Endpoint Path   | Description                                                         |
-|-----------------------------------------------------------------------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------|
-| [DirigeraClientApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientApi.java)                     | `/home/`        | Fetches the entire data model at once                               |
-| [DirigeraClientOAuthApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientOAuthApi.java)           | `/oauth/`       | Authentication and pairing of the client API with the DIRIGERA.     |
-| [DirigeraClientDeviceApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientDeviceApi.java)         | `/devices/`     | Fetch and edit device state. Remove devices from Gateway.           |
-| [DirigeraClientGatewayApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientGatewayApi.java)       | `/hub/`         | Fetching the gateway's status. Check and perform firmware updates.  |
-| [DirigeraClientDeviceSetApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientDeviceSetApi.java)   | `/device-set/`  | Fetch, create, edit, and drop device sets                           |
-| [DirigeraClientMusicApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientMusicApi.java)           | `/music/`       | Fetch playlists and favorites.                                      |
-| [DirigeraClientRemoteLinkApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientRemoteLinkApi.java) | `/remoteLinks/` | Link devices, i.e., controller/sensors to actors (e.g. light bulbs) |
-| [DirigeraClientRoomApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientRoomApi.java)             | `/rooms/`       | Fetch, create, edit, and drop rooms                                 |
-| [DirigeraClientSceneApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientSceneApi.java)           | `/scenes/`      | Fetch, create, edit, drop, and trigger scenes.                      |
-| [DirigeraClientStepApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientStepApi.java)             | `/step/`        |                                                                     |
-| [DirigeraClientUserApi](dirigera-client-api/src/main/java/de/dvdgeisler/iot/dirigera/client/api/DirigeraClientUserApi.java)             | `/users/`       | Fetch, edit, and drop users                                         |
-
 ## What is known to work
 * Pair API with DIRIGERA
 * Dump DIRIGERA's data model
@@ -48,11 +34,14 @@ barely tested, and some are known as inoperable.
     * TRADFRI motion sensor
   * Shortcut-Controller
     * TRADFRI SHORTCUT Button
+  * Outlet
+    * ASKVADER on/off switch
+    * 
 * Check for firmware updates
-* Link devices (e.g., light controller with light bulb)
-* Create, manipulate, and delete Device-Sets
+* (Un-)Link devices (e.g., light controller with light bulb)
 * List music playlists and favorites
 * Create, manipulate, and delete rooms
+* Create, manipulate, and delete device-sets
 * Create, manipulate, and delete scenes (without actions and triggers)
 * Manipulate, and delete users
 
@@ -66,16 +55,16 @@ here's an example:
 @ComponentScan(basePackageClasses = {DirigeraClientApi.class})
 public class MyApplication {
     @Bean
-    public CommandLineRunner run(final DirigeraClientApi api) {
+    public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-            api.oauth.pairIfRequired().block(); // pair gateway if required
+          api.pairIfRequired().block(); // pair gateway if required
 
-            api.device.devices() // fetch all devices from hub
-                    .flatMapMany(Flux::fromIterable)
-                    .filter(d -> d.deviceType == DeviceType.LIGHT) // filter by light devices
-                    .cast(LightDevice.class)
-                    .flatMap(d -> api.device.editDevice(d.id, List.of(LIGHT_ON, LIGHT_LEVEL_100))) // turn on lights
-                    .blockLast();
+          api.device.light.all() // fetch all light devices from hub
+                  .flatMapMany(Flux::fromIterable)
+                  .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
+                  .flatMap(d -> api.device.light.setLevel(d, 100)) // turn on lights
+                  .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
+                  .blockLast();
         };
     }
 
@@ -94,10 +83,8 @@ public class MyApplication {
     JSON deserialization will likely fail as soon as one of the endpoints
     returns the respective device data.
   * You may help us to overcome this limitation by providing us your 
-    Gateway-Dump (see [How to contribute](#How to contribute)).
+    Gateway-Dump (see [How to contribute](#how-to-contribute)).
 * Scene actions and triggers.
-* Assigning devices to scenes, device-sets, or rooms
-* Unlink devices
 
 ### How to contribute
 

@@ -1,10 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller;
 
-public class SoundControllerStateAttributes {
-    public String customName;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateAttributes;
+
+public class SoundControllerStateAttributes extends DeviceStateAttributes {
 
     public SoundControllerStateAttributes(final String customName) {
-        this.customName = customName;
+        super(customName);
     }
 
     public SoundControllerStateAttributes() {

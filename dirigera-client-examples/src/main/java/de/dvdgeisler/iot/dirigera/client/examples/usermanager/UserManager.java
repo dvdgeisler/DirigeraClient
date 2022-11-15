@@ -1,9 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.usermanager;
 
-import de.dvdgeisler.iot.dirigera.client.api.DirigeraClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneInfo;
+import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.user.User;
 import de.dvdgeisler.iot.dirigera.client.api.model.user.UserName;
 import org.slf4j.Logger;
@@ -13,9 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Mono;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,12 +18,12 @@ import java.util.Scanner;
  * Manage users
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DirigeraClientApi.class})
+@ComponentScan(basePackageClasses = {ClientApi.class})
 public class UserManager {
     private final static Logger log = LoggerFactory.getLogger(UserManager.class);
-    private final DirigeraClientApi api;
+    private final ClientApi api;
 
-    public UserManager(final DirigeraClientApi api) {
+    public UserManager(final ClientApi api) {
         this.api = api;
     }
 
