@@ -1,34 +1,30 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device.light;
+package de.dvdgeisler.iot.dirigera.client.api.model.device.outlet;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TRADFRIbulbE14WSopal400lm extends DeviceTest {
+class TRADFRIcontroloutlet extends DeviceTest {
     final static String JSON = """
             {
-              "id" : "7db6e5df-8540-4275-aa4b-bc20cdc7ba86_1",
-              "type" : "light",
-              "deviceType" : "light",
-              "createdAt" : "2022-11-12T12:48:50.000Z",
+              "id" : "6379a590-dc0a-47b5-b35b-7b46dfefd282_1",
+              "type" : "outlet",
+              "deviceType" : "outlet",
+              "createdAt" : "2022-11-11T17:05:54.000Z",
               "isReachable" : true,
-              "lastSeen" : "2022-11-12T12:48:59.000Z",
+              "lastSeen" : "2022-11-11T17:06:02.000Z",
               "attributes" : {
-                "customName" : "Ljuskälla 1",
-                "firmwareVersion" : "2.3.087",
+                "customName" : "Uttag 1",
+                "firmwareVersion" : "2.3.089",
                 "hardwareVersion" : "1",
                 "manufacturer" : "IKEA of Sweden",
-                "model" : "TRADFRI bulb E14 WS opal 400lm",
-                "productCode" : "",
-                "serialNumber" : "90FD9FFFFE4B9854",
+                "model" : "TRADFRI control outlet",
+                "productCode" : "E1603",
+                "serialNumber" : "D0CF5EFFFEEF2B3F",
                 "isOn" : true,
-                "startupOnOff" : "startOn",
+                "startupOnOff" : "startPrevious",
                 "lightLevel" : 100,
-                "colorMode" : "temperature",
-                "colorTemperature" : 2702,
-                "colorTemperatureMax" : 2202,
-                "colorTemperatureMin" : 4000,
                 "identifyPeriod" : 0,
                 "identifyStarted" : "2000-01-01T00:00:00.000Z",
                 "permittingJoin" : false,
@@ -41,7 +37,7 @@ class TRADFRIbulbE14WSopal400lm extends DeviceTest {
               },
               "capabilities" : {
                 "canSend" : [ ],
-                "canReceive" : [ "customName", "isOn", "lightLevel", "colorTemperature" ]
+                "canReceive" : [ "customName", "isOn", "lightLevel" ]
               },
               "room" : {
                 "id" : "decd27b3-f54a-4211-9a8f-e7bf70f832eb",
@@ -55,12 +51,12 @@ class TRADFRIbulbE14WSopal400lm extends DeviceTest {
             }
             """;
 
-    public TRADFRIbulbE14WSopal400lm() {
+    public TRADFRIcontroloutlet() {
         super(JSON);
     }
 
     @Override
-    public void validateDeserialize(final Device<?, ?> device) {
-        assertInstanceOf(LightDevice.class, device);
+    public void validateDeserialize(final Device<?,?> device) {
+        assertTrue(device instanceof OutletDevice);
     }
 }
