@@ -20,6 +20,7 @@
         <module>./dirigera-client-api</module>
         <module>./dirigera-client-examples</module>
         <module>./dirigera-client-dump</module>
+        <module>./dirigera-client-mqtt</module>
     </modules>
 
 </project>

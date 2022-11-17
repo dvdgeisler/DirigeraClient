@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    hostname: mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
+  hass:
+    image: homeassistant/home-assistant
+    container_name: hass
+    hostname: hass
+    ports:
+      - "8123:8123"
