@@ -20,7 +20,7 @@ public class AirPurifierDeviceApi extends DefaultDeviceApi<
 
     @Override
     protected boolean isInstance(final Device<?, ?> device) {
-        return device instanceof LightDevice;
+        return device instanceof AirPurifierDevice;
     }
 
     public Mono<AirPurifierDevice> setFanMode(final AirPurifierDevice device, final AirPurifierFanMode fanMode) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.airpurifier.AirPurifierDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
@@ -28,6 +29,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = ShortcutControllerDevice.class, name = "shortcutController"),
         @JsonSubTypes.Type(value = RepeaterDevice.class, name = "repeater"),
         @JsonSubTypes.Type(value = AirPurifierDevice.class, name = "airPurifier"),
+        @JsonSubTypes.Type(value = BlindsControllerDevice.class, name = "blindsController"),
 })
 public class Device<_Attributes extends DeviceAttributes, _Configuration extends DeviceConfigurationAttributes> extends Identifier {
     public DeviceCategory type;
