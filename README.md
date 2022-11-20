@@ -43,6 +43,8 @@ barely tested, and some are known as inoperable.
     * Aqara Smart Plug (lumi.plug.maeu01)
   * Air Purifier
     * STARKVIND Air purifier
+  * Blinds
+    * PRAKTLYSING cellular blind
 * Check for firmware updates
 * (Un-)Link devices (e.g., light controller with light bulb)
 * List music playlists and favorites
