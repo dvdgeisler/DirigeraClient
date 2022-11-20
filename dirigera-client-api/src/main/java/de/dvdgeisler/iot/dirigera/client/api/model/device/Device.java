@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.airpurifier.AirPurifierDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
@@ -12,7 +13,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +27,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = OutletDevice.class, name = "outlet"),
         @JsonSubTypes.Type(value = ShortcutControllerDevice.class, name = "shortcutController"),
         @JsonSubTypes.Type(value = RepeaterDevice.class, name = "repeater"),
+        @JsonSubTypes.Type(value = AirPurifierDevice.class, name = "airPurifier"),
 })
 public class Device<_Attributes extends DeviceAttributes, _Configuration extends DeviceConfigurationAttributes> extends Identifier {
     public DeviceCategory type;
@@ -36,7 +37,6 @@ public class Device<_Attributes extends DeviceAttributes, _Configuration extends
     public LocalDateTime lastSeen;
     public _Attributes attributes;
     public DeviceCapabilities capabilities;
-    public List<DeviceSet> deviceSet;
     public List<String> remoteLinks;
 
     @JsonUnwrapped
@@ -54,7 +54,6 @@ public class Device<_Attributes extends DeviceAttributes, _Configuration extends
             final LocalDateTime lastSeen,
             final _Attributes attributes,
             final DeviceCapabilities capabilities,
-            final List<DeviceSet> deviceSet,
             final List<String> remoteLinks,
             final _Configuration configuration) {
         super(id);
@@ -65,7 +64,6 @@ public class Device<_Attributes extends DeviceAttributes, _Configuration extends
         this.lastSeen = lastSeen;
         this.attributes = attributes;
         this.capabilities = capabilities;
-        this.deviceSet = deviceSet;
         this.remoteLinks = remoteLinks;
         this.configuration = configuration;
     }

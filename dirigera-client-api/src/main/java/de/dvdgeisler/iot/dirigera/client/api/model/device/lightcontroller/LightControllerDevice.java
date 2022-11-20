@@ -12,8 +12,8 @@ import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType.LIGH
 
 public class LightControllerDevice extends Device<LightControllerAttributes, LightControllerConfigurationAttributes> {
 
-    public LightControllerDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final LightControllerAttributes attributes, final DeviceCapabilities capabilities, final List<DeviceSet> deviceSet, final List<String> remoteLinks, final LightControllerConfigurationAttributes lightControllerConfigurationAttributes) {
-        super(id, CONTROLLER, LIGHT_CONTROLLER, createdAt, isReachable, lastSeen, attributes, capabilities, deviceSet, remoteLinks, lightControllerConfigurationAttributes);
+    public LightControllerDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final LightControllerAttributes attributes, final DeviceCapabilities capabilities, final List<String> remoteLinks, final LightControllerConfigurationAttributes lightControllerConfigurationAttributes) {
+        super(id, CONTROLLER, LIGHT_CONTROLLER, createdAt, isReachable, lastSeen, attributes, capabilities, remoteLinks, lightControllerConfigurationAttributes);
     }
 
     public LightControllerDevice() {
