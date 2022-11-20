@@ -39,6 +39,8 @@ barely tested, and some are known as inoperable.
     * ASKVADER on/off switch
     * TRADFRI control outlet
     * Aqara Smart Plug (lumi.plug.maeu01)
+  * Air Purifier
+    * STARKVIND Air purifier
 * Check for firmware updates
 * (Un-)Link devices (e.g., light controller with light bulb)
 * List music playlists and favorites
