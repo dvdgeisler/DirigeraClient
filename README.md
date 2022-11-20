@@ -31,6 +31,8 @@ barely tested, and some are known as inoperable.
     * TRADFRI remote control
   * Sound-Controller 
     * SYMFONISK Sound Controller
+  * Blinds-Controller
+    * TRADFRI open/close remote
   * Motion-Sensor 
     * TRADFRI motion sensor
   * Shortcut-Controller
