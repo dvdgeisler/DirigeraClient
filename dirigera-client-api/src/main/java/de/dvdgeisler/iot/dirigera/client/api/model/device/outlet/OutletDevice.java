@@ -12,8 +12,8 @@ import java.util.List;
 
 public class OutletDevice extends Device<OutletAttributes, OutletConfigurationAttributes> {
 
-    public OutletDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final OutletAttributes attributes, final DeviceCapabilities capabilities, final List<DeviceSet> deviceSet, final List<String> remoteLinks, final OutletConfigurationAttributes outletConfigurationAttributes) {
-        super(id, DeviceCategory.OUTLET, DeviceType.OUTLET, createdAt, isReachable, lastSeen, attributes, capabilities, deviceSet, remoteLinks, outletConfigurationAttributes);
+    public OutletDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final OutletAttributes attributes, final DeviceCapabilities capabilities, final List<String> remoteLinks, final OutletConfigurationAttributes outletConfigurationAttributes) {
+        super(id, DeviceCategory.OUTLET, DeviceType.OUTLET, createdAt, isReachable, lastSeen, attributes, capabilities, remoteLinks, outletConfigurationAttributes);
     }
 
     public OutletDevice() {

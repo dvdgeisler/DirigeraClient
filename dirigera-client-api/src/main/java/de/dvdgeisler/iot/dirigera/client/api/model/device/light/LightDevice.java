@@ -16,7 +16,7 @@ public class LightDevice extends Device<LightAttributes, LightConfigurationAttri
     public LightDevice() {
     }
 
-    public LightDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final LightAttributes attributes, final DeviceCapabilities capabilities, final List<DeviceSet> deviceSet, final List<String> remoteLinks, final LightConfigurationAttributes lightConfigurationAttributes) {
-        super(id, DeviceCategory.LIGHT, DeviceType.LIGHT, createdAt, isReachable, lastSeen, attributes, capabilities, deviceSet, remoteLinks, lightConfigurationAttributes);
+    public LightDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final LightAttributes attributes, final DeviceCapabilities capabilities, final List<String> remoteLinks, final LightConfigurationAttributes lightConfigurationAttributes) {
+        super(id, DeviceCategory.LIGHT, DeviceType.LIGHT, createdAt, isReachable, lastSeen, attributes, capabilities, remoteLinks, lightConfigurationAttributes);
     }
 }

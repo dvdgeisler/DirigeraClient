@@ -31,6 +31,8 @@ barely tested, and some are known as inoperable.
     * TRADFRI remote control
   * Sound-Controller 
     * SYMFONISK Sound Controller
+  * Blinds-Controller
+    * TRADFRI open/close remote
   * Motion-Sensor 
     * TRADFRI motion sensor
   * Shortcut-Controller
@@ -39,6 +41,10 @@ barely tested, and some are known as inoperable.
     * ASKVADER on/off switch
     * TRADFRI control outlet
     * Aqara Smart Plug (lumi.plug.maeu01)
+  * Air Purifier
+    * STARKVIND Air purifier
+  * Blinds
+    * PRAKTLYSING cellular blind
 * Check for firmware updates
 * (Un-)Link devices (e.g., light controller with light bulb)
 * List music playlists and favorites
