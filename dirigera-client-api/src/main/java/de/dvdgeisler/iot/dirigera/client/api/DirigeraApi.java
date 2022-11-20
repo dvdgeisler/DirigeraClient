@@ -24,12 +24,18 @@ public class DirigeraApi {
         public final LightControllerDeviceApi light;
         public final ShortcutControllerDeviceApi shortcut;
         public final SoundControllerDeviceApi sound;
+        public final BlindsControllerDeviceApi blinds;
 
-        public ControllerDeviceApiWrapper(final ClientApi clientApi) {
+        public ControllerDeviceApiWrapper(
+                final ClientApi clientApi,
+                final LightControllerDeviceApi light,
+                final ShortcutControllerDeviceApi shortcut,
+                final SoundControllerDeviceApi sound, final BlindsControllerDeviceApi blinds) {
             super(clientApi);
-            this.light = new LightControllerDeviceApi(clientApi);
-            this.shortcut = new ShortcutControllerDeviceApi(clientApi);
-            this.sound = new SoundControllerDeviceApi(clientApi);
+            this.light = light;
+            this.shortcut = shortcut;
+            this.sound = sound;
+            this.blinds = blinds;
         }
     }
     public static class DeviceApiWrapper extends DeviceApi<
@@ -48,10 +54,24 @@ public class DirigeraApi {
         public final RepeaterDeviceApi repeater;
         public final ShortcutControllerDeviceApi shortcutController;
         public final SoundControllerDeviceApi soundController;
+        public final AirPurifierDeviceApi airPurifier;
+        public final BlindsControllerDeviceApi blindsController;
+        public final BlindsDeviceApi blinds;
 
-        public DeviceApiWrapper(final ClientApi clientApi, final GatewayDeviceApi gateway, final LightControllerDeviceApi lightController, final LightDeviceApi light, final MotionSensorDeviceApi motionSensor, final OutletDeviceApi outlet, final RepeaterDeviceApi repeater, final ShortcutControllerDeviceApi shortcutController, final SoundControllerDeviceApi soundController) {
+        public DeviceApiWrapper(
+                final ClientApi clientApi,
+                final GatewayDeviceApi gateway,
+                final LightControllerDeviceApi lightController,
+                final LightDeviceApi light,
+                final MotionSensorDeviceApi motionSensor,
+                final OutletDeviceApi outlet,
+                final RepeaterDeviceApi repeater,
+                final ShortcutControllerDeviceApi shortcutController,
+                final SoundControllerDeviceApi soundController,
+                final AirPurifierDeviceApi airPurifier,
+                final BlindsControllerDeviceApi blindsController, final BlindsDeviceApi blinds) {
             super(clientApi);
-            this.controller = new ControllerDeviceApiWrapper(clientApi);
+            this.controller = new ControllerDeviceApiWrapper(clientApi, lightController, shortcutController, soundController, blindsController);
             this.gateway = gateway;
             this.lightController = lightController;
             this.light = light;
@@ -60,6 +80,9 @@ public class DirigeraApi {
             this.repeater = repeater;
             this.shortcutController = shortcutController;
             this.soundController = soundController;
+            this.airPurifier = airPurifier;
+            this.blindsController = blindsController;
+            this.blinds = blinds;
         }
 
         @Override
@@ -85,8 +108,10 @@ public class DirigeraApi {
                 new OutletDeviceApi(clientApi),
                 new RepeaterDeviceApi(clientApi),
                 new ShortcutControllerDeviceApi(clientApi),
-                new SoundControllerDeviceApi(clientApi)
-        );
+                new SoundControllerDeviceApi(clientApi),
+                new AirPurifierDeviceApi(clientApi),
+                new BlindsControllerDeviceApi(clientApi),
+                new BlindsDeviceApi(clientApi));
         this.room = new RoomApi(clientApi);
         this.scene = new SceneApi(clientApi);
         this.user = new UserApi(clientApi);

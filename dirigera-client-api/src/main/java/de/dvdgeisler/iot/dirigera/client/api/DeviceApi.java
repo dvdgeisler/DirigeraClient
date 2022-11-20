@@ -107,7 +107,7 @@ public abstract class DeviceApi<
 
     public Mono<_Device> addToDeviceSet(final _Device device, final DeviceSet deviceSet) {
         return this.refresh(device)
-                .map(d -> d.deviceSet)
+                .map(d -> d.configuration.deviceSet)
                 .filter(deviceSets -> deviceSets.stream().map(ds -> ds.id).noneMatch(id -> Objects.equals(id, deviceSet.id)))
                 .map(deviceSets -> Stream.concat(deviceSets.stream(), Stream.of(deviceSet)).toList())
                 .flatMap(deviceSets -> this.setDeviceSets(device, deviceSets));
@@ -115,7 +115,7 @@ public abstract class DeviceApi<
 
     public Mono<_Device> removeFromDeviceSet(final _Device device, final DeviceSet deviceSet) {
         return this.refresh(device)
-                .map(d->d.deviceSet)
+                .map(d->d.configuration.deviceSet)
                 .flatMapMany(Flux::fromIterable)
                 .filter(ds-> !Objects.equals(ds.id, deviceSet.id))
                 .collectList()
