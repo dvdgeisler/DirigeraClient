@@ -20,8 +20,8 @@ public class MotionSensorDevice extends Device<MotionSensorAttributes, MotionSen
     public MotionSensorDevice() {
     }
 
-    public MotionSensorDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final MotionSensorAttributes attributes, final DeviceCapabilities capabilities, final List<DeviceSet> deviceSet, final List<String> remoteLinks, final MotionSensorConfigurationAttributes motionSensorConfigurationAttributes, final Integer onDuration, final MotionSensorConfig sensorConfig) {
-        super(id, SENSOR, MOTION_SENSOR, createdAt, isReachable, lastSeen, attributes, capabilities, deviceSet, remoteLinks, motionSensorConfigurationAttributes);
+    public MotionSensorDevice(final String id, final LocalDateTime createdAt, final Boolean isReachable, final LocalDateTime lastSeen, final MotionSensorAttributes attributes, final DeviceCapabilities capabilities, final List<String> remoteLinks, final MotionSensorConfigurationAttributes motionSensorConfigurationAttributes, final Integer onDuration, final MotionSensorConfig sensorConfig) {
+        super(id, SENSOR, MOTION_SENSOR, createdAt, isReachable, lastSeen, attributes, capabilities, remoteLinks, motionSensorConfigurationAttributes);
         this.onDuration = onDuration;
         this.sensorConfig = sensorConfig;
     }
