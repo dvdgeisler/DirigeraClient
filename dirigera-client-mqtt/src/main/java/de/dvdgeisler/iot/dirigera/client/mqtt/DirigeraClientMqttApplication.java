@@ -3,8 +3,10 @@ package de.dvdgeisler.iot.dirigera.client.mqtt;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.LightEventHandler;
+import de.dvdgeisler.iot.dirigera.client.mqtt.hass.MotionSensorEventHandler;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.OutletEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +38,15 @@ public class DirigeraClientMqttApplication {
     public CommandLineRunner run(
             final DirigeraApi api,
             final LightEventHandler lightEventHandler,
-            final OutletEventHandler outletEventHandler) {
+            final OutletEventHandler outletEventHandler,
+            final MotionSensorEventHandler motionSensorEventHandler) {
         return (String... args) -> {
 
             api.pairIfRequired().block();
 
             this.mqttBridge.registerEventHandler(LightDevice.class, lightEventHandler);
             this.mqttBridge.registerEventHandler(OutletDevice.class, outletEventHandler);
+            this.mqttBridge.registerEventHandler(MotionSensorDevice.class, motionSensorEventHandler);
 
             api.device.all()
                     .flatMapMany(Flux::fromIterable)

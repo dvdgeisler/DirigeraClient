@@ -110,6 +110,22 @@ incomplete. You may submit the generated dump as an issue to GitHub.
 java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
 ```
 
+## Integration to Home Assistant
+
+Lights and sockets can be integrated into Home Assistant via MQTT (more devices will follow).
+Therefore, the application [dirigera-client-mqtt](dirigera-client-mqtt/src/main/java/de/dvdgeisler/iot/dirigera/client/mqtt/DirigeraClientMqttApplication.java) 
+is started as a service giving the hostnames of the Dirigera, and the MQTT broker, e.g.:
+```bash
+./mvnw package
+java -jar dirigera-client-mqtt/target/dirigera-client-mqtt-0.0.1-SNAPSHOT.jar \
+  --dirigera.hostname=<DIRIGERA-IP-ADDRESS> \
+  --dirigera.mqtt.hostname=<MQTT-IP-ADDRESS (Default: localhost)> \
+  --dirigera.mqtt.port=<MQTT-PORT (Default: 1883)>
+```
+Home Assistant will create entities for supported devices, based on its MQTT auto discovery approach.
+
+![](img/hass-integration.png)
+
 ## Other repos to dig in
 
 * [wjtje/DIRIGERA](https://github.com/wjtje/DIRIGERA)
