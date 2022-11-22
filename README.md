@@ -124,7 +124,7 @@ java -jar dirigera-client-mqtt/target/dirigera-client-mqtt-0.0.1-SNAPSHOT.jar \
 ```
 Home Assistant will create entities for supported devices, based on its MQTT auto discovery approach.
 
-![](img/hass-integration.png)
+![](./img/hass-integration.png)
 
 ## Other repos to dig in
 
