@@ -2,6 +2,7 @@ package de.dvdgeisler.iot.dirigera.client.mqtt;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
@@ -25,8 +26,7 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
             @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
             @Value("${dirigera.mqtt.timeout:10}") final Integer timeout,
             final DirigeraApi api) throws MqttException {
-        super(String.format("tcp://%s:%d", host, port),
-                Objects.requireNonNull(api.status().map(s -> s.id).block()));
+        super(String.format("tcp://%s:%d", host, port), readClientId(api));
         final MqttConnectOptions options;
         this.api = api;
         this.eventHandler = new HashMap<>();
@@ -114,5 +114,13 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
                 .stream()
                 .flatMap(factory -> factory.removeDevice(this, this.api, device))
                 .forEach(this::publishMessage);
+    }
+
+    private static String readClientId(final DirigeraApi api) {
+        final GatewayStatus status;
+        api.pairIfRequired().block();
+        status = api.status().block();
+
+        return Optional.ofNullable(status).map(s -> s.id).orElse(UUID.randomUUID().toString());
     }
 }
