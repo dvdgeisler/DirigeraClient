@@ -10,8 +10,8 @@ public class SceneTriggerApp extends SceneTrigger {
     public SceneTriggerApp() {
     }
 
-    public SceneTriggerApp(final String id, final Boolean disabled, final SceneEndTrigger endTrigger, final LocalDateTime triggeredAt) {
-        super(id, APPLICATION, disabled, endTrigger);
+    public SceneTriggerApp(final String id, final Boolean disabled, final LocalDateTime triggeredAt) {
+        super(id, APPLICATION, disabled);
         this.triggeredAt = triggeredAt;
     }
 }

@@ -8,19 +8,18 @@ import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = SceneTriggerApp.class, name = "app"),
         @JsonSubTypes.Type(value = SceneTriggerSunriseSunset.class, name = "sunriseSunset"),
+        @JsonSubTypes.Type(value = SceneTriggerTime.class, name = "time"),
 })
 public class SceneTrigger extends Identifier {
     public SceneTriggerType type;
     public Boolean disabled;
-    public SceneEndTrigger endTrigger;
 
     public SceneTrigger() {
     }
 
-    public SceneTrigger(final String id, final SceneTriggerType type, final Boolean disabled, final SceneEndTrigger endTrigger) {
+    public SceneTrigger(final String id, final SceneTriggerType type, final Boolean disabled) {
         super(id);
         this.type = type;
         this.disabled = disabled;
-        this.endTrigger = endTrigger;
     }
 }

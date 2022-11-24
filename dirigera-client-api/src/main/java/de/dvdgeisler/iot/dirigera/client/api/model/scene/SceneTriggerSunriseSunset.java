@@ -8,12 +8,14 @@ public class SceneTriggerSunriseSunset extends SceneTrigger {
     public SceneTriggerSunriseSunsetTrigger trigger;
     public LocalDateTime nextTriggerAt;
     public LocalDateTime triggeredAt;
+    public SceneEndTrigger endTrigger;
 
     public SceneTriggerSunriseSunset(final String id, final Boolean disabled, final SceneEndTrigger endTrigger, final SceneTriggerSunriseSunsetTrigger trigger, final LocalDateTime nextTriggerAt, final LocalDateTime triggeredAt) {
-        super(id, SUNRISE_SUNSET, disabled, endTrigger);
+        super(id, SUNRISE_SUNSET, disabled);
         this.trigger = trigger;
         this.nextTriggerAt = nextTriggerAt;
         this.triggeredAt = triggeredAt;
+        this.endTrigger = endTrigger;
     }
 
     public SceneTriggerSunriseSunset() {
