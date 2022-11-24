@@ -113,16 +113,15 @@ java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar 
 ## Integration to Home Assistant
 
 Lights and sockets can be integrated into Home Assistant via MQTT (more devices will follow).
-Therefore, the application [dirigera-client-mqtt](dirigera-client-mqtt/src/main/java/de/dvdgeisler/iot/dirigera/client/mqtt/DirigeraClientMqttApplication.java) 
-is started as a service giving the hostnames of the Dirigera, and the MQTT broker, e.g.:
-```bash
-./mvnw package
-java -jar dirigera-client-mqtt/target/dirigera-client-mqtt-0.0.1-SNAPSHOT.jar \
-  --dirigera.hostname=<DIRIGERA-IP-ADDRESS> \
-  --dirigera.mqtt.hostname=<MQTT-IP-ADDRESS (Default: localhost)> \
-  --dirigera.mqtt.port=<MQTT-PORT (Default: 1883)>
-```
 Home Assistant will create entities for supported devices, based on its MQTT auto discovery approach.
+
+Add https://github.com/TheMrBooyah/hassio-repository to your home assistant.
+Update the configuration to your setup.
+
+In order to get your 'Token', run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java). This will ask you to pair your gateway. After successfully pairing the gateway a file 'dirigera_access_token' will be created. Open the file with your favourite text editor and copy everything into the 'Token' field.
+
+Start the addon, watch the logs for any errors and if everything went as expected, home assistant should have some new devices/entities from your IKEA Smart Hub.
+
 
 ![](img/hass-integration.png)
 
