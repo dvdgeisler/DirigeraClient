@@ -9,10 +9,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Flux;
 
 /**
- * Lists all known devices
+ * Opens a websocket
  */
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {DirigeraApi.class})
@@ -25,7 +24,7 @@ public class WebSockets {
         return (String... args) -> {
             api.pairIfRequired().block(); // pair gateway if required
 
-            capi.websocket();
+            capi.websocket(message -> log.debug("Received websocket message: {}", message));
         };
     }
 
