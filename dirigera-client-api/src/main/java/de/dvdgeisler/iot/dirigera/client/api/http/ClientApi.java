@@ -18,6 +18,7 @@ import javax.net.ssl.SSLException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Component
 public class ClientApi extends AbstractClientApi {
@@ -88,7 +89,7 @@ public class ClientApi extends AbstractClientApi {
                 .bodyToMono(Map.class);
     }
 
-    public void websocket() {
+    public void websocket(final Consumer<String> consumer) {
         final String token;
         final String authorizationHeader;
         final HttpClient httpClient;
@@ -103,10 +104,10 @@ public class ClientApi extends AbstractClientApi {
                     .headers(headers -> headers.add(HttpHeaders.AUTHORIZATION, authorizationHeader))
                     .keepAlive(true);
             client = new ReactorNettyWebSocketClient(httpClient);
-            client.execute(URI.create(String.format("https://%s:%d/v1/", hostname, port)), session ->
+            client.execute(URI.create(String.format("https://%s:%d/v1/", this.hostname, this.port)), session ->
                     session.receive()
                             .map(WebSocketMessage::getPayloadAsText)
-                            .doOnNext(message -> log.debug("Received websocket message: {}", message))
+                            .doOnNext(consumer)
                             .repeat()
                             .then()
             ).block();
