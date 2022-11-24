@@ -22,6 +22,8 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
     public MqttBridge(
             @Value("${dirigera.mqtt.hostname:localhost}") final String host,
             @Value("${dirigera.mqtt.port:1883}") final Short port,
+            @Value("${dirigera.mqtt.username:}") final String username,
+            @Value("${dirigera.mqtt.password:}") final String password,
             @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
             @Value("${dirigera.mqtt.timeout:10}") final Integer timeout,
             final DirigeraApi api) throws MqttException {
@@ -38,6 +40,11 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
         options.setAutomaticReconnect(reconnect);
         options.setCleanSession(true);
         options.setConnectionTimeout(timeout);
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            options.setUserName(username);
+            options.setPassword(password.toCharArray());
+        }
         this.connect(options);
 
         log.info("Connection to MQTT broker successfully established");
