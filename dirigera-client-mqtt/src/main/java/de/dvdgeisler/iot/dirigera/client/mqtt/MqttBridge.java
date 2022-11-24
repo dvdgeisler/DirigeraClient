@@ -25,8 +25,7 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
             @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
             @Value("${dirigera.mqtt.timeout:10}") final Integer timeout,
             final DirigeraApi api) throws MqttException {
-        super(String.format("tcp://%s:%d", host, port),
-                Objects.requireNonNull(api.status().map(s -> s.id).block()));
+        super(String.format("tcp://%s:%d", host, port), clientId(api));
         final MqttConnectOptions options;
         this.api = api;
         this.eventHandler = new HashMap<>();
@@ -114,5 +113,10 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
                 .stream()
                 .flatMap(factory -> factory.removeDevice(this, this.api, device))
                 .forEach(this::publishMessage);
+    }
+
+    private static String clientId(final DirigeraApi api) {
+        api.pairIfRequired().block();
+        return api.status().map(s -> s.id).block();
     }
 }
