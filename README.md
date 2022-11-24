@@ -29,6 +29,7 @@ barely tested, and some are known as inoperable.
     * Remote Control N2
     * TRADFRI on/off switch
     * TRADFRI remote control
+    * LEPTITER Recessed spot light
   * Sound-Controller 
     * SYMFONISK Sound Controller
   * Blinds-Controller
