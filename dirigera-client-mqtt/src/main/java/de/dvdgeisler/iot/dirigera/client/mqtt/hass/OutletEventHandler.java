@@ -55,7 +55,7 @@ public class OutletEventHandler extends HassEventHandler<OutletDevice, DeviceSta
             final DirigeraApi api,
             final OutletDevice device) {
 
-        this.subscribe(mqtt, api, device);
+        this.subscribe(mqtt, api, device, TOPIC_SET);
         return Stream.of(this.build(mqtt, device, TOPIC_CONFIG,
                 new OutletConfig(
                         device.id,

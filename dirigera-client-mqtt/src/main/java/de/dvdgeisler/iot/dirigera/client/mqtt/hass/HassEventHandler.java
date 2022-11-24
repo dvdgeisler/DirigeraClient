@@ -56,22 +56,35 @@ public abstract class HassEventHandler<_Device extends de.dvdgeisler.iot.diriger
                 .collect(Collectors.joining("/"));
     }
 
-    protected <T> MqttBridgeMessage<_Device> build(final MqttBridge mqtt, final _Device device, final String topic, final T payload) {
+    protected <T> MqttBridgeMessage<_Device> build(
+            final MqttBridge mqtt,
+            final _Device device,
+            final String topic,
+            final T payload) {
         try {
             return new MqttBridgeMessage<>(
                     device,
                     this,
                     this.topic(mqtt, device, topic),
-                    new MqttMessage(this.objectMapper.writeValueAsBytes(payload)));
+                    new MqttMessage(this.objectMapper.writeValueAsBytes(payload)){{
+                        this.setQos(1);
+                        this.setRetained(true);
+                    }});
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
         return null;
     }
 
-    protected void subscribe(final MqttBridge mqtt, final DirigeraApi api, final _Device device) {
+    protected void subscribe(final MqttBridge mqtt, final DirigeraApi api, final _Device device, final String topicSuffix) {
+        final String topic;
+
         try {
-            mqtt.subscribe(this.topic(mqtt, device, "set"), (topic, message) -> {
+            topic = this.topic(mqtt, device, topicSuffix);
+            log.info("Subscribe to device: topic={}, id={}, name={}, category={}, type={}",
+                    topic, device.id, device.attributes.state.customName, device.deviceType, device.type);
+
+            mqtt.subscribe(this.topic(mqtt, device, topicSuffix), (t, message) -> {
                 final _DeviceState state;
 
                 try {
