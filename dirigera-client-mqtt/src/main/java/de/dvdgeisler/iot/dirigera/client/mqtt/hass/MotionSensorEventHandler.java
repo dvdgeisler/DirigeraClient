@@ -50,7 +50,6 @@ public class MotionSensorEventHandler extends HassEventHandler<MotionSensorDevic
             final DirigeraApi api,
             final MotionSensorDevice device) {
 
-        this.subscribe(mqtt, api, device);
         return Stream.of(this.build(mqtt, device, TOPIC_CONFIG,
                 new MotionSensorConfig(
                         device.id,

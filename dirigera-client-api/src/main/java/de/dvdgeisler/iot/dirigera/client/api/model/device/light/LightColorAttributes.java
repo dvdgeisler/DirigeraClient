@@ -20,8 +20,18 @@ public class LightColorAttributes {
     public Float saturation;
     @JsonProperty("colorTemperature")
     public Integer temperature;
+
+    /**
+     * The minimal color temperature in Kelvin.
+     * @implNote higher Kelvin indicates lower color temperature
+     */
     @JsonProperty("colorTemperatureMin")
     public Integer temperatureMin;
+
+    /**
+     * The maximal color temperature in Kelvin.
+     * @implNote lower Kelvin indicates higher color temperature
+     */
     @JsonProperty("colorTemperatureMax")
     public Integer temperatureMax;
     @JsonProperty("colorMode")

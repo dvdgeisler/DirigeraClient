@@ -51,8 +51,8 @@ public class LightEventHandler extends HassEventHandler<LightDevice, LightStatus
 
         Optional.ofNullable(status.color_temp)
                 .filter(t -> canReceive(device, "colorTemperature"))
-                .map(t -> max(t, getMaxTemperatureMireds(device))) // todo: getMaxTemperatureMireds may return null
-                .map(t -> min(t, getMinTemperatureMireds(device))) // todo: getMinTemperatureMireds may return null
+                .flatMap(t -> Optional.ofNullable(getMaxTemperatureMireds(device)).map(maxT -> min(t, maxT)))
+                .flatMap(t -> Optional.ofNullable(getMinTemperatureMireds(device)).map(minT -> max(t, minT)))
                 .map(LightUtils::miredsToKelvin)
                 .map(t -> api.device.light.setTemperature(device, t))
                 .ifPresent(Mono::block);
@@ -81,7 +81,7 @@ public class LightEventHandler extends HassEventHandler<LightDevice, LightStatus
         final List<LightColorMode> colorModes;
 
         colorModes = colorModes(device);
-        this.subscribe(mqtt, api, device);
+        this.subscribe(mqtt, api, device, TOPIC_SET);
         return Stream.of(this.build(mqtt, device, TOPIC_CONFIG,
                 new LightConfig(
                         device.id,
