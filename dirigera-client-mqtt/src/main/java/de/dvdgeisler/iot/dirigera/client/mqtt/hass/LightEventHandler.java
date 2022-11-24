@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceUtils.*;
-import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light.LightUtils.getState;
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light.LightUtils.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;

@@ -4,7 +4,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCapabilities;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCategory;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 
 import java.time.LocalDateTime;
 import java.util.List;

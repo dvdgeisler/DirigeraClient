@@ -3,11 +3,7 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.airpurifier.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.*;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
-import java.util.List;
 
 public class AirPurifierDeviceApi extends DefaultDeviceApi<
         AirPurifierStateAttributes,

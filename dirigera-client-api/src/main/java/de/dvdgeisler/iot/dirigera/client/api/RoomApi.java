@@ -1,13 +1,10 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientRoomApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
 import reactor.core.publisher.Mono;
-import reactor.util.retry.Retry;
 
-import java.time.Duration;
 import java.util.List;
 
 public class RoomApi {
