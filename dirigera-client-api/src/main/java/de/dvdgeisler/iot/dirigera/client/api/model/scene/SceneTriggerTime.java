@@ -7,15 +7,11 @@ import static de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerType
 public class SceneTriggerTime extends SceneTrigger {
     public SceneTriggerTimeTrigger trigger;
     public LocalDateTime nextTriggerAt;
-    public LocalDateTime triggeredAt;
-    public SceneEndTrigger endTrigger;
 
-    public SceneTriggerTime(final String id, final SceneTriggerType type, final Boolean disabled, final SceneEndTrigger endTrigger, final SceneTriggerTimeTrigger trigger, final LocalDateTime nextTriggerAt, final LocalDateTime triggeredAt) {
-        super(id, TIME, disabled);
+    public SceneTriggerTime(final String id, final Boolean disabled, final SceneEndTrigger endTrigger, final SceneTriggerTimeTrigger trigger, final LocalDateTime nextTriggerAt, final LocalDateTime triggeredAt) {
+        super(id, TIME, disabled, triggeredAt, endTrigger);
         this.trigger = trigger;
         this.nextTriggerAt = nextTriggerAt;
-        this.triggeredAt = triggeredAt;
-        this.endTrigger = endTrigger;
     }
 
     public SceneTriggerTime() {
