@@ -2,24 +2,17 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttBridge;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttBridgeMessage;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttEventHandler;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.Device;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailability;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light.LightStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +20,6 @@ import java.util.stream.Stream;
 
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState.OFFLINE;
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState.ONLINE;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public abstract class HassEventHandler<_Device extends de.dvdgeisler.iot.dirigera.client.api.model.device.Device, _DeviceState> implements MqttEventHandler<_Device> {
     private final static Logger log = LoggerFactory.getLogger(HassEventHandler.class);
