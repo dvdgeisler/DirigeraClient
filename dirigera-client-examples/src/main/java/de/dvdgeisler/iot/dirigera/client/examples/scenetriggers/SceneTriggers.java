@@ -42,39 +42,6 @@ public class SceneTriggers {
         this.json = json;
     }
 
-    private static SceneTriggerController createTrigger(final Device device, final int buttonIndex) {
-        return new SceneTriggerController( // trigger for button 0 (turn light on)
-                null, false, null, null,
-                new SceneTriggerControllerTrigger(
-                        null,
-                        DeviceType.SHORTCUT_CONTROLLER,
-                        buttonIndex,
-                        device.id));
-    }
-
-    private Scene createDummyScene(final Device device, final int button) {
-        final Scene scene;
-        final String name;
-
-        name = String.format("%s button %d", device.attributes.state.customName, button);
-
-        scene = this.dapi.scene.create(name, "Icon")
-                .doOnSuccess(s -> log.info("Created Scene {}: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))
-                .block(); // create dummy scene
-
-        return this.dapi.scene.setTrigger(scene, List.of(
-                new SceneTriggerApp(null, null, null, null),
-                createTrigger(device, button))
-        ).block();
-    }
-
-    private Stream<Scene> createDummyScenes(final Device device) {
-        return Stream.of(
-                this.createDummyScene(device, 0),
-                this.createDummyScene(device, 1),
-                this.createDummyScene(device, 2)); // button 3 raises an error on the dirigera
-    }
-
     @Bean
     public CommandLineRunner run() {
         return (String... args) -> {
@@ -117,6 +84,7 @@ public class SceneTriggers {
                 log.error(e.getMessage());
             }
 
+            // clean up
             scenes.stream()
                     .peek(scene -> log.info("Delete scene {}", scene.attributes.info.name))
                     .map(this.dapi.scene::delete)
@@ -124,6 +92,60 @@ public class SceneTriggers {
         };
     }
 
+    /**
+     * Create button for dedicaterd trigger for specific button
+     * @param device
+     * @param buttonIndex
+     * @return
+     */
+    private static SceneTriggerController createTrigger(final Device device, final int buttonIndex) {
+        return new SceneTriggerController(
+                null, false, null, null,
+                new SceneTriggerControllerTrigger(
+                        null,
+                        DeviceType.SHORTCUT_CONTROLLER,
+                        buttonIndex,
+                        device.id));
+    }
+
+    /**
+     * Create a dummy scene to catch the given button press
+     * @param device
+     * @param button
+     * @return
+     */
+    private Scene createDummyScene(final Device device, final int button) {
+        final Scene scene;
+        final String name;
+
+        name = String.format("%s button %d", device.attributes.state.customName, button);
+
+        scene = this.dapi.scene.create(name, "Icon")
+                .doOnSuccess(s -> log.info("Created Scene {}: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))
+                .block(); // create dummy scene
+
+        return this.dapi.scene.setTrigger(scene, List.of(
+                new SceneTriggerApp(null, null, null, null),
+                createTrigger(device, button))
+        ).block();
+    }
+
+    /**
+     * Create dummy scenes for all possible buttons
+     * @param device
+     * @return
+     */
+    private Stream<Scene> createDummyScenes(final Device device) {
+        return Stream.of(
+                this.createDummyScene(device, 0),
+                this.createDummyScene(device, 1),
+                this.createDummyScene(device, 2)); // button 3 raises an error on the dirigera
+    }
+
+    /**
+     * Log the button press
+     * @param s
+     */
     private void logButtonPress(final String s) {
         final Map json, data, info;
         final String type;
