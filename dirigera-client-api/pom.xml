@@ -44,4 +44,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>dirigera-client-api</finalName>
+    </build>
 </project>

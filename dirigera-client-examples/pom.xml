@@ -29,4 +29,8 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>dirigera-client-examples</finalName>
+    </build>
+
 </project>
