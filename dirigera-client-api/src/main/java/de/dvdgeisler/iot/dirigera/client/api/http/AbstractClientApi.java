@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -17,23 +18,22 @@ import javax.net.ssl.SSLException;
 
 public abstract class AbstractClientApi {
 
+    protected final SslContext sslContext;
+    protected final HttpClient httpClient;
     protected final WebClient webClient;
     protected final TokenStore tokenStore;
 
     public AbstractClientApi(final String baseUrl, final TokenStore tokenStore) throws SSLException {
-        final SslContext sslContext;
-        final HttpClient httpClient;
-
-        sslContext = SslContextBuilder
+        this.sslContext = SslContextBuilder
                 .forClient()
                 .trustManager(InsecureTrustManagerFactory.INSTANCE)
                 .build();
-        httpClient = HttpClient.create().secure(t -> t.sslContext(sslContext));
+        this.httpClient = HttpClient.create().secure(t -> t.sslContext(this.sslContext));
 
         this.webClient = WebClient
                 .builder()
                 .baseUrl(baseUrl)
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .clientConnector(new ReactorClientHttpConnector(this.httpClient))
                 .build();
         this.tokenStore = tokenStore;
     }

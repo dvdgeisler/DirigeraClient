@@ -4,6 +4,7 @@ import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneInfo;
+import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTrigger;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class SceneApi {
     public Mono<Scene> create(final String name, final String icon) {
         return this.clientApi.scene.createScene(new SceneAttributes(
                         new SceneInfo(name, icon), List.of(), List.of()))
-                .flatMap(id -> this.clientApi.scene.getScene(id.id));
+                .flatMap(id -> this.clientApi.scene.getScene(id.id).retry(10));
     }
 
     public Mono<Void> delete(final Scene scene) {
@@ -35,6 +36,12 @@ public class SceneApi {
 
     public Mono<Scene> update(final Scene scene, final String name, final String icon) {
         return this.clientApi.scene.updateScene(scene.id, new SceneAttributes(new SceneInfo(name, icon), List.of(), List.of()))
+                .thenReturn(scene)
+                .flatMap(this::refresh);
+    }
+
+    public Mono<Scene> setTrigger(final Scene scene, final List<SceneTrigger> triggers) {
+        return this.clientApi.scene.updateScene(scene.id, new SceneAttributes(scene.attributes.info, triggers, List.of()))
                 .thenReturn(scene)
                 .flatMap(this::refresh);
     }
