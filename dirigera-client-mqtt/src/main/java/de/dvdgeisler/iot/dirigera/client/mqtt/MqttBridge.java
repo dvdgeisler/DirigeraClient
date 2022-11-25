@@ -22,11 +22,12 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
     public MqttBridge(
             @Value("${dirigera.mqtt.hostname:localhost}") final String host,
             @Value("${dirigera.mqtt.port:1883}") final Short port,
+            @Value("${dirigera.mqtt.username:}") final String username,
+            @Value("${dirigera.mqtt.password:}") final String password,
             @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
             @Value("${dirigera.mqtt.timeout:10}") final Integer timeout,
             final DirigeraApi api) throws MqttException {
-        super(String.format("tcp://%s:%d", host, port),
-                Objects.requireNonNull(api.status().map(s -> s.id).block()));
+        super(String.format("tcp://%s:%d", host, port), clientId(api));
         final MqttConnectOptions options;
         this.api = api;
         this.eventHandler = new HashMap<>();
@@ -38,6 +39,11 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
         options.setAutomaticReconnect(reconnect);
         options.setCleanSession(true);
         options.setConnectionTimeout(timeout);
+
+        if (!username.isEmpty() && !password.isEmpty()) {
+            options.setUserName(username);
+            options.setPassword(password.toCharArray());
+        }
         this.connect(options);
 
         log.info("Connection to MQTT broker successfully established");
@@ -114,5 +120,10 @@ public class MqttBridge extends org.eclipse.paho.client.mqttv3.MqttClient {
                 .stream()
                 .flatMap(factory -> factory.removeDevice(this, this.api, device))
                 .forEach(this::publishMessage);
+    }
+
+    private static String clientId(final DirigeraApi api) {
+        api.pairIfRequired().block();
+        return api.status().map(s -> s.id).block();
     }
 }

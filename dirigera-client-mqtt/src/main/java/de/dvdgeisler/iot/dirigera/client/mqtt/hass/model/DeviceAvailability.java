@@ -1,8 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.mqtt.hass.model;
 
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-
 public class DeviceAvailability {
     public String topic;
     public String payload_available;

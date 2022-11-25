@@ -4,8 +4,6 @@ import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientDeviceSetApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

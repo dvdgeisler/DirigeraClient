@@ -3,10 +3,6 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.outlet;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.Device;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailability;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceState;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light.LightColorMode;
-
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OutletConfig {

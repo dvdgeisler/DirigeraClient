@@ -1,7 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.motionsensor;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceState;
 
 import java.util.Optional;

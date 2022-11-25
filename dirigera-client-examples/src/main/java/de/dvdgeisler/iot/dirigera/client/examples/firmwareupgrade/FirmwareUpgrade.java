@@ -1,7 +1,5 @@
 package de.dvdgeisler.iot.dirigera.client.examples.firmwareupgrade;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
 import org.slf4j.Logger;
