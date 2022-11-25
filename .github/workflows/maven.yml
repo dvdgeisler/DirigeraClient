@@ -33,13 +33,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - uses: actions/upload-artifact@v3
       with:
-        name: dirigera-client-api
-        path: dirigera-client-api/target/*.jar
-    - uses: actions/upload-artifact@v3
-      with:
-        name: dirigera-client-dump
-        path: dirigera-client-dump/target/*.jar
-    - uses: actions/upload-artifact@v3
-      with:
-        name: dirigera-client-mqtt
-        path: dirigera-client-mqtt/target/*.jar
+        name: dirigera-client
+        path: |
+          **/target/*.jar
