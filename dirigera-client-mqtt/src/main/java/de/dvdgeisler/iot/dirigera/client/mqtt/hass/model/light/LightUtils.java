@@ -24,7 +24,7 @@ public class LightUtils {
     }
 
     public static Integer getMaxTemperatureMireds(final LightDevice device) {
-        return Optional.ofNullable(getMaxTemperatureKelvin(device))
+        return Optional.ofNullable(getMinTemperatureKelvin(device))
                 .map(LightUtils::kelvinToMireds)
                 .orElse(null);
     }
@@ -34,12 +34,12 @@ public class LightUtils {
                 .map(d -> d.attributes)
                 .map(d -> d.state)
                 .map(d -> d.color)
-                .map(d -> d.temperatureMax)
+                .map(d -> d.temperatureMin)
                 .orElse(null);
     }
 
     public static Integer getMinTemperatureMireds(final LightDevice device) {
-        return Optional.ofNullable(getTemperatureMireds(device))
+        return Optional.ofNullable(getMaxTemperatureKelvin(device))
                 .map(LightUtils::miredsToKelvin)
                 .orElse(null);
     }
@@ -49,7 +49,7 @@ public class LightUtils {
                 .map(d -> d.attributes)
                 .map(d -> d.state)
                 .map(d -> d.color)
-                .map(d -> d.temperatureMin)
+                .map(d -> d.temperatureMax)
                 .orElse(null);
     }
 

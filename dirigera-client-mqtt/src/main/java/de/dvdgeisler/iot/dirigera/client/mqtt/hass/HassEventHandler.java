@@ -2,24 +2,17 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttBridge;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttBridgeMessage;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttEventHandler;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.Device;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailability;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light.LightStatus;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +20,6 @@ import java.util.stream.Stream;
 
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState.OFFLINE;
 import static de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState.ONLINE;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public abstract class HassEventHandler<_Device extends de.dvdgeisler.iot.dirigera.client.api.model.device.Device, _DeviceState> implements MqttEventHandler<_Device> {
     private final static Logger log = LoggerFactory.getLogger(HassEventHandler.class);
@@ -56,22 +47,35 @@ public abstract class HassEventHandler<_Device extends de.dvdgeisler.iot.diriger
                 .collect(Collectors.joining("/"));
     }
 
-    protected <T> MqttBridgeMessage<_Device> build(final MqttBridge mqtt, final _Device device, final String topic, final T payload) {
+    protected <T> MqttBridgeMessage<_Device> build(
+            final MqttBridge mqtt,
+            final _Device device,
+            final String topic,
+            final T payload) {
         try {
             return new MqttBridgeMessage<>(
                     device,
                     this,
                     this.topic(mqtt, device, topic),
-                    new MqttMessage(this.objectMapper.writeValueAsBytes(payload)));
+                    new MqttMessage(this.objectMapper.writeValueAsBytes(payload)){{
+                        this.setQos(1);
+                        this.setRetained(true);
+                    }});
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
         return null;
     }
 
-    protected void subscribe(final MqttBridge mqtt, final DirigeraApi api, final _Device device) {
+    protected void subscribe(final MqttBridge mqtt, final DirigeraApi api, final _Device device, final String topicSuffix) {
+        final String topic;
+
         try {
-            mqtt.subscribe(this.topic(mqtt, device, "set"), (topic, message) -> {
+            topic = this.topic(mqtt, device, topicSuffix);
+            log.info("Subscribe to device: topic={}, id={}, name={}, category={}, type={}",
+                    topic, device.id, device.attributes.state.customName, device.deviceType, device.type);
+
+            mqtt.subscribe(this.topic(mqtt, device, topicSuffix), (t, message) -> {
                 final _DeviceState state;
 
                 try {

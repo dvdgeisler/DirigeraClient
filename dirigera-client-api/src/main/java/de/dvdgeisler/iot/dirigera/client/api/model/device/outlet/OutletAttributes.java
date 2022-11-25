@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStartupMode;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.ota.OtaAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerStateAttributes;
 
 import java.time.LocalDateTime;
 
