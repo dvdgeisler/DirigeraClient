@@ -10,7 +10,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main", "develop", "feature/github-actions"]
   pull_request:
     branches: [ "main", "develop" ]
 
@@ -29,3 +29,10 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - uses: actions/upload-artifact@v3
+      with:
+        name: dirigera-client-api
+        path: |
+          dirigera-client-api/target/*.jar
+          dirigera-client-dump/target/*.jar
+          dirigera-client-mqtt/target/*.jar
