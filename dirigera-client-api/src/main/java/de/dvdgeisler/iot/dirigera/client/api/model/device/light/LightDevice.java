@@ -1,7 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.light;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCapabilities;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCategory;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;

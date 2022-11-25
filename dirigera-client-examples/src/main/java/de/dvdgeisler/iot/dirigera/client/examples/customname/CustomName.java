@@ -1,15 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.customname;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.LightDeviceApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateCommand;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightConfigurationAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightConfigurationCommand;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,10 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import reactor.core.publisher.Flux;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Scanner;
 
 /**
  * Lists all known devices

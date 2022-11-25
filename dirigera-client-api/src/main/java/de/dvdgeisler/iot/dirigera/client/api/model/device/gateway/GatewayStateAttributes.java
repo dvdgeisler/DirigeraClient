@@ -5,7 +5,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceStateAttributes;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -1,6 +1,5 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.light;
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceConfigurationAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceConfigurationDefaultAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
