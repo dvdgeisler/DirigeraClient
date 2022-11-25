@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- *
+ * Use Controllers and Sensors to trigger Scenes
  */
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {DirigeraApi.class})
@@ -72,7 +72,7 @@ public class SceneTriggers {
         return Stream.of(
                 this.createDummyScene(device, 0),
                 this.createDummyScene(device, 1),
-                this.createDummyScene(device, 2));
+                this.createDummyScene(device, 2)); // button 3 raises an error on the dirigera
     }
 
     @Bean
