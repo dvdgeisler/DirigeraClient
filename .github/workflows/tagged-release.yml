@@ -1,0 +1,41 @@
+# This workflow will create a pre-release on merging code to "main"
+# For more information see: https://github.com/marvinpinto/action-automatic-releases
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Create tagged release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  gh_tagged_release:
+    name: Create tagged release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build source code with maven
+        run: mvn -B package --file pom.xml
+
+      - name: Create tagged release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          files: |
+            LICENSE.txt
+            *.jar
