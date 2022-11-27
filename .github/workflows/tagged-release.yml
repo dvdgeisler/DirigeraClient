@@ -38,4 +38,4 @@ jobs:
           prerelease: false
           files: |
             LICENSE.txt
-            *.jar
+            **/*.jar
