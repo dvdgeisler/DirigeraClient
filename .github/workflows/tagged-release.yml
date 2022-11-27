@@ -1,4 +1,4 @@
-# This workflow will create a pre-release on merging code to "main"
+# This workflow will create a tagged release on pushing a version tag (v*)
 # For more information see: https://github.com/marvinpinto/action-automatic-releases
 
 # This workflow uses actions that are not certified by GitHub.
