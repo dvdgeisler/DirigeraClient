@@ -4,17 +4,27 @@ import de.dvdgeisler.iot.dirigera.client.api.model.Home;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.socket.WebSocketMessage;
+import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
+import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
+import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
+import java.io.IOException;
+import java.net.URI;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Component
 public class ClientApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientApi.class);
+    private final String hostname;
+    private final short port;
 
     public final ClientDeviceApi device;
     public final ClientDeviceSetApi deviceSet;
@@ -43,6 +53,8 @@ public class ClientApi extends AbstractClientApi {
             final ClientUserApi user
     ) throws SSLException {
         super(String.format("https://%s:%d/v1/", hostname, port), tokenStore);
+        this.hostname = hostname;
+        this.port = port;
         this.device = device;
         this.deviceSet = deviceSet;
         this.gateway = gateway;
@@ -77,4 +89,32 @@ public class ClientApi extends AbstractClientApi {
                 .bodyToMono(Map.class);
     }
 
+    public Mono<Void> websocket(final Consumer<String> consumer) {
+        final String token;
+        final String authorizationHeader;
+        final HttpClient httpClient;
+        final WebSocketClient client;
+
+
+
+        try {
+            token = this.tokenStore.getAccessToken();
+            authorizationHeader = String.format("Bearer %s", token);
+            httpClient = this.httpClient
+                    .headers(headers -> headers.add(HttpHeaders.AUTHORIZATION, authorizationHeader))
+                    .keepAlive(true);
+            client = new ReactorNettyWebSocketClient(httpClient);
+            return client.execute(URI.create(String.format("https://%s:%d/v1/", this.hostname, this.port)), session ->
+                    session.receive()
+                            .map(WebSocketMessage::getPayloadAsText)
+                            .doOnNext(consumer)
+                            .repeat()
+                            .then()
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
