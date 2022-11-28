@@ -3,11 +3,12 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.speaker.*;
+import de.dvdgeisler.iot.dirigera.client.api.model.music.MusicPlaybackState;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.speaker.SpeakerPlaybackState.*;
+import static de.dvdgeisler.iot.dirigera.client.api.model.music.MusicPlaybackState.*;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class SpeakerDeviceApi extends DefaultDeviceApi<
@@ -44,7 +45,7 @@ public class SpeakerDeviceApi extends DefaultDeviceApi<
                 .flatMap(d -> this.setStateAttribute(d, createStateAttribute(Optional.empty(), Optional.of(volume), Optional.empty())));
     }
 
-    public Mono<SpeakerDevice> setPlayback(final SpeakerDevice device, final SpeakerPlaybackState playbackState) {
+    public Mono<SpeakerDevice> setPlayback(final SpeakerDevice device, final MusicPlaybackState playbackState) {
         return this.assertCapability(device, "playback")
                 .flatMap(d -> this.setStateAttribute(d, createStateAttribute(Optional.empty(), Optional.empty(), Optional.of(playbackState))));
     }
@@ -65,7 +66,7 @@ public class SpeakerDeviceApi extends DefaultDeviceApi<
         return this.setPlayback(device, PREVIOUS);
     }
 
-    private SpeakerStateAttributes createStateAttribute(final Optional<Boolean> isMuted, final Optional<Integer> volume, final Optional<SpeakerPlaybackState> playback) {
+    private SpeakerStateAttributes createStateAttribute(final Optional<Boolean> isMuted, final Optional<Integer> volume, final Optional<MusicPlaybackState> playback) {
         final SpeakerStateAttributes attributes = new SpeakerStateAttributes();
 
         isMuted.ifPresent(b -> attributes.isMuted = b);
