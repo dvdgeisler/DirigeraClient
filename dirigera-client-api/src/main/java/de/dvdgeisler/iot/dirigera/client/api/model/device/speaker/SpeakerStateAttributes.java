@@ -9,7 +9,7 @@ public class SpeakerStateAttributes extends DeviceStateAttributes {
   public String playback;
   public LocalDateTime playbackLastChangedTimestamp;
   public SpeakerAudioAttributes playbackAudio;
-  public SpeakerPlaybackPositionAttributes playbackPosition;
+  public SpeakerPlaybackPosition playbackPosition;
   public Integer volume;
   public Boolean isMuted;
 }

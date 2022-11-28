@@ -317,7 +317,7 @@
       "deviceType": "speaker",
       "createdAt": "2022-11-27T10:08:08.515Z",
       "isReachable": true,
-      "lastSeen": "2022-11-27T10:08:11.651Z",
+      "lastSeen": "2022-11-28T19:52:21.239Z",
       "attributes": {
         "customName": "Decak",
         "model": "SYMFONISK Bookshelf S21",
@@ -328,14 +328,27 @@
         "productCode": "S21",
         "identifyStarted": "0001-01-01T00:00:00.000Z",
         "identifyPeriod": 0,
-        "playback": "playbackIdle",
-        "playbackLastChangedTimestamp": "2022-11-27T10:08:08.515Z",
-        "playbackAudio": {},
+        "playback": "playbackPlaying",
+        "playbackLastChangedTimestamp": "2022-11-28T19:52:18.576Z",
+        "playbackAudio": {
+          "serviceType": "sonos",
+          "providerType": "linein.airplay",
+          "playItem": {
+            "title": "Fml",
+            "artist": "deadmau5",
+            "album": "For Lack of a Better Name",
+            "imageURL": "http://192.168.100.42:1400/getaa?v=0&vli=1&u=3094074005",
+            "duration": 419000
+          },
+          "nextPlayItem": {
+            "title": ""
+          }
+        },
         "playbackPosition": {
           "position": 0,
-          "timestamp": "2022-11-27T10:08:08.332Z"
+          "timestamp": "2022-11-28T19:52:18.576Z"
         },
-        "volume": 25,
+        "volume": 13,
         "isMuted": false,
         "audioGroup": "4a786561-0c2c-4b82-9298-4f775c140d64"
       },

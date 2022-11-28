@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.LocalDateTime;
 
 @JsonInclude(Include.NON_NULL)
-public class SpeakerPlaybackPositionAttributes {
+public class SpeakerPlaybackPosition {
   public Integer position;
   public LocalDateTime timestamp;
 }
