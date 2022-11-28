@@ -8,4 +8,12 @@ import java.time.LocalDateTime;
 public class SpeakerPlaybackPosition {
   public Integer position;
   public LocalDateTime timestamp;
+
+  public SpeakerPlaybackPosition(final Integer position, final LocalDateTime timestamp) {
+    this.position = position;
+    this.timestamp = timestamp;
+  }
+
+  public SpeakerPlaybackPosition() {
+  }
 }
