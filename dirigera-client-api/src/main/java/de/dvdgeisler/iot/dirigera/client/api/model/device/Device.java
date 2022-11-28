@@ -15,11 +15,16 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.unknown.UnknownDevice;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "deviceType", visible = true)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "deviceType",
+        visible = true,
+        defaultImpl = UnknownDevice.class)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = GatewayDevice.class, name = "gateway"),
         @JsonSubTypes.Type(value = LightDevice.class, name = "light"),
