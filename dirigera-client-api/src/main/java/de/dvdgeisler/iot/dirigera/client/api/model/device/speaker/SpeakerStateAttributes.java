@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SpeakerStateAttributes extends DeviceStateAttributes {
-  public String playback;
+  public SpeakerPlaybackState playback;
   public LocalDateTime playbackLastChangedTimestamp;
   public SpeakerAudioAttributes playbackAudio;
   public SpeakerPlaybackPosition playbackPosition;
