@@ -1,21 +1,21 @@
-package de.dvdgeisler.iot.dirigera.client.api.model.device.speaker;
+package de.dvdgeisler.iot.dirigera.client.api.model.music;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class SpeakerPlayItem {
+public class MusicPlayItem {
   public String title;
   public String artist;
   public String album;
   public String imageUrl;
   public Long duration;
 
-  public SpeakerPlayItem() {
+  public MusicPlayItem() {
   }
 
-  public SpeakerPlayItem(String title, String artist, String album, String imageUrl,
-      Long duration) {
+  public MusicPlayItem(String title, String artist, String album, String imageUrl,
+                       Long duration) {
     this.title = title;
     this.artist = artist;
     this.album = album;
