@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 @JsonInclude(Include.NON_NULL)
 public class SpeakerPlaybackPosition {
-  public Integer position;
+  public Long position;
   public LocalDateTime timestamp;
 
-  public SpeakerPlaybackPosition(final Integer position, final LocalDateTime timestamp) {
+  public SpeakerPlaybackPosition(final Long position, final LocalDateTime timestamp) {
     this.position = position;
     this.timestamp = timestamp;
   }
