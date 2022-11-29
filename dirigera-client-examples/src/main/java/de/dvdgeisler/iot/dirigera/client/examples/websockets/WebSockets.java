@@ -26,18 +26,18 @@ public class WebSockets {
         return (String... args) -> {
             api.pairIfRequired().block(); // pair gateway if required
 
-            capi.websocket(event -> {
+            api.websocket(event -> {
                 try {
                     log.debug("Received websocket message: {}", json.writeValueAsString(event));
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
-            }).block();
+            });
         };
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(WebSockets.class, args).close();
+        SpringApplication.run(WebSockets.class, args);
     }
 
 

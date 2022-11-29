@@ -15,8 +15,8 @@ public class GatewayDeviceApi extends DeviceApi<
         GatewayConfigurationAttributes,
         GatewayDevice> {
 
-    public GatewayDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public GatewayDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

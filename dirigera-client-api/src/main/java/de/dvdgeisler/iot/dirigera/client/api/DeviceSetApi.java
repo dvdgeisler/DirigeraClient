@@ -4,21 +4,23 @@ import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientDeviceSetApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
-import org.springframework.stereotype.Component;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceSetEvent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
-@Component
 public class DeviceSetApi {
     private final ClientDeviceSetApi deviceSetApi;
     private final ClientApi clientApi;
+    private final WebSocketApi webSocketApi;
 
-    public DeviceSetApi(final ClientDeviceSetApi deviceSetApi, final ClientApi clientApi) {
+    public DeviceSetApi(final ClientDeviceSetApi deviceSetApi, final ClientApi clientApi, final WebSocketApi webSocketApi) {
         this.deviceSetApi = deviceSetApi;
         this.clientApi = clientApi;
+        this.webSocketApi = webSocketApi;
     }
 
     Mono<List<DeviceSet>> all() {
@@ -47,5 +49,9 @@ public class DeviceSetApi {
     Mono<DeviceSet> update(final DeviceSet deviceSet, final String name, final String icon) {
         return this.deviceSetApi.updateDeviceSet(deviceSet.id, new DeviceSetAttributes(name, icon))
                 .flatMap(v -> this.refresh(deviceSet));
+    }
+
+    public void websocket(Consumer<DeviceSetEvent> consumer) {
+        this.webSocketApi.addListener(consumer, DeviceSetEvent.class);
     }
 }

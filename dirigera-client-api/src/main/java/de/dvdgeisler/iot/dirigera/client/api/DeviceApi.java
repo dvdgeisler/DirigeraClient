@@ -3,9 +3,9 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,9 +13,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-@Component
 public abstract class DeviceApi<
         _DeviceStateAttributes extends DeviceStateAttributes,
         _Attributes extends DeviceAttributes<_DeviceStateAttributes>,
@@ -23,9 +23,11 @@ public abstract class DeviceApi<
         _Device extends Device<_Attributes, _DeviceConfigurationAttributes>> {
     private final static Logger log = LoggerFactory.getLogger(DeviceApi.class);
     protected final ClientApi clientApi;
+    protected final WebSocketApi webSocketApi;
 
-    public DeviceApi(final ClientApi clientApi) {
+    public DeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
         this.clientApi = clientApi;
+        this.webSocketApi = webSocketApi;
     }
 
     protected abstract boolean isInstance(final Device<?,?> device);
@@ -120,5 +122,12 @@ public abstract class DeviceApi<
                 .filter(ds-> !Objects.equals(ds.id, deviceSet.id))
                 .collectList()
                 .flatMap(deviceSets -> this.setDeviceSets(device, deviceSets));
+    }
+
+    public void websocket(Consumer<DeviceEvent<_Device>> consumer) {
+        this.webSocketApi.addListener(event -> {
+            if(this.isInstance((Device<?, ?>) event.data))
+                consumer.accept(event);
+        }, DeviceEvent.class);
     }
 }
