@@ -3,13 +3,13 @@ package de.dvdgeisler.iot.dirigera.client.api.model.music;
 import java.util.List;
 
 public class Music {
-    public List<String> playlists;
-    public List<String> favorites;
+    public List<MusicPlayList> playlists;
+    public List<MusicFavorite> favorites;
 
     public Music() {
     }
 
-    public Music(final List<String> playlists, final List<String> favorites) {
+    public Music(final List<MusicPlayList> playlists, final List<MusicFavorite> favorites) {
         this.playlists = playlists;
         this.favorites = favorites;
     }

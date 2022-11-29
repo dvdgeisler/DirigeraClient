@@ -13,8 +13,8 @@ public class BlindsControllerDeviceApi extends ControllerDeviceApi<
         BlindsControllerConfigurationAttributes,
         BlindsControllerDevice> {
 
-    public BlindsControllerDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public BlindsControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

@@ -1,12 +1,12 @@
 package de.dvdgeisler.iot.dirigera.client.examples.scenetriggers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerApp;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerController;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerControllerTrigger;
 import org.slf4j.Logger;
@@ -21,8 +21,6 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -43,8 +41,8 @@ public class SceneTriggers {
     }
 
     private static SceneTriggerController createTrigger(final Device device, final int buttonIndex) {
-        return new SceneTriggerController( // trigger for button 0 (turn light on)
-                null, false, null, null,
+        return new SceneTriggerController(
+                null, null, null, null,
                 new SceneTriggerControllerTrigger(
                         null,
                         DeviceType.SHORTCUT_CONTROLLER,
@@ -63,7 +61,7 @@ public class SceneTriggers {
                 .block(); // create dummy scene
 
         return this.dapi.scene.setTrigger(scene, List.of(
-                new SceneTriggerApp(null, null, null, null),
+                //new SceneTriggerApp(null, null, null, null),
                 createTrigger(device, button))
         ).block();
     }
@@ -111,8 +109,15 @@ public class SceneTriggers {
                         .flatMap(this::createDummyScenes)
                         .forEach(scenes::add);
                 log.info("Press button of any connected controller");
-                this.capi.websocket(this::logButtonPress)
-                        .block(Duration.ofSeconds(60));
+                this.dapi.scene.websocket(event -> {
+                    try {
+                        log.info("Received: {}\n{}", event.data.attributes.info.name, json.writeValueAsString(event));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                Thread.sleep(Duration.ofSeconds(60).toMillis());
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
@@ -121,26 +126,8 @@ public class SceneTriggers {
                     .peek(scene -> log.info("Delete scene {}", scene.attributes.info.name))
                     .map(this.dapi.scene::delete)
                     .forEach(Mono::block);
+
         };
-    }
-
-    private void logButtonPress(final String s) {
-        final Map json, data, info;
-        final String type;
-
-        try {
-            json = this.json.readValue(s, Map.class);
-            type = json.get("type").toString();
-            if(!Objects.equals(type, "sceneUpdated")) {
-                log.info("Received: {}", s);
-                return;
-            }
-            data = (Map) json.get("data");
-            info = (Map) data.get("info");
-            log.info("Received: {}", info.get("name"));
-        } catch (Throwable e) {
-            log.error(e.getMessage());
-        }
     }
 
     public static void main(String[] args) {

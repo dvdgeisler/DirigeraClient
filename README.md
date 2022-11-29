@@ -106,9 +106,18 @@ we can determine at which points the API data model deviates or is
 incomplete. You may submit the generated dump as an issue to GitHub.
 
 #### Build and run the Dump Application
+1) Clone repository:
+```bash
+git clone git@github.com:dvdgeisler/DirigeraClient.git
+cd DirigeraClient
+```
+2) Build project:
 ```bash
 ./mvnw package
-java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
+```
+3) Run the Dump-Application:
+```bash
+java -jar ./dirigera-client-dump/target/dirigera-client-dump.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
 ```
 
 ## Integration to Home Assistant
