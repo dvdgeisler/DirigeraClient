@@ -63,24 +63,25 @@ public class UnknownDeviceCollector {
 
     private boolean add(final UnknownDeviceEntry unknownDeviceEntry) {
         if (this.entries.add(unknownDeviceEntry)) {
-            log.warn("""
-                            Unknown device found:
-                                type={}, category={},
-                                manufacturer={}, model={},
-                                customName={}, id={}
-                                
-                                Help us to support additional devices and create an issue on
-                                {} with the following content:
-                                {}
-                            """,
-                    getDeviceCategory(unknownDeviceEntry.device),
-                    getDeviceType(unknownDeviceEntry.device),
-                    getDeviceManufacturer(unknownDeviceEntry.device),
-                    getDeviceModel(unknownDeviceEntry.device),
-                    getDeviceCustomName(unknownDeviceEntry.device),
-                    getDeviceId(unknownDeviceEntry.device),
-                    "https://github.com/dvdgeisler/DirigeraClient",
-                    unknownDeviceEntry.jsonNode);
+            if (getDeviceType(unknownDeviceEntry.device) != null)
+                log.warn("""
+                                Unknown device found:
+                                    type={}, category={},
+                                    manufacturer={}, model={},
+                                    customName={}, id={}
+                                    
+                                    Help us to support additional devices and create an issue on
+                                    {} with the following content:
+                                    {}
+                                """,
+                        getDeviceCategory(unknownDeviceEntry.device),
+                        getDeviceType(unknownDeviceEntry.device),
+                        getDeviceManufacturer(unknownDeviceEntry.device),
+                        getDeviceModel(unknownDeviceEntry.device),
+                        getDeviceCustomName(unknownDeviceEntry.device),
+                        getDeviceId(unknownDeviceEntry.device),
+                        "https://github.com/dvdgeisler/DirigeraClient",
+                        unknownDeviceEntry.jsonNode);
             return true;
         }
         return false;
