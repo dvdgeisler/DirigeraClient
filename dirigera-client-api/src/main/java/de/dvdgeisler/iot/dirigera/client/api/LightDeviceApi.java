@@ -13,8 +13,8 @@ public class LightDeviceApi extends DefaultDeviceApi<
         LightAttributes,
         LightConfigurationAttributes,
         LightDevice> {
-    public LightDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public LightDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setLevel(final LightDevice device, final Integer lightLevel) {
         final LightStateAttributes attributes;
 
-        if(lightLevel < 0 || lightLevel > 100)
+        if (lightLevel < 0 || lightLevel > 100)
             return Mono.error(new IllegalArgumentException("Light level must be between 0 and 100"));
 
         attributes = new LightStateAttributes();
@@ -38,7 +38,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setLevelTransition(final LightDevice device, final Duration transtion, final Integer lightLevel) {
         final LightStateAttributes attributes;
 
-        if(lightLevel < 0 || lightLevel > 100)
+        if (lightLevel < 0 || lightLevel > 100)
             throw new IllegalArgumentException("Light level must be between 0 and 100");
 
         attributes = new LightStateAttributes();
@@ -51,7 +51,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setLevelAfterPeriod(final LightDevice device, final Duration period, final Integer lightLevel) {
         final LightStateAttributes attributes;
 
-        if(lightLevel < 0 || lightLevel > 100)
+        if (lightLevel < 0 || lightLevel > 100)
             throw new IllegalArgumentException("Light level must be between 0 and 100");
 
         attributes = new LightStateAttributes();
@@ -64,10 +64,10 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setColor(final LightDevice device, final Float hue, final Float saturation) {
         final LightStateAttributes attributes;
 
-        if(hue < 0 || hue > 360)
+        if (hue < 0 || hue > 360)
             return Mono.error(new IllegalArgumentException("Light Hue must be between 0 and 360"));
 
-        if(saturation < 0 || saturation > 1)
+        if (saturation < 0 || saturation > 1)
             return Mono.error(new IllegalArgumentException("Light Saturation must be between 0 and 360"));
 
         attributes = new LightStateAttributes();
@@ -86,10 +86,10 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setColorTransition(final LightDevice device, final Duration transtion, final Float hue, final Float saturation) {
         final LightStateAttributes attributes;
 
-        if(hue < 0 || hue > 360)
+        if (hue < 0 || hue > 360)
             return Mono.error(new IllegalArgumentException("Light Hue must be between 0 and 360"));
 
-        if(saturation < 0 || saturation > 1)
+        if (saturation < 0 || saturation > 1)
             return Mono.error(new IllegalArgumentException("Light Saturation must be between 0 and 360"));
 
         attributes = new LightStateAttributes();
@@ -108,10 +108,10 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setColorAfterPeriod(final LightDevice device, final Duration period, final Float hue, final Float saturation) {
         final LightStateAttributes attributes;
 
-        if(hue < 0 || hue > 360)
+        if (hue < 0 || hue > 360)
             return Mono.error(new IllegalArgumentException("Light Hue must be between 0 and 360"));
 
-        if(saturation < 0 || saturation > 1)
+        if (saturation < 0 || saturation > 1)
             return Mono.error(new IllegalArgumentException("Light Saturation must be between 0 and 360"));
 
         attributes = new LightStateAttributes();
@@ -130,7 +130,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setTemperature(final LightDevice device, final Integer temperature) {
         final LightStateAttributes attributes;
 
-        if(temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
+        if (temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
             return Mono.error(new IllegalArgumentException(String.format("Light Temperature must be between %d and %d", device.attributes.state.color.temperatureMax, device.attributes.state.color.temperatureMin)));
 
 
@@ -150,7 +150,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setTemperatureTransition(final LightDevice device, final Duration transtion, final Integer temperature) {
         final LightStateAttributes attributes;
 
-        if(temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
+        if (temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
             return Mono.error(new IllegalArgumentException(String.format("Light Temperature must be between %d and %d", device.attributes.state.color.temperatureMax, device.attributes.state.color.temperatureMin)));
 
 
@@ -170,7 +170,7 @@ public class LightDeviceApi extends DefaultDeviceApi<
     public Mono<LightDevice> setTemperatureAfterPeriod(final LightDevice device, final Duration period, final Integer temperature) {
         final LightStateAttributes attributes;
 
-        if(temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
+        if (temperature > device.attributes.state.color.temperatureMin || temperature < device.attributes.state.color.temperatureMax)
             return Mono.error(new IllegalArgumentException(String.format("Light Temperature must be between %d and %d", device.attributes.state.color.temperatureMax, device.attributes.state.color.temperatureMin)));
 
 

@@ -3,15 +3,19 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceSetEvent;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class RoomApi {
     private final ClientApi clientApi;
+    private final WebSocketApi webSocketApi;
 
-    public RoomApi(final ClientApi clientApi) {
+    public RoomApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
         this.clientApi = clientApi;
+        this.webSocketApi = webSocketApi;
     }
 
     public Mono<List<Room>> all() {
@@ -35,5 +39,9 @@ public class RoomApi {
         return this.clientApi.room.updateRoom(room.id, new RoomAttributes(name, icon, color))
                 .thenReturn(room)
                 .flatMap(this::refresh);
+    }
+
+    public void websocket(Consumer<DeviceSetEvent> consumer) {
+        this.webSocketApi.addListener(consumer, DeviceSetEvent.class);
     }
 }

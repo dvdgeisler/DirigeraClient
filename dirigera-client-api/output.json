@@ -1,0 +1,389 @@
+{
+  "hub": {
+    "id": "12fa5ddf-bf67-4445-87bf-6ceeedace5af_1",
+    "relationId": "12fa5ddf-bf67-4445-87bf-6ceeedace5af",
+    "type": "gateway",
+    "deviceType": "gateway",
+    "createdAt": "2022-09-14T11:32:34.752Z",
+    "isReachable": true,
+    "lastSeen": "2022-11-27T23:06:00.300Z",
+    "attributes": {
+      "customName": "Kosikarska dirigera",
+      "model": "DIRIGERA Hub for smart products",
+      "manufacturer": "IKEA of Sweden",
+      "firmwareVersion": "2.155.1",
+      "hardwareVersion": "P2.5",
+      "serialNumber": "12fa5ddf-bf67-4445-87bf-6ceeedace5af",
+      "identifyStarted": "2022-11-26T04:11:17.000Z",
+      "identifyPeriod": -1,
+      "otaStatus": "upToDate",
+      "otaState": "readyToCheck",
+      "otaProgress": 0,
+      "otaPolicy": "autoDownload",
+      "otaScheduleStart": "00:00",
+      "otaScheduleEnd": "00:00",
+      "permittingJoin": false,
+      "backendConnected": true,
+      "backendConnectionPersistent": true,
+      "backendOnboardingComplete": true,
+      "backendRegion": "eu-central-1",
+      "backendCountryCode": "CZ",
+      "userConsents": [
+        {
+          "name": "analytics",
+          "value": "enabled"
+        },
+        {
+          "name": "diagnostics",
+          "value": "enabled"
+        }
+      ],
+      "logLevel": 3,
+      "coredump": false,
+      "timezone": "Europe/Prague",
+      "countryCode": "XZ",
+      "coordinates": {
+        "latitude": 49.45936193807304,
+        "longitude": 18.143936907492133,
+        "accuracy": -1
+      },
+      "isOn": false
+    },
+    "capabilities": {
+      "canSend": [],
+      "canReceive": [
+        "customName",
+        "permittingJoin",
+        "userConsents",
+        "logLevel",
+        "time",
+        "timezone",
+        "countryCode",
+        "coordinates"
+      ]
+    },
+    "deviceSet": [],
+    "remoteLinks": []
+  },
+  "devices": [
+    {
+      "id": "12fa5ddf-bf67-4445-87bf-xxxxx",
+      "relationId": "12fa5ddf-bf67-4445-87bf-xxxx",
+      "type": "gateway",
+      "deviceType": "gateway",
+      "createdAt": "2022-09-14T11:32:34.752Z",
+      "isReachable": true,
+      "lastSeen": "2022-11-27T23:06:00.300Z",
+      "attributes": {
+        "customName": "Kosikarska dirigera",
+        "model": "DIRIGERA Hub for smart products",
+        "manufacturer": "IKEA of Sweden",
+        "firmwareVersion": "2.155.1",
+        "hardwareVersion": "P2.5",
+        "serialNumber": "12fa5ddf-bf67-4445-87bf-xxxx",
+        "identifyStarted": "2022-11-26T04:11:17.000Z",
+        "identifyPeriod": -1,
+        "otaStatus": "upToDate",
+        "otaState": "readyToCheck",
+        "otaProgress": 0,
+        "otaPolicy": "autoDownload",
+        "otaScheduleStart": "00:00",
+        "otaScheduleEnd": "00:00",
+        "permittingJoin": false,
+        "backendConnected": true,
+        "backendConnectionPersistent": true,
+        "backendOnboardingComplete": true,
+        "backendRegion": "eu-central-1",
+        "backendCountryCode": "CZ",
+        "userConsents": [
+          {
+            "name": "analytics",
+            "value": "enabled"
+          },
+          {
+            "name": "diagnostics",
+            "value": "enabled"
+          }
+        ],
+        "logLevel": 3,
+        "coredump": false,
+        "timezone": "Europe/Prague",
+        "countryCode": "XZ",
+        "coordinates": {
+          "latitude": 49.xxxx,
+          "longitude": 18.xxxx,
+          "accuracy": -1
+        },
+        "isOn": false
+      },
+      "capabilities": {
+        "canSend": [],
+        "canReceive": [
+          "customName",
+          "permittingJoin",
+          "userConsents",
+          "logLevel",
+          "time",
+          "timezone",
+          "countryCode",
+          "coordinates"
+        ]
+      },
+      "deviceSet": [],
+      "remoteLinks": []
+    },
+    {
+      "id": "5038993a-7851-4a89-856c-97ff61ab7c0f_1",
+      "type": "controller",
+      "deviceType": "shortcutController",
+      "createdAt": "2022-11-03T17:00:25.000Z",
+      "isReachable": false,
+      "lastSeen": "2022-11-26T04:11:14.000Z",
+      "attributes": {
+        "customName": "Dobre rano",
+        "model": "TRADFRI SHORTCUT Button",
+        "manufacturer": "IKEA of Sweden",
+        "firmwareVersion": "2.3.080",
+        "hardwareVersion": "1",
+        "serialNumber": "B4E3F9FFFE679FFA",
+        "productCode": "E1812",
+        "batteryPercentage": 74,
+        "isOn": false,
+        "lightLevel": 1,
+        "permittingJoin": false,
+        "otaStatus": "updateAvailable",
+        "otaState": "updateFailed",
+        "otaProgress": 0,
+        "otaPolicy": "autoUpdate",
+        "otaScheduleStart": "00:00",
+        "otaScheduleEnd": "00:00"
+      },
+      "capabilities": {
+        "canSend": [
+          "singlePress",
+          "doublePress",
+          "longPress"
+        ],
+        "canReceive": [
+          "customName"
+        ]
+      },
+      "room": {
+        "id": "f00658cf-6b86-40fe-9f8b-9acda57e6e3d",
+        "name": "Loznice",
+        "color": "ikea_beige_1",
+        "icon": "rooms_arm_chair"
+      },
+      "deviceSet": [],
+      "remoteLinks": [],
+      "isHidden": false
+    },
+    {
+      "id": "570b263c-99d7-4f5f-ab27-a39b2639da0c_1",
+      "type": "speaker",
+      "deviceType": "speaker",
+      "createdAt": "2022-11-26T03:11:25.990Z",
+      "isReachable": true,
+      "lastSeen": "2022-11-26T03:11:25.990Z",
+      "attributes": {
+        "customName": "Zahrada Reproduktor",
+        "model": "SYMFONISK Bookshelf S21",
+        "manufacturer": "Sonos, Inc.",
+        "firmwareVersion": "70.3-35220",
+        "hardwareVersion": "1.20.3.3-2.0",
+        "serialNumber": "34-7E-5C-F5-46-A0:6",
+        "productCode": "S21",
+        "identifyStarted": "0001-01-01T00:00:00.000Z",
+        "identifyPeriod": 0,
+        "playback": "playbackIdle",
+        "playbackLastChangedTimestamp": "2022-11-26T03:11:25.990Z",
+        "playbackAudio": {},
+        "playbackPosition": {
+          "position": 0,
+          "timestamp": "2022-11-26T03:11:25.797Z"
+        },
+        "volume": 0,
+        "isMuted": true,
+        "audioGroup": "6975a151-910f-404c-93ea-ce54775bfacb"
+      },
+      "capabilities": {
+        "canSend": [],
+        "canReceive": [
+          "playback",
+          "playbackAudio",
+          "volume",
+          "isMuted"
+        ]
+      },
+      "deviceSet": [],
+      "remoteLinks": [],
+      "isHidden": true
+    },
+    {
+      "id": "a282955d-8d3f-4e9e-a985-848ec68ecba8_1",
+      "type": "light",
+      "deviceType": "light",
+      "createdAt": "2022-11-05T12:00:55.000Z",
+      "isReachable": true,
+      "lastSeen": "2022-11-28T00:02:35.000Z",
+      "attributes": {
+        "customName": "Dvur prava",
+        "model": "TRADFRI bulb E27 W opal 1000lm",
+        "manufacturer": "IKEA of Sweden",
+        "firmwareVersion": "2.3.094",
+        "hardwareVersion": "1",
+        "serialNumber": "000B57FFFEE4588B",
+        "productCode": "LED1622G12E27EU",
+        "isOn": false,
+        "startupOnOff": "startOn",
+        "lightLevel": 100,
+        "identifyStarted": "2000-01-01T00:00:00.000Z",
+        "identifyPeriod": 0,
+        "permittingJoin": false,
+        "otaStatus": "upToDate",
+        "otaState": "readyToCheck",
+        "otaProgress": 0,
+        "otaPolicy": "autoUpdate",
+        "otaScheduleStart": "00:00",
+        "otaScheduleEnd": "00:00"
+      },
+      "capabilities": {
+        "canSend": [],
+        "canReceive": [
+          "customName",
+          "isOn",
+          "lightLevel"
+        ]
+      },
+      "room": {
+        "id": "1b6ea885-f7a0-4ce1-86ff-a439e4ea02a2",
+        "name": "Dvur",
+        "color": "ikea_beige_1",
+        "icon": "rooms_fence"
+      },
+      "deviceSet": [],
+      "remoteLinks": [],
+      "isHidden": false
+    },
+    {
+      "id": "f8a9ebda-2304-4bb0-85b0-66f55224acbd_1",
+      "type": "light",
+      "deviceType": "light",
+      "createdAt": "2022-11-04T18:05:49.000Z",
+      "isReachable": true,
+      "lastSeen": "2022-11-28T00:02:35.000Z",
+      "attributes": {
+        "customName": "Dvur leva",
+        "model": "TRADFRI bulb E27 opal 1000lm",
+        "manufacturer": "IKEA of Sweden",
+        "firmwareVersion": "2.3.094",
+        "hardwareVersion": "1",
+        "serialNumber": "000B57FFFE25A758",
+        "productCode": "LED1623G12",
+        "isOn": false,
+        "startupOnOff": "startOn",
+        "lightLevel": 100,
+        "identifyStarted": "2000-01-01T00:00:00.000Z",
+        "identifyPeriod": 0,
+        "permittingJoin": false,
+        "otaStatus": "upToDate",
+        "otaState": "readyToCheck",
+        "otaProgress": 0,
+        "otaPolicy": "autoUpdate",
+        "otaScheduleStart": "00:00",
+        "otaScheduleEnd": "00:00"
+      },
+      "capabilities": {
+        "canSend": [],
+        "canReceive": [
+          "customName",
+          "isOn",
+          "lightLevel"
+        ]
+      },
+      "room": {
+        "id": "1b6ea885-f7a0-4ce1-86ff-a439e4ea02a2",
+        "name": "Dvur",
+        "color": "ikea_beige_1",
+        "icon": "rooms_fence"
+      },
+      "deviceSet": [],
+      "remoteLinks": [],
+      "isHidden": false
+    },
+    {
+      "id": "2830bc93-4be7-451b-abb1-e25b914e9e32_1",
+      "type": "speaker",
+      "deviceType": "speaker",
+      "createdAt": "2022-11-27T10:08:08.515Z",
+      "isReachable": true,
+      "lastSeen": "2022-11-28T19:52:21.239Z",
+      "attributes": {
+        "customName": "Decak",
+        "model": "SYMFONISK Bookshelf S21",
+        "manufacturer": "Sonos, Inc.",
+        "firmwareVersion": "70.3-35220",
+        "hardwareVersion": "1.20.3.3-2.0",
+        "serialNumber": "34-7E-5C-F5-46-C8:C",
+        "productCode": "S21",
+        "identifyStarted": "0001-01-01T00:00:00.000Z",
+        "identifyPeriod": 0,
+        "playback": "playbackPlaying",
+        "playbackLastChangedTimestamp": "2022-11-28T19:52:18.576Z",
+        "playbackAudio": {
+          "serviceType": "sonos",
+          "providerType": "linein.airplay",
+          "playItem": {
+            "title": "Fml",
+            "artist": "deadmau5",
+            "album": "For Lack of a Better Name",
+            "imageURL": "http://192.168.100.42:1400/getaa?v=0&vli=1&u=3094074005",
+            "duration": 419000
+          },
+          "nextPlayItem": {
+            "title": ""
+          }
+        },
+        "playbackPosition": {
+          "position": 0,
+          "timestamp": "2022-11-28T19:52:18.576Z"
+        },
+        "volume": 13,
+        "isMuted": false,
+        "audioGroup": "4a786561-0c2c-4b82-9298-4f775c140d64"
+      },
+      "capabilities": {
+        "canSend": [],
+        "canReceive": [
+          "playback",
+          "playbackAudio",
+          "volume",
+          "isMuted"
+        ]
+      },
+      "deviceSet": [],
+      "remoteLinks": [],
+      "isHidden": true
+    }
+  ],
+  "scenes": [],
+  "rooms": [
+    {
+      "id": "f00658cf-6b86-40fe-9f8b-9acda57e6e3d",
+      "name": "Loznice",
+      "color": "ikea_beige_1",
+      "icon": "rooms_arm_chair"
+    },
+    {
+      "id": "1b6ea885-f7a0-4ce1-86ff-a439e4ea02a2",
+      "name": "Dvur",
+      "color": "ikea_beige_1",
+      "icon": "rooms_fence"
+    }
+  ],
+  "deviceSets": [],
+  "music": {
+    "playlists": [],
+    "favorites": []
+  }
+}

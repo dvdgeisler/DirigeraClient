@@ -26,8 +26,8 @@ public abstract class ControllerDeviceApi<
         _Device> {
     private final static Logger log = LoggerFactory.getLogger(ControllerDeviceApi.class);
 
-    public ControllerDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public ControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

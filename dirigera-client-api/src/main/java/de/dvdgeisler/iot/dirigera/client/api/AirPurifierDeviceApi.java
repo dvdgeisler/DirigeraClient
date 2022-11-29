@@ -10,8 +10,9 @@ public class AirPurifierDeviceApi extends DefaultDeviceApi<
         AirPurifierAttributes,
         AirPurifierConfigurationAttributes,
         AirPurifierDevice> {
-    public AirPurifierDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+
+    public AirPurifierDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

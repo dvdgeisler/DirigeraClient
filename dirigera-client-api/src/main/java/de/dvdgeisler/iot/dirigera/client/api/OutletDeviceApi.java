@@ -15,8 +15,8 @@ public class OutletDeviceApi extends DefaultDeviceApi<
         OutletAttributes,
         OutletConfigurationAttributes,
         OutletDevice> {
-    public OutletDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public OutletDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

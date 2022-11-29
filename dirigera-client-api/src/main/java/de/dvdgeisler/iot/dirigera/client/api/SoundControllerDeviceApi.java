@@ -13,8 +13,8 @@ public class SoundControllerDeviceApi extends ControllerDeviceApi<
         SoundControllerConfigurationAttributes,
         SoundControllerDevice> {
 
-    public SoundControllerDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public SoundControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

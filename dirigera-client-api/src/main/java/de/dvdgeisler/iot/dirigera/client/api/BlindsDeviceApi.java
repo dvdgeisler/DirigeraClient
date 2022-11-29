@@ -10,8 +10,8 @@ public class BlindsDeviceApi extends DefaultDeviceApi<
         BlindsAttributes,
         BlindsConfigurationAttributes,
         BlindsDevice> {
-    public BlindsDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public BlindsDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class BlindsDeviceApi extends DefaultDeviceApi<
     public Mono<BlindsDevice> setTargetLevel(final BlindsDevice device, final Integer targetLevel) {
         final BlindsStateAttributes attributes;
 
-        if(targetLevel < 0 || targetLevel > 100)
+        if (targetLevel < 0 || targetLevel > 100)
             return Mono.error(new IllegalArgumentException("Target level must be between 0 and 100"));
 
         attributes = new BlindsStateAttributes();
@@ -35,7 +35,7 @@ public class BlindsDeviceApi extends DefaultDeviceApi<
     public Mono<BlindsDevice> setCurrentLevel(final BlindsDevice device, final Integer currentLevel) {
         final BlindsStateAttributes attributes;
 
-        if(currentLevel < 0 || currentLevel > 100)
+        if (currentLevel < 0 || currentLevel > 100)
             return Mono.error(new IllegalArgumentException("Target level must be between 0 and 100"));
 
         attributes = new BlindsStateAttributes();

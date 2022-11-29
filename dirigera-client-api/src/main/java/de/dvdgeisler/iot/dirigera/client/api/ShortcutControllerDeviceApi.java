@@ -13,8 +13,8 @@ public class ShortcutControllerDeviceApi extends ControllerDeviceApi<
         ShortcutControllerConfigurationAttributes,
         ShortcutControllerDevice> {
 
-    public ShortcutControllerDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public ShortcutControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

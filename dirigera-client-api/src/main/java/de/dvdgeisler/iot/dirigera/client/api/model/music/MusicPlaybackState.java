@@ -3,16 +3,16 @@ package de.dvdgeisler.iot.dirigera.client.api.model.music;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum MusicPlaybackState {
-    @JsonProperty("idle")
+    @JsonProperty("playbackIdle")
     IDLE,
-    @JsonProperty("playing")
+    @JsonProperty("playbackPlaying")
     PLAYING,
-    @JsonProperty("paused")
+    @JsonProperty("playbackPaused")
     PAUSED,
-    @JsonProperty("next")
+    @JsonProperty("playbackNext")
     NEXT,
-    @JsonProperty("previous")
+    @JsonProperty("playbackPrevious")
     PREVIOUS,
-    @JsonProperty("buffering")
+    @JsonProperty("playbackBuffering")
     BUFFERING
 }
