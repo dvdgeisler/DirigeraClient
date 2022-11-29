@@ -19,8 +19,8 @@ public class SpeakerDeviceApi extends DefaultDeviceApi<
         SpeakerConfigurationAttributes,
         SpeakerDevice> {
 
-    public SpeakerDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public SpeakerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

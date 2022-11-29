@@ -1,9 +1,12 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.model.Home;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -25,6 +29,7 @@ public class ClientApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientApi.class);
     private final String hostname;
     private final short port;
+    private final ObjectMapper objectMapper;
 
     public final ClientDeviceApi device;
     public final ClientDeviceSetApi deviceSet;
@@ -41,6 +46,7 @@ public class ClientApi extends AbstractClientApi {
             @Value("${dirigera.hostname}") final String hostname,
             @Value("${dirigera.port:8443}") final short port,
             final TokenStore tokenStore,
+            final ObjectMapper objectMapper,
             final ClientDeviceApi device,
             final ClientDeviceSetApi deviceSet,
             final ClientGatewayApi gateway,
@@ -55,6 +61,7 @@ public class ClientApi extends AbstractClientApi {
         super(String.format("https://%s:%d/v1/", hostname, port), tokenStore);
         this.hostname = hostname;
         this.port = port;
+        this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
         this.gateway = gateway;
@@ -89,12 +96,11 @@ public class ClientApi extends AbstractClientApi {
                 .bodyToMono(Map.class);
     }
 
-    public Mono<Void> websocket(final Consumer<String> consumer) {
+    public Mono<Void> websocket(final Consumer<Event> consumer) {
         final String token;
         final String authorizationHeader;
         final HttpClient httpClient;
         final WebSocketClient client;
-
 
 
         try {
@@ -106,7 +112,15 @@ public class ClientApi extends AbstractClientApi {
             client = new ReactorNettyWebSocketClient(httpClient);
             return client.execute(URI.create(String.format("https://%s:%d/v1/", this.hostname, this.port)), session ->
                     session.receive()
-                            .map(WebSocketMessage::getPayloadAsText)
+                            .map(WebSocketMessage::getPayload)
+                            .map(DataBuffer::asInputStream)
+                            .flatMap(i -> {
+                                try {
+                                    return Flux.just(this.objectMapper.readValue(i, Event.class));
+                                } catch (IOException e) {
+                                    return Flux.error(e);
+                                }
+                            })
                             .doOnNext(consumer)
                             .repeat()
                             .then()

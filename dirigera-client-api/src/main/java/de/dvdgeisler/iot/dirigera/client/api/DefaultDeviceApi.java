@@ -21,8 +21,8 @@ public abstract class DefaultDeviceApi<
                         _Device> {
     private final static Logger log = LoggerFactory.getLogger(DefaultDeviceApi.class);
 
-    public DefaultDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public DefaultDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     public Mono<_Device> setRoom(final _Device device, final Room room) {

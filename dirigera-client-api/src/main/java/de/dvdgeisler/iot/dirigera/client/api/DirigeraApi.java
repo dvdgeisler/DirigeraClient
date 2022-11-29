@@ -7,10 +7,12 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayEnvironment;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayPersistentMode;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Component
 public class DirigeraApi {
@@ -28,21 +30,23 @@ public class DirigeraApi {
 
         public ControllerDeviceApiWrapper(
                 final ClientApi clientApi,
+                final WebSocketApi webSocketApi,
                 final LightControllerDeviceApi light,
                 final ShortcutControllerDeviceApi shortcut,
                 final SoundControllerDeviceApi sound, final BlindsControllerDeviceApi blinds) {
-            super(clientApi);
+            super(clientApi, webSocketApi);
             this.light = light;
             this.shortcut = shortcut;
             this.sound = sound;
             this.blinds = blinds;
         }
     }
+
     public static class DeviceApiWrapper extends DeviceApi<
             DeviceStateAttributes,
             DeviceAttributes<DeviceStateAttributes>,
             DeviceConfigurationAttributes,
-            Device<DeviceAttributes<DeviceStateAttributes>, DeviceConfigurationAttributes>>  {
+            Device<DeviceAttributes<DeviceStateAttributes>, DeviceConfigurationAttributes>> {
 
         public final ControllerDeviceApiWrapper controller;
 
@@ -61,6 +65,7 @@ public class DirigeraApi {
 
         public DeviceApiWrapper(
                 final ClientApi clientApi,
+                final WebSocketApi webSocketApi,
                 final GatewayDeviceApi gateway,
                 final LightControllerDeviceApi lightController,
                 final LightDeviceApi light,
@@ -73,9 +78,15 @@ public class DirigeraApi {
                 final BlindsControllerDeviceApi blindsController,
                 final BlindsDeviceApi blinds,
                 final SpeakerDeviceApi speaker) {
-            super(clientApi);
+            super(clientApi, webSocketApi);
             this.speaker = speaker;
-            this.controller = new ControllerDeviceApiWrapper(clientApi, lightController, shortcutController, soundController, blindsController);
+            this.controller = new ControllerDeviceApiWrapper(
+                    clientApi,
+                    webSocketApi,
+                    lightController,
+                    shortcutController,
+                    soundController,
+                    blindsController);
             this.gateway = gateway;
             this.lightController = lightController;
             this.light = light;
@@ -91,10 +102,12 @@ public class DirigeraApi {
 
         @Override
         protected boolean isInstance(final Device<?, ?> device) {
-            return device instanceof Device<?,?>;
+            return device instanceof Device<?, ?>;
         }
     }
+
     private final ClientApi clientApi;
+    private final WebSocketApi webSocketApi;
 
     public final DeviceApiWrapper device;
     public final RoomApi room;
@@ -103,22 +116,24 @@ public class DirigeraApi {
 
     public DirigeraApi(final ClientApi clientApi) {
         this.clientApi = clientApi;
+        this.webSocketApi = new WebSocketApi(clientApi);
         this.device = new DeviceApiWrapper(
                 clientApi,
-                new GatewayDeviceApi(clientApi),
-                new LightControllerDeviceApi(clientApi),
-                new LightDeviceApi(clientApi),
-                new MotionSensorDeviceApi(clientApi),
-                new OutletDeviceApi(clientApi),
-                new RepeaterDeviceApi(clientApi),
-                new ShortcutControllerDeviceApi(clientApi),
-                new SoundControllerDeviceApi(clientApi),
-                new AirPurifierDeviceApi(clientApi),
-                new BlindsControllerDeviceApi(clientApi),
-                new BlindsDeviceApi(clientApi),
-                new SpeakerDeviceApi(clientApi));
-        this.room = new RoomApi(clientApi);
-        this.scene = new SceneApi(clientApi);
+                this.webSocketApi,
+                new GatewayDeviceApi(clientApi, this.webSocketApi),
+                new LightControllerDeviceApi(clientApi, this.webSocketApi),
+                new LightDeviceApi(clientApi, this.webSocketApi),
+                new MotionSensorDeviceApi(clientApi, this.webSocketApi),
+                new OutletDeviceApi(clientApi, this.webSocketApi),
+                new RepeaterDeviceApi(clientApi, this.webSocketApi),
+                new ShortcutControllerDeviceApi(clientApi, this.webSocketApi),
+                new SoundControllerDeviceApi(clientApi, this.webSocketApi),
+                new AirPurifierDeviceApi(clientApi, this.webSocketApi),
+                new BlindsControllerDeviceApi(clientApi, this.webSocketApi),
+                new BlindsDeviceApi(clientApi, this.webSocketApi),
+                new SpeakerDeviceApi(clientApi, this.webSocketApi));
+        this.room = new RoomApi(clientApi, this.webSocketApi);
+        this.scene = new SceneApi(clientApi, this.webSocketApi);
         this.user = new UserApi(clientApi);
     }
 
@@ -148,26 +163,34 @@ public class DirigeraApi {
 
     public Mono<GatewayStatus> checkFirmwareUpdate() {
         return this.clientApi.gateway.checkFirmwareUpdate()
-                .flatMap(v->this.clientApi.gateway.status());
+                .flatMap(v -> this.clientApi.gateway.status());
     }
 
     public Mono<GatewayStatus> installFirmwareUpdate() {
         return this.clientApi.gateway.installFirmwareUpdate()
-                .flatMap(v->this.clientApi.gateway.status());
+                .flatMap(v -> this.clientApi.gateway.status());
     }
 
     public Mono<GatewayStatus> setFirmwareEnvironment(final GatewayEnvironment environment) {
         return this.clientApi.gateway.setFirmwareEnvironment(environment)
-                .flatMap(v->this.clientApi.gateway.status());
+                .flatMap(v -> this.clientApi.gateway.status());
     }
 
     public Mono<GatewayStatus> activatePersistentMode() {
         return this.clientApi.gateway.setPersistentMode(new GatewayPersistentMode(true))
-                .flatMap(v->this.clientApi.gateway.status());
+                .flatMap(v -> this.clientApi.gateway.status());
     }
 
     public Mono<GatewayStatus> deactivatePersistentMode() {
         return this.clientApi.gateway.setPersistentMode(new GatewayPersistentMode(false))
-                .flatMap(v->this.clientApi.gateway.status());
+                .flatMap(v -> this.clientApi.gateway.status());
+    }
+
+    public <E extends Event> void websocket(Consumer<E> consumer, Class<E> filter) {
+        this.webSocketApi.addListener(consumer, filter);
+    }
+
+    public void websocket(Consumer<Event> consumer) {
+        this.webSocketApi.addListener(consumer);
     }
 }
