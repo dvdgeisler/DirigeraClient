@@ -4,9 +4,11 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 
 import java.time.LocalDateTime;
 
-public class DeviceAddedEvent extends Event<Device> {
-    public DeviceAddedEvent(final String id, final LocalDateTime time, final String specversion, final String source, final EventType deviceStateChanged, final Device eventData) {
-        super(id, time, specversion, source, deviceStateChanged, eventData);
+import static de.dvdgeisler.iot.dirigera.client.api.model.events.EventType.DEVICE_ADDED;
+
+public class DeviceAddedEvent extends DeviceEvent {
+    public DeviceAddedEvent(final String id, final LocalDateTime time, final String specversion, final String source, final Device eventData) {
+        super(id, time, specversion, source, DEVICE_ADDED, eventData);
     }
 
     public DeviceAddedEvent() {

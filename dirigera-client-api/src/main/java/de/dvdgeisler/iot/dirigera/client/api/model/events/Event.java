@@ -2,11 +2,14 @@ package de.dvdgeisler.iot.dirigera.client.api.model.events;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.unknown.UnknownDevice;
 
 import java.time.LocalDateTime;
 
-@JsonTypeInfo(include = JsonTypeInfo.As.PROPERTY, property = "type", use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type",
+        use = JsonTypeInfo.Id.NAME,
+        visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "pong", value = LastModifiedEvent.class),
         @JsonSubTypes.Type(name = "deviceConfigurationChanged", value = DeviceConfigurationChangedEvent.class),
@@ -32,16 +35,16 @@ public class Event<Data> {
     public LocalDateTime time;
     public String specversion;
     public String source;
-    public EventType deviceStateChanged;
-    public Data eventData;
+    public EventType type;
+    public Data data;
 
-    public Event(final String id, final LocalDateTime time, final String specversion, final String source, final EventType deviceStateChanged, final Data eventData) {
+    public Event(final String id, final LocalDateTime time, final String specversion, final String source, final EventType type, final Data data) {
         this.id = id;
         this.time = time;
         this.specversion = specversion;
         this.source = source;
-        this.deviceStateChanged = deviceStateChanged;
-        this.eventData = eventData;
+        this.type = type;
+        this.data = data;
     }
 
     public Event() {
