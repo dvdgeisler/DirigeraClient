@@ -5,6 +5,8 @@ import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
+import de.dvdgeisler.iot.dirigera.client.api.model.events.SceneUpdatedEvent;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerApp;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneTriggerController;
@@ -22,7 +24,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -124,20 +125,17 @@ public class SceneTriggers {
         };
     }
 
-    private void logButtonPress(final String s) {
+    private void logButtonPress(final Event event) {
         final Map json, data, info;
         final String type;
 
+
+
         try {
-            json = this.json.readValue(s, Map.class);
-            type = json.get("type").toString();
-            if(!Objects.equals(type, "sceneUpdated")) {
-                log.info("Received: {}", s);
-                return;
+            switch (event.type) {
+                case SCENE_UPDATED -> log.info("Received: {}", ((SceneUpdatedEvent)event).data.attributes.info);
+                default -> log.info("Received: {}", this.json.writeValueAsString(event));
             }
-            data = (Map) json.get("data");
-            info = (Map) data.get("info");
-            log.info("Received: {}", info.get("name"));
         } catch (Throwable e) {
             log.error(e.getMessage());
         }
