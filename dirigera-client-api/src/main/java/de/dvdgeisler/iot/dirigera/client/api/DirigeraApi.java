@@ -107,7 +107,7 @@ public class DirigeraApi {
     }
 
     private final ClientApi clientApi;
-    private final WebSocketApi webSocketApi;
+    public final WebSocketApi websocket;
 
     public final DeviceApiWrapper device;
     public final RoomApi room;
@@ -116,24 +116,24 @@ public class DirigeraApi {
 
     public DirigeraApi(final ClientApi clientApi) {
         this.clientApi = clientApi;
-        this.webSocketApi = new WebSocketApi(clientApi);
+        this.websocket = new WebSocketApi(clientApi);
         this.device = new DeviceApiWrapper(
                 clientApi,
-                this.webSocketApi,
-                new GatewayDeviceApi(clientApi, this.webSocketApi),
-                new LightControllerDeviceApi(clientApi, this.webSocketApi),
-                new LightDeviceApi(clientApi, this.webSocketApi),
-                new MotionSensorDeviceApi(clientApi, this.webSocketApi),
-                new OutletDeviceApi(clientApi, this.webSocketApi),
-                new RepeaterDeviceApi(clientApi, this.webSocketApi),
-                new ShortcutControllerDeviceApi(clientApi, this.webSocketApi),
-                new SoundControllerDeviceApi(clientApi, this.webSocketApi),
-                new AirPurifierDeviceApi(clientApi, this.webSocketApi),
-                new BlindsControllerDeviceApi(clientApi, this.webSocketApi),
-                new BlindsDeviceApi(clientApi, this.webSocketApi),
-                new SpeakerDeviceApi(clientApi, this.webSocketApi));
-        this.room = new RoomApi(clientApi, this.webSocketApi);
-        this.scene = new SceneApi(clientApi, this.webSocketApi);
+                this.websocket,
+                new GatewayDeviceApi(clientApi, this.websocket),
+                new LightControllerDeviceApi(clientApi, this.websocket),
+                new LightDeviceApi(clientApi, this.websocket),
+                new MotionSensorDeviceApi(clientApi, this.websocket),
+                new OutletDeviceApi(clientApi, this.websocket),
+                new RepeaterDeviceApi(clientApi, this.websocket),
+                new ShortcutControllerDeviceApi(clientApi, this.websocket),
+                new SoundControllerDeviceApi(clientApi, this.websocket),
+                new AirPurifierDeviceApi(clientApi, this.websocket),
+                new BlindsControllerDeviceApi(clientApi, this.websocket),
+                new BlindsDeviceApi(clientApi, this.websocket),
+                new SpeakerDeviceApi(clientApi, this.websocket));
+        this.room = new RoomApi(clientApi, this.websocket);
+        this.scene = new SceneApi(clientApi, this.websocket);
         this.user = new UserApi(clientApi);
     }
 
@@ -187,10 +187,10 @@ public class DirigeraApi {
     }
 
     public <E extends Event> void websocket(Consumer<E> consumer, Class<E> filter) {
-        this.webSocketApi.addListener(consumer, filter);
+        this.websocket.addListener(consumer, filter);
     }
 
     public void websocket(Consumer<Event> consumer) {
-        this.webSocketApi.addListener(consumer);
+        this.websocket.addListener(consumer);
     }
 }

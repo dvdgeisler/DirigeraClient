@@ -80,9 +80,12 @@ public class WebSocketApi {
         this.listeners.removeIf(l -> l instanceof FilteredEventListener<?> && ((FilteredEventListener<?>) l).listener.equals(listener));
     }
 
-    void stop() throws InterruptedException {
+    public void stop() throws InterruptedException {
         this.running.set(false);
-        while (this.thread.isAlive())
+        this.thread.interrupt();
+        while (this.thread.isAlive()) {
             Thread.sleep(100);
+            this.thread.interrupt();
+        }
     }
 }

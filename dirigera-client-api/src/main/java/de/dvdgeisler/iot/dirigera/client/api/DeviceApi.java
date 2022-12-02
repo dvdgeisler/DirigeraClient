@@ -89,7 +89,7 @@ public abstract class DeviceApi<
                 .collectList();
     }
 
-    protected Mono<_Device> refresh(final _Device device) {
+    public Mono<_Device> refresh(final _Device device) {
         return this.clientApi.device.device(device.id)
                 .flatMap(this::cast);
     }

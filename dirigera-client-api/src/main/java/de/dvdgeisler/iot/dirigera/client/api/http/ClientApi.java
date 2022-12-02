@@ -126,7 +126,7 @@ public class ClientApi extends AbstractClientApi {
                             .then()
             );
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return Mono.error(e);
         }
     }
 }
