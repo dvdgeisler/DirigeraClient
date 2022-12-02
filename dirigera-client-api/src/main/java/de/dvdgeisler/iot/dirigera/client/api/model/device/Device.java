@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -21,6 +22,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.speaker.SpeakerDevice;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         property = "deviceType",
