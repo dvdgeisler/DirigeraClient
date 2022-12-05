@@ -1,7 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DeviceAttributes<_DeviceStateAttributes extends DeviceStateAttributes> {
     public String model;
     public String manufacturer;

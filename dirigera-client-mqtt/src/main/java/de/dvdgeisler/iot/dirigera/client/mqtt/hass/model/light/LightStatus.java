@@ -1,7 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.light;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceState;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LightStatus {
     public DeviceState state;
     public Integer brightness;
