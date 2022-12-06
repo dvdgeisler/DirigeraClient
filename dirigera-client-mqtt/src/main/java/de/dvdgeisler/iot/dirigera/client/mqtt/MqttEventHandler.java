@@ -60,7 +60,7 @@ public abstract class MqttEventHandler<E extends Event> {
     }
 
     protected <T> void subscribe(final String topic, final Class<T> payloadType, final Consumer<T> consumer) {
-        log.debug("Subscribe to MQTT: topic={}, payload={}", topic, payloadType.getSimpleName());
+        log.debug("Subscribe to MQTT topic: topic={}, payload={}", topic, payloadType.getSimpleName());
         try {
             this.mqtt.subscribe(topic, (t, message) -> {
                 log.debug("MQTT message received: topic={}, payload={}", t, this.toJSON(message));
@@ -72,7 +72,7 @@ public abstract class MqttEventHandler<E extends Event> {
     }
 
     protected void unsubscribe(final String topic) {
-        log.debug("Unsubscribe from MQTT: topic={}", topic);
+        log.debug("Unsubscribe from MQTT topic: topic={}", topic);
         try {
             this.mqtt.unsubscribe(topic);
         } catch (MqttException e) {

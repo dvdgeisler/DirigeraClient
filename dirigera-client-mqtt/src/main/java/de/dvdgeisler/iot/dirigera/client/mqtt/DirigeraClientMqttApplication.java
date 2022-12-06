@@ -103,12 +103,8 @@ public class DirigeraClientMqttApplication {
 
     public void exit(int status) {
 
-        try {
-            log.info("Close WebSocket");
-            this.api.websocket.stop();
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-        }
+        log.info("Close WebSocket");
+        this.api.websocket.stop();
 
         if (context != null) {
             log.info("Close Spring Boot context");
