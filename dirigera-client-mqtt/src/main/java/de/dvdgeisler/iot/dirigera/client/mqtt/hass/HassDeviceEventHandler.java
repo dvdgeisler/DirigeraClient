@@ -99,28 +99,28 @@ public abstract class HassDeviceEventHandler<D extends Device> extends MqttDevic
 
     @Override
     protected void onDeviceEvent(final DeviceAddedEvent<D> event) {
-        log.debug("Device added: {}", this.toJSON(event.data));
+        log.debug("Received device added event: {}", this.toJSON(event.data));
 
         this.onDeviceCreated(event.data);
     }
 
     @Override
     protected void onDeviceEvent(final DeviceConfigurationChangedEvent<D> event) {
-        log.debug("Device configuration changed: {}", this.toJSON(event.data));
+        log.debug("Received device configuration changed event: {}", this.toJSON(event.data));
 
         this.onDeviceStateChanged(event.data);
     }
 
     @Override
     protected void onDeviceEvent(final DeviceStateChangedEvent<D> event) {
-        log.debug("Device state changed: {}", this.toJSON(event.data));
+        log.debug("Received device state changed event: {}", this.toJSON(event.data));
 
         this.onDeviceStateChanged(event.data);
     }
 
     @Override
     protected void onDeviceEvent(final DeviceRemovedEvent<D> event) {
-        log.debug("Device removed: {}", this.toJSON(event.data));
+        log.debug("Received device removed event: {}", this.toJSON(event.data));
         this.onDeviceRemoved(event.data);
     }
 
