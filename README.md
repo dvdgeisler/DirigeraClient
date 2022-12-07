@@ -1,4 +1,4 @@
-# Dirigera Client API
+# DIRIGERA Client API
 
 Unofficial client API for IKEA's new Smarthome Hub
 [DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
@@ -74,13 +74,15 @@ public class MyApplication {
    This application reads the data model of your DIRIGERA and outputs it as JSON. Based on the dump,
    we can determine at which points the API data model deviates or is
    incomplete. You may submit the generated dump as an issue to GitHub.</br></br>
-2) Try it out and share your experience. Many functionalities are "blind" implemented. This means 
+2) Try it out and share your experience. Many functionalities are _blind_ implemented. This means 
    that the endpoints have been reverse-engineered, and the transmitted data was derived from shared 
    dumps. However, only testing with real devices can verify whether the interface is implemented 
-   correctly.
+   correctly.</br></br>
+3) Tell us how you plan to use the API and what features are lacking or need to be improved.
 
 #### Run the Dump Application
-##### Prerequisites:
+
+Prerequisites:
 * Java 17 (or higher) has to be installed
   * Download Java the latest OpenJDK for your operating system [here](https://openjdk.org)
   * Unpack the zip file to a location of your choosing
@@ -89,7 +91,7 @@ public class MyApplication {
   * Reboot your pc
   * Execute `java -version`
     * This should output something like:
-    ```
+    ```txt
       openjdk version "17.0.2" 2022-01-18
       OpenJDK Runtime Environment (build 17.0.2+8-86)
       OpenJDK 64-Bit Server VM (build 17.0.2+8-86, mixed mode, sharing)
