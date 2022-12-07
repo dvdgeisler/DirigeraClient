@@ -21,9 +21,8 @@ public abstract class AbstractClientApi {
     protected final SslContext sslContext;
     protected final HttpClient httpClient;
     protected final WebClient webClient;
-    protected final TokenStore tokenStore;
 
-    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final String path, final TokenStore tokenStore) throws SSLException {
+    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final String path) throws SSLException {
         this.gatewayDiscovery = gatewayDiscovery;
         this.sslContext = SslContextBuilder
                 .forClient()
@@ -39,11 +38,10 @@ public abstract class AbstractClientApi {
                 .map(b -> b.clientConnector(new ReactorClientHttpConnector(this.httpClient)))
                 .map(WebClient.Builder::build)
                 .block();
-        this.tokenStore = tokenStore;
     }
 
-    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final TokenStore tokenStore) throws SSLException {
-        this(gatewayDiscovery, "", tokenStore);
+    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery) throws SSLException {
+        this(gatewayDiscovery, "");
     }
 
 

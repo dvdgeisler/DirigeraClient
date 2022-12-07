@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api;
 
 import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.Home;
-import de.dvdgeisler.iot.dirigera.client.api.model.auth.Token;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayEnvironment;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayPersistentMode;
@@ -137,6 +136,7 @@ public class DirigeraApi {
         this.user = new UserApi(clientApi);
     }
 
+    /*
     public Mono<Token> pair() {
         return this.clientApi.oauth.pair();
     }
@@ -148,6 +148,7 @@ public class DirigeraApi {
     public Mono<Token> pairIfRequired() {
         return this.clientApi.oauth.pairIfRequired();
     }
+    */
 
     public Mono<Home> getHome() {
         return this.clientApi.home();

@@ -51,7 +51,6 @@ public class DirigeraClientMqttApplication implements MqttCallback {
         final String publisherId;
         final String uri;
 
-        api.pairIfRequired().block();
         publisherId = api.status().map(s -> s.id).block();
         uri = String.format("tcp://%s:%d", host, port);
         client = new MqttClient(uri, publisherId);

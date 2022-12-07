@@ -77,11 +77,8 @@ public class SceneTriggers {
     public CommandLineRunner run() {
         return (String... args) -> {
             List<Scene> scenes;
-            this.dapi.pairIfRequired().block();
-
 
             scenes = new ArrayList<>();
-
 
             try {
                 this.dapi.device.controller.light // create dummy scenes for light controller

@@ -52,7 +52,6 @@ public class ClientApi extends AbstractClientApi {
 
     public ClientApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore,
             final ObjectMapper objectMapper,
             final ClientDeviceApi device,
             final ClientDeviceSetApi deviceSet,
@@ -65,7 +64,7 @@ public class ClientApi extends AbstractClientApi {
             final ClientStepApi step,
             final ClientUserApi user
     ) throws SSLException {
-        super(gatewayDiscovery, tokenStore);
+        super(gatewayDiscovery);
         this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
@@ -80,25 +79,29 @@ public class ClientApi extends AbstractClientApi {
     }
 
     public Mono<Home> home() {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("home").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Home.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("home").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Home.class));
     }
 
     public Mono<Map> dump() {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("home").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Map.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("home").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Map.class));
     }
 
     public Mono<Void> websocket(final WebSocketHandler consumer) {

@@ -15,22 +15,27 @@ import javax.net.ssl.SSLException;
 public class ClientStepApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientStepApi.class);
 
+    private final ClientOAuthApi oauth;
+
     public ClientStepApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "step/", tokenStore);
+            final ClientOAuthApi oauth) throws SSLException {
+        super(gatewayDiscovery, "step/");
+        this.oauth = oauth;
     }
 
     public Mono<Void> stepDeviceGroup(final String targetId, final DeviceType deviceType, final StepAttributes attributes) {
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("{targetId}").queryParam("deviceType", deviceType).build(targetId))
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(attributes)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .post()
+                        .uri(uri -> uri.path("{targetId}").queryParam("deviceType", deviceType).build(targetId))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(attributes)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 }

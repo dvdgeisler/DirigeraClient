@@ -28,7 +28,6 @@ public class Rooms {
     public CommandLineRunner run() {
         return (String... args) -> {
             Room room;
-            this.api.pairIfRequired().block();
 
             room = this.api.room.create("My-First-Room", "Icon", "Color")
                     .doOnSuccess(r -> log.info("Created Room {}: name={}, icon={}, color={}", r.id, r.attributes.name, r.attributes.icon, r.attributes.color))

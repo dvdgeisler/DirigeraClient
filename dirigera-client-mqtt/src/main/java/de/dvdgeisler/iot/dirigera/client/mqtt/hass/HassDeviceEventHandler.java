@@ -49,7 +49,6 @@ public abstract class HassDeviceEventHandler<D extends Device> extends MqttDevic
     protected String getGatewayId() {
         synchronized (this) {
             if (this.gatewayId == null) {
-                this.getApi().pairIfRequired().block();
                 this.gatewayId = this.getApi().getHome()
                         .map(h -> h.hub)
                         .map(h -> h.id)

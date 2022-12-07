@@ -19,97 +19,112 @@ import java.util.List;
 public class ClientSceneApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientSceneApi.class);
 
+    private final ClientOAuthApi oauth;
+
     public ClientSceneApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "scenes/", tokenStore);
+            final ClientOAuthApi oauth) throws SSLException {
+        super(gatewayDiscovery, "scenes/");
+        this.oauth = oauth;
     }
-
-
 
     /**
      * TODO: fails if any trigger or action is set: "triggers[0]" does not match any of the allowed types, "actions[0]" does not match any of the allowed types
      */
     public Mono<Identifier> createScene(final SceneAttributes attributes) {
-        return this.webClient
-                .post()
-                .uri(UriBuilder::build)
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(attributes)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Identifier.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .post()
+                        .uri(UriBuilder::build)
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(attributes)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Identifier.class));
     }
 
     public Mono<Void> deleteScene(final String id) {
-        return this.webClient
-                .delete()
-                .uri(uri -> uri.path("{id}").build(id))
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .delete()
+                        .uri(uri -> uri.path("{id}").build(id))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
     public Mono<List<Scene>> scenes() {
-        return this.webClient
-                .get()
-                .uri(UriBuilder::build)
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(new ParameterizedTypeReference<List<Scene>>() {
-                });
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(UriBuilder::build)
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(new ParameterizedTypeReference<List<Scene>>() {
+                        }));
     }
 
     public Mono<Scene> getScene(final String id) {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("{id}").build(id))
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Scene.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("{id}").build(id))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Scene.class));
     }
 
     public Mono<Void> triggerScene(final String id) {
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("{id}/trigger").build(id))
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .post()
+                        .uri(uri -> uri.path("{id}/trigger").build(id))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
     public Mono<Void> undoScene(final String id) {
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("{id}/trigger").build(id))
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .post()
+                        .uri(uri -> uri.path("{id}/trigger").build(id))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
     public Mono<Void> updateScene(final String id, final SceneAttributes attributes) {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("{id}").build(id))
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(attributes)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("{id}").build(id))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(attributes)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
 }

@@ -71,12 +71,10 @@ public class MyApplication {
     @Bean
     public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-          api.pairIfRequired().block(); // pair gateway if required
-
           api.device.light.all() // fetch all light devices from hub
                   .flatMapMany(Flux::fromIterable)
                   .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
-                  .flatMap(d -> api.device.light.setLevel(d, 100)) // turn on lights
+                  .flatMap(d -> api.device.light.setLevel(d, 100)) // set light level to 100%
                   .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
                   .blockLast();
         };
