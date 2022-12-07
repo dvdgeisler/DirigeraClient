@@ -67,6 +67,15 @@ public class MyApplication {
 }
 ```
 
+## Limitations:
+
+The API cannot catch any button presses from controllers or status changes from motion detectors to process them 
+programmatically. However, both device types may be paired with actuators (e.g., lights or outlets) that will 
+process the inputs directly (see example [LinkDevices](dirigera-client-examples/src/main/java/de/dvdgeisler/iot/dirigera/client/examples/linkdevices/LinkDevices.java)). 
+As a workaround, controllers can be used to some extent as triggers 
+for scenes whose status change can be intercepted as an event from the WebSocket stream 
+[SceneTriggers](dirigera-client-examples/src/main/java/de/dvdgeisler/iot/dirigera/client/examples/scenetriggers/SceneTriggers.java)).
+
 ## How to contribute
 
 1) The most significant pain point is the limitation of the API data model.
