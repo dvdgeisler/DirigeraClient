@@ -59,11 +59,10 @@ public class ClientOAuthApi extends AbstractClientApi {
     private final TokenStore tokenStore;
 
     public ClientOAuthApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             @Value("${dirigera.clientname:}") final String clientName,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/oauth/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "oauth/", tokenStore);
 
         this.clientName = Optional
                 .ofNullable(clientName)
