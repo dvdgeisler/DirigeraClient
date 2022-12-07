@@ -123,7 +123,7 @@ created. Open the file with your favourite text editor and copy everything into 
 Start the addon, watch the logs for any errors and if everything went as expected, home assistant should have some new
 devices/entities from your IKEA Smart Hub.
 
-![](img/hass-integration.png)
+<img src="img/hass-integration.png" alt="drawing" width="300"/>
 
 ## Other repos to dig in
 
