@@ -1,9 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.speaker;
 
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceConfigurationDefaultAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorConfig;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
+
 import java.util.List;
 
 public class SpeakerConfigurationAttributes extends DeviceConfigurationDefaultAttributes {
