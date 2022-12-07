@@ -1,16 +1,30 @@
 # DIRIGERA Client API
-
-![Supports aarch64 Architecture][aarch64-shield]
-![Supports amd64 Architecture][amd64-shield]
-![Supports armhf Architecture][armhf-shield]
-![Supports armv7 Architecture][armv7-shield]
-![Supports i386 Architecture][i386-shield]
+<p align="center">
+    ![Supports aarch64 Architecture][aarch64-shield]
+    ![Supports amd64 Architecture][amd64-shield]
+    ![Supports armhf Architecture][armhf-shield]
+    ![Supports armv7 Architecture][armv7-shield]
+    ![Supports i386 Architecture][i386-shield]
+</p>
 
 Unofficial client API for IKEA's new Smarthome Hub
 [DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
 uses DIRIGERA's REST interface at port 8443. The vast majority
 of interfaces have been implemented. However, most are
 barely tested, and some are known as inoperable.
+
+## Downloads
+<p align="center">
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-api.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-api.jar" />
+    </a>
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-dump.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-dump.jar" />
+    </a>
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-mqtt.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-mqtt.jar" />
+    </a>
+</p>
 
 ## What is known to work
 
