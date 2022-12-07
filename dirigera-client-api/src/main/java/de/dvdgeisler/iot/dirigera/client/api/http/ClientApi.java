@@ -28,16 +28,16 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 @Component
 public class ClientApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientApi.class);
-    private final static String WEBSOCKET_SPECVERSION = "1.0.0";
+    private final static String WEBSOCKET_SPECVERSION = "1.1.0";
     private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", ClientApi.class.getPackageName(), ClientApi.class.getClass().getSimpleName());
     private final static Duration WEBSOCKET_PING_DELAY = Duration.ofSeconds(10);
+    private final static Duration WEBSOCKET_PING_TIMEOUT = WEBSOCKET_PING_DELAY.plusSeconds(1);
     private final String hostname;
     private final short port;
     private final ObjectMapper objectMapper;
@@ -122,23 +122,33 @@ public class ClientApi extends AbstractClientApi {
 
     public Mono<Void> websocket(final Consumer<Event> consumer, final BooleanSupplier run) {
         return this.websocket(session -> {
-            Schedulers.boundedElastic().schedulePeriodically(
-                    () -> session.send(this.buildPingMessage(session)).block(),
-                    0, WEBSOCKET_PING_DELAY.getSeconds(), TimeUnit.SECONDS);
+
+            Schedulers.boundedElastic().schedule(
+                    () -> {
+                        final Thread thread;
+
+                        thread = Thread.currentThread();
+                        log.info("Start ping thread: id={}, name={}", thread.getId(), thread.getName());
+                        session.send(this.buildPingMessage(session).delayElement(WEBSOCKET_PING_DELAY))
+                                .repeat(run)
+                                .blockLast();
+                        log.info("Finished ping thread: id={}, name={}", thread.getId(), thread.getName());
+                    });
             return Mono.just(session)
-                            .flatMapMany(WebSocketSession::receive)
-                            .map(WebSocketMessage::getPayload)
-                            .map(DataBuffer::asInputStream)
-                            .flatMap(i -> {
-                                try {
-                                    return Flux.just(this.objectMapper.readValue(i, Event.class));
-                                } catch (IOException e) {
-                                    return Flux.error(e);
-                                }
-                            })
-                            .doOnNext(consumer)
-                            .repeat(run)
-                            .then();
+                    .flatMapMany(WebSocketSession::receive)
+                    .timeout(WEBSOCKET_PING_TIMEOUT)
+                    .map(WebSocketMessage::getPayload)
+                    .map(DataBuffer::asInputStream)
+                    .flatMap(i -> {
+                        try {
+                            return Flux.just(this.objectMapper.readValue(i, Event.class));
+                        } catch (IOException e) {
+                            return Flux.error(e);
+                        }
+                    })
+                    .doOnNext(consumer)
+                    .repeat(run)
+                    .then();
         });
     }
 

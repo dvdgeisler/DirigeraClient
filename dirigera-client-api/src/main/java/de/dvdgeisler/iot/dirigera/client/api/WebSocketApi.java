@@ -4,8 +4,10 @@ import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -44,17 +46,28 @@ public class WebSocketApi {
 
     private void run() {
         final Thread thread;
+        final AtomicBoolean restart;
 
         thread = Thread.currentThread();
-        log.info("Start event handler thread: id={}, name={}", thread.getId(), thread.getName());
-        this.running.set(true);
-        this.api.websocket(this::onEvent, this::isRunning).block();
-        this.running.set(false);
-        log.info("Finish event handler thread: id={}, name={}", thread.getId(), thread.getName());
+        restart = new AtomicBoolean(false);
+        do {
+            log.info("Start event handler thread: id={}, name={}", thread.getId(), thread.getName());
+            restart.set(false);
+            this.running.set(true);
+            this.api.websocket(this::onEvent, this::isRunning)
+                    .onErrorResume(error -> {
+                        log.error("Error while listening to websocket events: {}", error.getMessage());
+                        restart.set(true);
+                        return Mono.delay(Duration.ofSeconds(1)).then();
+                    })
+                    .block();
+            this.running.set(false);
+            log.info("Finish event handler thread: id={}, name={}", thread.getId(), thread.getName());
+        } while(restart.get());
     }
 
     private synchronized void onEvent(final Event event) {
-        log.debug("Received Dirigera event: type={}, id={}, source={}, time={}", event.id, event.type, event.source, event.time);
+        log.debug("Received Dirigera event: type={}, id={}, source={}, time={}", event.type, event.id, event.source, event.time);
         this.listeners.forEach(c -> c.accept(event));
     }
 
