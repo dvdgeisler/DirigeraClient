@@ -37,8 +37,6 @@ public class ClientApi extends AbstractClientApi {
     private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", ClientApi.class.getPackageName(), ClientApi.class.getClass().getSimpleName());
     private final static Duration WEBSOCKET_PING_DELAY = Duration.ofSeconds(10);
     private final static Duration WEBSOCKET_PING_TIMEOUT = WEBSOCKET_PING_DELAY.plusSeconds(1);
-    //private final String hostname;
-    //private final short port;
     private final ObjectMapper objectMapper;
 
     public final ClientDeviceApi device;
