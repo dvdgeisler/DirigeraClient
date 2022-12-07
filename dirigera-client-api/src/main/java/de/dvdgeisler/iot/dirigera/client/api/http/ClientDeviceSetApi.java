@@ -4,7 +4,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -19,10 +18,9 @@ public class ClientDeviceSetApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientDeviceSetApi.class);
 
     public ClientDeviceSetApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/device-set/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "device-set/", tokenStore);
     }
 
     public Mono<Identifier> createDeviceSet(final String name, final String icon) {

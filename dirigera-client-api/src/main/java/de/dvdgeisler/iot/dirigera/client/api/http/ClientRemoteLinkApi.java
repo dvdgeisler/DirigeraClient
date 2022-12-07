@@ -3,7 +3,6 @@ package de.dvdgeisler.iot.dirigera.client.api.http;
 import de.dvdgeisler.iot.dirigera.client.api.model.RemoteLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -16,10 +15,9 @@ public class ClientRemoteLinkApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientRemoteLinkApi.class);
 
     public ClientRemoteLinkApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/remoteLinks/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "remoteLinks/", tokenStore);
     }
 
     public Mono<Void> updateRemoteLinks(final String remoteLinkId, final RemoteLink remoteLink) {

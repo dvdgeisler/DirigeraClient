@@ -5,7 +5,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,10 +21,9 @@ public class ClientRoomApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientRoomApi.class);
 
     public ClientRoomApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/rooms/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "rooms/", tokenStore);
     }
 
     public Mono<Identifier> createRoom(final String name, final String icon, final String color) {

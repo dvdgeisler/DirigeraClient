@@ -10,7 +10,6 @@ import org.jsoup.nodes.Element;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
@@ -18,24 +17,33 @@ import javax.net.ssl.SSLException;
 
 public abstract class AbstractClientApi {
 
+    protected final GatewayDiscovery gatewayDiscovery;
     protected final SslContext sslContext;
     protected final HttpClient httpClient;
     protected final WebClient webClient;
     protected final TokenStore tokenStore;
 
-    public AbstractClientApi(final String baseUrl, final TokenStore tokenStore) throws SSLException {
+    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final String path, final TokenStore tokenStore) throws SSLException {
+        this.gatewayDiscovery = gatewayDiscovery;
         this.sslContext = SslContextBuilder
                 .forClient()
                 .trustManager(InsecureTrustManagerFactory.INSTANCE)
                 .build();
         this.httpClient = HttpClient.create().secure(t -> t.sslContext(this.sslContext));
 
-        this.webClient = WebClient
-                .builder()
-                .baseUrl(baseUrl)
-                .clientConnector(new ReactorClientHttpConnector(this.httpClient))
-                .build();
+        this.webClient = gatewayDiscovery.getApiUrl()
+                .map(url -> url + path)
+                .map(url -> WebClient
+                        .builder()
+                        .baseUrl(url))
+                .map(b -> b.clientConnector(new ReactorClientHttpConnector(this.httpClient)))
+                .map(WebClient.Builder::build)
+                .block();
         this.tokenStore = tokenStore;
+    }
+
+    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final TokenStore tokenStore) throws SSLException {
+        this(gatewayDiscovery, "", tokenStore);
     }
 
 

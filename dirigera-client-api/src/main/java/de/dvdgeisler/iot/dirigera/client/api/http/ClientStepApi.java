@@ -4,7 +4,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.StepAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -17,10 +16,9 @@ public class ClientStepApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientStepApi.class);
 
     public ClientStepApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/step/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "step/", tokenStore);
     }
 
     public Mono<Void> stepDeviceGroup(final String targetId, final DeviceType deviceType, final StepAttributes attributes) {
