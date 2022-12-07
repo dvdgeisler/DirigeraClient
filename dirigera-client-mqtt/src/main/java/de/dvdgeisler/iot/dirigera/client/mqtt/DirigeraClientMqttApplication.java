@@ -8,6 +8,7 @@ import org.eclipse.paho.client.mqttv3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,13 +21,13 @@ import org.springframework.context.annotation.ComponentScan;
         HassLightDeviceEventHandler.class,
         HassMotionSensorDeviceEventHandler.class,
         HassOutletDeviceEventHandler.class})
-public class DirigeraClientMqttApplication {
+public class DirigeraClientMqttApplication implements MqttCallback {
     private final static Logger log = LoggerFactory.getLogger(DirigeraClientMqttApplication.class);
 
     private final static int EXIT_SUCCESS = 0;
     private final static int EXIT_ERROR = 1;
     private final DirigeraApi api;
-    private final ConfigurableApplicationContext context;
+    private ConfigurableApplicationContext context;
 
     public DirigeraClientMqttApplication(
             final DirigeraApi api,
@@ -62,28 +63,13 @@ public class DirigeraClientMqttApplication {
         options.setKeepAliveInterval(keepAliveInterval);
         options.setMaxReconnectDelay(reconnectDelay);
         options.setAutomaticReconnect(reconnect);
-        //options.setCleanSession(true);
         options.setConnectionTimeout(timeout);
 
         if (!username.isEmpty() && !password.isEmpty()) {
             options.setUserName(username);
             options.setPassword(password.toCharArray());
         }
-        client.setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(final Throwable cause) {
-                log.error("Connection lost to MQTT broker: {}", cause.getMessage());
-                exit(EXIT_ERROR);
-            }
-
-            @Override
-            public void messageArrived(final String topic, final MqttMessage message) {
-            }
-
-            @Override
-            public void deliveryComplete(final IMqttDeliveryToken token) {
-            }
-        });
+        client.setCallback(this);
 
         try {
             client.connect(options);
@@ -102,21 +88,42 @@ public class DirigeraClientMqttApplication {
     }
 
     public void exit(int status) {
+        final ApplicationArguments args;
 
-        try {
-            log.info("Close WebSocket");
-            this.api.websocket.stop();
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
+        log.info("Close WebSocket");
+        this.api.websocket.stop();
+
+        if (context != null && status == EXIT_ERROR) {
+            log.info("Attempt to restart application");
+
+            args = this.context.getBean(ApplicationArguments.class);
+
+            Thread thread = new Thread(() -> {
+                log.info("Close Spring Boot context");
+                this.context.close();
+                main(args.getSourceArgs());
+            });
+
+            thread.setDaemon(false);
+            thread.start();
+        } else {
+            log.info("Exit application");
+            Runtime.getRuntime().halt(status);
         }
-
-        if (context != null) {
-            log.info("Close Spring Boot context");
-            this.context.close();
-        }
-
-        log.info("Exit application");
-        Runtime.getRuntime().halt(status);
     }
 
+    @Override
+    public void connectionLost(final Throwable cause) {
+        log.error("Connection lost to MQTT broker: {}", cause.getMessage());
+        exit(EXIT_ERROR);
+    }
+
+    @Override
+    public void messageArrived(final String topic, final MqttMessage message) {
+        log.debug("Received message from MQTT: topic={}, message={}", topic, message);
+    }
+
+    @Override
+    public void deliveryComplete(final IMqttDeliveryToken token) {
+    }
 }

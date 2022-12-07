@@ -4,7 +4,10 @@ import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -30,7 +33,6 @@ public class WebSocketApi {
     }
 
     private final ClientApi api;
-    private final Thread thread;
     private final AtomicBoolean running;
     private final List<Consumer<Event>> listeners;
 
@@ -38,29 +40,34 @@ public class WebSocketApi {
         this.listeners = new ArrayList<>();
         this.api = api;
         this.running = new AtomicBoolean(false);
-        this.thread = new Thread(this::run, "websocket");
-        this.thread.start();
+
+        Schedulers.boundedElastic().schedule(this::run);
     }
 
     private void run() {
-        this.running.set(true);
-        do {
-            try {
-                this.loop();
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                log.error(e.getMessage());
-            }
-        } while (this.running.get());
-    }
+        final Thread thread;
+        final AtomicBoolean restart;
 
-    private void loop() {
-        if (!this.api.oauth.isPaired())
-            return;
-        this.api.websocket(this::onEvent).block();
+        thread = Thread.currentThread();
+        restart = new AtomicBoolean(false);
+        do {
+            log.info("Start event handler thread: id={}, name={}", thread.getId(), thread.getName());
+            restart.set(false);
+            this.running.set(true);
+            this.api.websocket(this::onEvent, this::isRunning)
+                    .onErrorResume(error -> {
+                        log.error("Error while listening to websocket events: {}", error.getMessage());
+                        restart.set(true);
+                        return Mono.delay(Duration.ofSeconds(1)).then();
+                    })
+                    .block();
+            this.running.set(false);
+            log.info("Finish event handler thread: id={}, name={}", thread.getId(), thread.getName());
+        } while(restart.get());
     }
 
     private synchronized void onEvent(final Event event) {
+        log.debug("Received Dirigera event: type={}, id={}, source={}, time={}", event.type, event.id, event.source, event.time);
         this.listeners.forEach(c -> c.accept(event));
     }
 
@@ -80,12 +87,11 @@ public class WebSocketApi {
         this.listeners.removeIf(l -> l instanceof FilteredEventListener<?> && ((FilteredEventListener<?>) l).listener.equals(listener));
     }
 
-    public void stop() throws InterruptedException {
+    public boolean isRunning() {
+        return this.running.get();
+    }
+
+    public void stop() {
         this.running.set(false);
-        this.thread.interrupt();
-        while (this.thread.isAlive()) {
-            Thread.sleep(100);
-            this.thread.interrupt();
-        }
     }
 }
