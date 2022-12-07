@@ -1,5 +1,11 @@
 # DIRIGERA Client API
 
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports armhf Architecture][armhf-shield]
+![Supports armv7 Architecture][armv7-shield]
+![Supports i386 Architecture][i386-shield]
+
 Unofficial client API for IKEA's new Smarthome Hub
 [DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
 uses DIRIGERA's REST interface at port 8443. The vast majority
