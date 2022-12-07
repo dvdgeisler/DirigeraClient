@@ -21,8 +21,6 @@ public class RedlightDistrict {
     @Bean
     public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-            api.pairIfRequired().block();
-
             api.device.light.all()
                     .flatMapMany(Flux::fromIterable)
                     .doOnNext(d -> log.info("Found light '{}': isOn={}, hue={}, saturation={}, lightLevel={}",

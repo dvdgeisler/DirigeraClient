@@ -33,8 +33,6 @@ public class ListDevices {
     @Bean
     public CommandLineRunner runListDevices(final DirigeraApi api) {
         return (String... args) -> {
-            api.pairIfRequired().block();
-
             api.device.all() // fetch all devices from hub
                     .flatMapMany(Flux::fromIterable)
                     .map(device -> Map.of(

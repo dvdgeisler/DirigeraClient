@@ -5,10 +5,8 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,16 +27,8 @@ public class LightMonitor {
         this.api = api;
     }
 
-    @Bean
-    public CommandLineRunner run() {
-        return (String... args) -> this.api.pairIfRequired().block();
-    }
-
     @Scheduled(fixedRate = 1000)
     public void monitor() {
-        if(!this.api.isPaired())
-            return;
-
         this.api.device.light.all()
                 .flatMapMany(Flux::fromIterable)
                 .filter(d -> d.deviceType == DeviceType.LIGHT)

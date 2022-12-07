@@ -62,7 +62,7 @@ public class ClientOAuthApi extends AbstractClientApi {
             final GatewayDiscovery gatewayDiscovery,
             @Value("${dirigera.clientname:}") final String clientName,
             final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "oauth/", tokenStore);
+        super(gatewayDiscovery, "oauth/");
 
         this.clientName = Optional
                 .ofNullable(clientName)
@@ -73,63 +73,67 @@ public class ClientOAuthApi extends AbstractClientApi {
     }
 
     public Mono<Authorize> authorize(final String challenge) {
-        return this.webClient
-                .get()
-                .uri(uri -> uri
-                        .path("authorize")
-                        .queryParam("audience", AUDIENCE)
-                        .queryParam("response_type", "code")
-                        .queryParam("code_challenge", challenge)
-                        .queryParam("code_challenge_method", CHALLENGE_METHOD).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Authorize.class);
+        return Mono.just(this.webClient)
+                .flatMap(webClient -> webClient
+                        .get()
+                        .uri(uri -> uri
+                                .path("authorize")
+                                .queryParam("audience", AUDIENCE)
+                                .queryParam("response_type", "code")
+                                .queryParam("code_challenge", challenge)
+                                .queryParam("code_challenge_method", CHALLENGE_METHOD).build())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Authorize.class));
     }
 
     public Mono<Void> cancelAuthorize(final Authorize authorize, final String codeVerifier) {
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("authorize").build())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(BodyInserters
-                        .fromFormData("code", authorize.code.toString())
-                        .with("code_verifier", codeVerifier))
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return Mono.just(this.webClient)
+                .flatMap(webClient -> webClient
+                        .post()
+                        .uri(uri -> uri.path("authorize").build())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .body(BodyInserters
+                                .fromFormData("code", authorize.code.toString())
+                                .with("code_verifier", codeVerifier))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
     public Mono<Token> tokenExchange(final Authorize authorize, final String codeVerifier) {
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("token").build())
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(BodyInserters
-                        .fromFormData("code", authorize.code.toString())
-                        .with("code_verifier", codeVerifier)
-                        .with("name", this.clientName)
-                        .with("grant_type", "authorization_code"))
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Token.class)
-                .doOnSuccess(this.tokenStore::setAccessToken);
+        return Mono.just(this.webClient)
+                .flatMap(webClient -> webClient
+                        .post()
+                        .uri(uri -> uri.path("token").build())
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .body(BodyInserters
+                                .fromFormData("code", authorize.code.toString())
+                                .with("code_verifier", codeVerifier)
+                                .with("name", this.clientName)
+                                .with("grant_type", "authorization_code"))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Token.class)
+                        .doOnSuccess(this.tokenStore::setAccessToken));
     }
 
     /**
      * TODO: No idea what this fun is supposed to do or return
      */
     public Mono<Map> pollAuthStatus(final String transactionId) {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("authorize/{transactionId}").build(transactionId))
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Map.class);
+        return Mono.just(this.webClient)
+                .flatMap(webClient -> webClient
+                        .get()
+                        .uri(uri -> uri.path("authorize/{transactionId}").build(transactionId))
+                        .headers(this.tokenStore::setBearerAuth)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Map.class));
     }
 
     public Mono<Token> refreshToken() {
@@ -141,17 +145,18 @@ public class ClientOAuthApi extends AbstractClientApi {
             return Mono.error(e);
         }
 
-        return this.webClient
-                .post()
-                .uri(uri -> uri.path("token").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(BodyInserters.fromFormData("refresh_token", token))
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Token.class)
-                .doOnSuccess(ClientOAuthApi.this.tokenStore::setAccessToken);
+        return Mono.just(this.webClient)
+                .flatMap(webClient -> webClient
+                        .post()
+                        .uri(uri -> uri.path("token").build())
+                        .headers(this.tokenStore::setBearerAuth)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .body(BodyInserters.fromFormData("refresh_token", token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Token.class)
+                        .doOnSuccess(ClientOAuthApi.this.tokenStore::setAccessToken));
     }
 
     public boolean isPaired() {
@@ -180,7 +185,7 @@ public class ClientOAuthApi extends AbstractClientApi {
     }
 
     public Mono<Token> pairIfRequired() {
-        if(this.isPaired()) {
+        if (this.isPaired()) {
             try {
                 return Mono.just(new Token(this.tokenStore.getAccessToken()));
             } catch (IOException e) {
@@ -190,6 +195,7 @@ public class ClientOAuthApi extends AbstractClientApi {
         log.info("No access token found. Pairing required.");
         return this.pair();
     }
+
     private static String defaultClientName() {
         try {
             return InetAddress.getLocalHost().getHostName();

@@ -1,4 +1,15 @@
-# Dirigera Client API
+# DIRIGERA Client API
+<p align="center">
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-api.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-api.jar" />
+    </a>
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-dump.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-dump.jar" />
+    </a>
+    <a href="https://github.com/dvdgeisler/DirigeraClient/releases/download/latest/dirigera-client-mqtt.jar" alt="Contributors">
+        <img src="https://img.shields.io/github/downloads/dvdgeisler/DirigeraClient/latest/dirigera-client-mqtt.jar" />
+    </a>
+</p>
 
 Unofficial client API for IKEA's new Smarthome Hub
 [DIRIGERA](https://github.com/wjtje/DIRIGERA). The client API
@@ -7,78 +18,57 @@ of interfaces have been implemented. However, most are
 barely tested, and some are known as inoperable.
 
 ## What is known to work
+
 * Pair API with DIRIGERA
 * Dump DIRIGERA's data model
-* Fetch and edit devices, i.e.:
-  * Gateway
-    * DIRIGERA Hub for smart products
-  * Repeater
-    * TRADFRI signal repeater
-  * Light & Driver
-    * STOFTMOLN ceiling/wall lamp WW24
-    * FLOALT panel WS 60x60
-    * TRADFRI bulb E27 CWS 806lm
-    * TRADFRI bulb E27 CWS opal 600lm
-    * TRADFRI bulb E27 WS opal 980lm
-    * TRADFRI bulb E27 WS opal 1000lm
-    * TRADFRI bulb E27 WS globe opal 1055lm
-    * TRADFRI bulb T120 E27 WS opal 470lm
-    * TRADFRI bulb E14 WS opal 400lm
-    * TRADFRI bulb GU10 WS 400lm
-    * TRADFRI bulb GU10 WS 345lm
-    * TRADFRI Driver 10W
-    * TRADFRI Driver 30W
-    * GUNNARP panel round
-  * Light-Controller
-    * Remote Control N2
-    * TRADFRI on/off switch
-    * TRADFRI remote control
-    * LEPTITER Recessed spot light
-    * TRADFRI wireless dimmer
-  * Sound-Controller
-    * SYMFONISK Sound Controller
-  * Blinds-Controller
-    * TRADFRI open/close remote
-  * Motion-Sensor
-    * TRADFRI motion sensor
-  * Shortcut-Controller
-    * TRADFRI SHORTCUT Button
-  * Outlet
-    * ASKVADER on/off switch
-    * TRADFRI control outlet
-    * Aqara Smart Plug (lumi.plug.maeu01)
-  * Air Purifier
-    * STARKVIND Air purifier
-  * Blinds
-    * PRAKTLYSING cellular blind
-* Check for firmware updates
+* Fetch and edit devices
 * (Un-)Link devices (e.g., light controller with light bulb)
-* List music playlists and favorites
-* Create, manipulate, and delete rooms
-* Create, manipulate, and delete device-sets
-* Create, manipulate, and delete scenes (without actions and triggers)
+* List and play music playlists and favorites
+* Create, manipulate, and delete rooms, device-sets, and scenes
 * Manipulate, and delete users
 
+### Supported devices
+| Device Type         | API                                           | Home-Assistant Integration                    | Tested Devices                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|---------------------|-----------------------------------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Gateway             | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>DIRIGERA Hub for smart products</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Repeater            | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>TRADFRI signal repeater</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Light               | <span style="color:green"> **&check;**</span> | <span style="color:green"> **&check;**</span> | <ul><li>STOFTMOLN ceiling/wall lamp WW24</li><li>FLOALT panel WS 60x60</li><li>TRADFRI bulb E27 CWS 806lm</li><li>TRADFRI bulb E27 CWS opal 600lm</li><li>TRADFRI bulb E27 WS opal 980lm</li><li>TRADFRI bulb E27 WS opal 1000lm</li><li>TRADFRI bulb E27 WS globe opal 1055lm</li><li>TRADFRI bulb T120 E27 WS opal 470lm</li><li>TRADFRI bulb E14 WS opal 400lm</li><li>TRADFRI bulb GU10 WS 400lm</li><li>TRADFRI bulb GU10 WS 345lm</li><li>TRADFRI Driver 10W</li><li>TRADFRI Driver 30W</li><li>GUNNARP panel round</li><li>LWA017 (Signify Netherlands B.V.)</li></ul> |
+| Outlet              | <span style="color:green"> **&check;**</span> | <span style="color:green"> **&check;**</span> | <ul><li>ASKVADER on/off switch</li><li>TRADFRI control outlet</li><li>Aqara Smart Plug (lumi.plug.maeu01)</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Air Purifier        | <span style="color:orange">**?**      </span> | <span style="color:red">   **X**      </span> | <ul><li>STARKVIND Air purifier</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Blinds              | <span style="color:orange">**?**      </span> | <span style="color:orange">**?**      </span> | <ul><li>PRAKTLYSING cellular blind</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Light-Controller    | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>Remote Control N2</li><li>TRADFRI on/off switch</li><li>TRADFRI remote control</li><li>LEPTITER Recessed spot light</li><li>TRADFRI wireless dimmer</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Blinds-Controller   | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>TRADFRI open/close remote</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Sound-Controller    | <span style="color:orange">**?**      </span> | <span style="color:red">   **X**      </span> | <ul><li>SYMFONISK Sound Controller</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Shortcut-Controller | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>TRADFRI SHORTCUT Button</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Motion-Sensor       | <span style="color:green"> **&check;**</span> | <span style="color:red">   **X**      </span> | <ul><li>TRADFRI motion sensor</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Speaker             | <span style="color:orange">**?**      </span> | <span style="color:red">   **X**      </span> | <ul><li>SYMFONISK Bookshelf S21</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+
+Legend:</br>
+<span style="color:green"> **&check;**</span> fully functional</br>
+<span style="color:orange">**?**   </span> implemented but not tested</br>
+<span style="color:red">   **X**   </span> not implemented
+
 ### Example Code
-The package `dirigera-client-examples` provides several example 
+
+The package `dirigera-client-examples` provides several example
 applications, which essentially cover the aforementioned points.
-However, to give you a glimpse of the look and feel of the library, 
+However, to give you a glimpse of the look and feel of the library,
 here's an example:
+
 ```java
+
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {DirigeraClientApi.class})
 public class MyApplication {
     @Bean
     public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-          api.pairIfRequired().block(); // pair gateway if required
-
-          api.device.light.all() // fetch all light devices from hub
-                  .flatMapMany(Flux::fromIterable)
-                  .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
-                  .flatMap(d -> api.device.light.setLevel(d, 100)) // turn on lights
-                  .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
-                  .blockLast();
+            api.device.light.all() // fetch all light devices from hub
+                    .flatMapMany(Flux::fromIterable)
+                    .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
+                    .flatMap(d -> api.device.light.setLevel(d, 100)) // set light level to 100%
+                    .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
+                    .blockLast();
         };
     }
 
@@ -88,30 +78,32 @@ public class MyApplication {
 }
 ```
 
-## What does not work
+## Limitations:
 
-* Everything which is not defined in API's Data-Model.
-  * The API's data model is strictly typed, but there are still many 
-    devices missing. Hence, it's very likely you have a device linked 
-    to your gateway, which is not depicted by the API. In this case, the 
-    JSON deserialization will likely fail as soon as one of the endpoints
-    returns the respective device data.
-  * You may help us to overcome this limitation by providing us your 
-    Gateway-Dump (see [How to contribute](#how-to-contribute)).
-* Scene actions and triggers.
+The API cannot catch any button presses from controllers or status changes from motion detectors to process them 
+programmatically. However, both device types may be paired with actuators (e.g., lights or outlets) that will 
+process the inputs directly (see example [LinkDevices](dirigera-client-examples/src/main/java/de/dvdgeisler/iot/dirigera/client/examples/linkdevices/LinkDevices.java)). 
+As a workaround, controllers can be used to some extent as triggers 
+for scenes whose status change can be intercepted as an event from the WebSocket stream 
+[SceneTriggers](dirigera-client-examples/src/main/java/de/dvdgeisler/iot/dirigera/client/examples/scenetriggers/SceneTriggers.java)).
 
-### How to contribute
+## How to contribute
 
-The most significant pain point is the limitation of the API data model. 
-You can help us to improve it, and to support progressively more devices.
-
-To do so, run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java). 
-This application reads the data model of your DIRIGERA and outputs it as JSON. Based on the dump, 
-we can determine at which points the API data model deviates or is 
-incomplete. You may submit the generated dump as an issue to GitHub.
+1) The most significant pain point is the limitation of the API data model.
+   You can help us to improve it, and to support progressively more devices.</br></br>
+   To do so, run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java).
+   This application reads the data model of your DIRIGERA and outputs it as JSON. Based on the dump,
+   we can determine at which points the API data model deviates or is
+   incomplete. You may submit the generated dump as an issue to GitHub.</br></br>
+2) Try it out and share your experience. Many functionalities are _blind_ implemented. This means 
+   that the endpoints have been reverse-engineered, and the transmitted data was derived from shared 
+   dumps. However, only testing with real devices can verify whether the interface is implemented 
+   correctly.</br></br>
+3) Tell us how you plan to use the API and what features are lacking or need to be improved.
 
 #### Run the Dump Application
-##### Prerequisites:
+
+Prerequisites:
 * Java 17 (or higher) has to be installed
   * Download Java the latest OpenJDK for your operating system [here](https://openjdk.org)
   * Unpack the zip file to a location of your choosing
@@ -120,7 +112,7 @@ incomplete. You may submit the generated dump as an issue to GitHub.
   * Reboot your pc
   * Execute `java -version`
     * This should output something like:
-    ```
+    ```txt
       openjdk version "17.0.2" 2022-01-18
       OpenJDK Runtime Environment (build 17.0.2+8-86)
       OpenJDK 64-Bit Server VM (build 17.0.2+8-86, mixed mode, sharing)
@@ -130,24 +122,31 @@ incomplete. You may submit the generated dump as an issue to GitHub.
 
 ##### Instructions
 1) Download the latest [dirigera-client-dump.jar](https://github.com/dvdgeisler/DirigeraClient/releases)
-2) Run `java -jar dirigira-client-dump.jar --dirigera.hostname=<ip address of DIRIGERA Gateway>`
+2) Run `java -jar dirigira-client-dump.jar`</br>
+   If the autodiscovery fails and no DIRIGERA is found in your Network, you may pass the DIRIGERA's connection details 
+   by the parameters `--dirigera.hostname=<ip address of DIRIGERA Gateway>` and
+   `--dirigera.port=8443`.
 
 ## Integration to Home Assistant
 
 Lights and sockets can be integrated into Home Assistant via MQTT (more devices will follow).
 Home Assistant will create entities for supported devices, based on its MQTT auto discovery approach.
 
-Add https://github.com/TheMrBooyah/hassio-repository to your home assistant.
+Add `https://github.com/TheMrBooyah/hassio-repository` to your home assistant.
 Update the configuration to your setup.
 
-In order to get your 'Token', run the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java). This will ask you to pair your gateway. After successfully pairing the gateway a file 'dirigera_access_token' will be created. Open the file with your favourite text editor and copy everything into the 'Token' field.
+In order to get your 'Token', run
+the [Dump Application](dirigera-client-dump/src/main/java/de/dvdgeisler/iot/dirigera/client/dump/DumpApplication.java).
+This will ask you to pair your gateway. After successfully pairing the gateway a file 'dirigera_access_token' will be
+created. Open the file with your favourite text editor and copy everything into the 'Token' field.
 
-Start the addon, watch the logs for any errors and if everything went as expected, home assistant should have some new devices/entities from your IKEA Smart Hub.
+Start the addon, watch the logs for any errors and if everything went as expected, home assistant should have some new
+devices/entities from your IKEA Smart Hub.
 
-
-![](img/hass-integration.png)
+<img src="img/hass-integration.png" alt="drawing" width="300"/>
 
 ## Other repos to dig in
 
+* [TheMrBooyah/hassio-dirigera-client](https://github.com/TheMrBooyah/hassio-dirigera-client)
 * [wjtje/DIRIGERA](https://github.com/wjtje/DIRIGERA)
 * [mattias73andersson/dirigera-client-poc](https://github.com/mattias73andersson/dirigera-client-poc)

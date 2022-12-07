@@ -16,68 +16,83 @@ import javax.net.ssl.SSLException;
 public class ClientGatewayApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientGatewayApi.class);
 
+    private final ClientOAuthApi oauth;
+
     public ClientGatewayApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "hub/", tokenStore);
+            final ClientOAuthApi oauth) throws SSLException {
+        super(gatewayDiscovery, "hub/");
+        this.oauth = oauth;
     }
 
     public Mono<GatewayStatus> status() {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("status").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(GatewayStatus.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("status").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(GatewayStatus.class));
     }
 
     public Mono<Void> checkFirmwareUpdate() {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("ota/check").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("ota/check").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
+
     public Mono<Void> installFirmwareUpdate() {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("ota/update").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("ota/update").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
+
     /**
      * TODO: results in 404 error, might not supported in release mode
      */
     public Mono<Void> setFirmwareEnvironment(final GatewayEnvironment environment) {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("ota/environment").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(environment)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("ota/environment").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(environment)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 
     public Mono<Void> setPersistentMode(final GatewayPersistentMode mode) {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("cloud-integration").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(mode)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("cloud-integration").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(mode)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 }

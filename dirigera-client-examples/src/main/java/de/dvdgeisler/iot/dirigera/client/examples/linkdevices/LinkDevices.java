@@ -32,8 +32,6 @@ public class LinkDevices {
             final int receivingDeviceIndex;
             final int controllingDeviceIndex;
 
-            api.pairIfRequired().block();
-
             in = new Scanner(System.in);
 
             receivingDevices = api.device.all()

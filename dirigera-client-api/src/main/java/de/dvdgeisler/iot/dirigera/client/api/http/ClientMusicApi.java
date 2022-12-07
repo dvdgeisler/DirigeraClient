@@ -15,20 +15,25 @@ import javax.net.ssl.SSLException;
 public class ClientMusicApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientMusicApi.class);
 
+    private final ClientOAuthApi oauth;
+
     public ClientMusicApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "music/", tokenStore);
+            final ClientOAuthApi oauth) throws SSLException {
+        super(gatewayDiscovery, "music/");
+        this.oauth = oauth;
     }
 
     public Mono<Music> music() {
-        return this.webClient
-                .get()
-                .uri(UriBuilder::build)
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Music.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(UriBuilder::build)
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Music.class));
     }
 }

@@ -37,8 +37,6 @@ public class ClientApi extends AbstractClientApi {
     private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", ClientApi.class.getPackageName(), ClientApi.class.getClass().getSimpleName());
     private final static Duration WEBSOCKET_PING_DELAY = Duration.ofSeconds(10);
     private final static Duration WEBSOCKET_PING_TIMEOUT = WEBSOCKET_PING_DELAY.plusSeconds(1);
-    //private final String hostname;
-    //private final short port;
     private final ObjectMapper objectMapper;
 
     public final ClientDeviceApi device;
@@ -54,9 +52,6 @@ public class ClientApi extends AbstractClientApi {
 
     public ClientApi(
             final GatewayDiscovery gatewayDiscovery,
-            //@Value("${dirigera.hostname}") final String hostname,
-            //@Value("${dirigera.port:8443}") final short port,
-            final TokenStore tokenStore,
             final ObjectMapper objectMapper,
             final ClientDeviceApi device,
             final ClientDeviceSetApi deviceSet,
@@ -69,9 +64,7 @@ public class ClientApi extends AbstractClientApi {
             final ClientStepApi step,
             final ClientUserApi user
     ) throws SSLException {
-        super(gatewayDiscovery, tokenStore);
-        //this.hostname = hostname;
-        //this.port = port;
+        super(gatewayDiscovery);
         this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
@@ -86,25 +79,29 @@ public class ClientApi extends AbstractClientApi {
     }
 
     public Mono<Home> home() {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("home").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Home.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("home").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Home.class));
     }
 
     public Mono<Map> dump() {
-        return this.webClient
-                .get()
-                .uri(uri -> uri.path("home").build())
-                .headers(this.tokenStore::setBearerAuth)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Map.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .get()
+                        .uri(uri -> uri.path("home").build())
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Map.class));
     }
 
     public Mono<Void> websocket(final WebSocketHandler consumer) {

@@ -28,7 +28,6 @@ public class Scenes {
     public CommandLineRunner run() {
         return (String... args) -> {
             Scene scene;
-            this.api.pairIfRequired().block();
 
             scene = this.api.scene.create("My-First-Scene", "Icon")
                     .doOnSuccess(s -> log.info("Created Scene {}: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))

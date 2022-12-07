@@ -29,8 +29,6 @@ public class FirmwareUpgrade {
         return (String... args) -> {
             final GatewayStatus status;
 
-            api.pairIfRequired().block();
-
             status = api.status()
                     .filter(s -> s.attributes.ota.state == READY_TO_CHECK)
                     .switchIfEmpty(Mono.error(new RuntimeException("Gateway not ready")))
