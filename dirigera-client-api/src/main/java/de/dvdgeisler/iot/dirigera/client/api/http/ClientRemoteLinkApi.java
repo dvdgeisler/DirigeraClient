@@ -14,22 +14,27 @@ import javax.net.ssl.SSLException;
 public class ClientRemoteLinkApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientRemoteLinkApi.class);
 
+    private final ClientOAuthApi oauth;
+
     public ClientRemoteLinkApi(
             final GatewayDiscovery gatewayDiscovery,
-            final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "remoteLinks/", tokenStore);
+            final ClientOAuthApi oauth) throws SSLException {
+        super(gatewayDiscovery, "remoteLinks/");
+        this.oauth = oauth;
     }
 
     public Mono<Void> updateRemoteLinks(final String remoteLinkId, final RemoteLink remoteLink) {
-        return this.webClient
-                .put()
-                .uri(uri -> uri.path("{remoteLinkId}/targets").build(remoteLinkId))
-                .headers(this.tokenStore::setBearerAuth)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(remoteLink)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatus::isError, this::onError)
-                .bodyToMono(Void.class);
+        return this.oauth.pairIfRequired()
+                .map(token -> token.access_token)
+                .flatMap(token -> this.webClient
+                        .put()
+                        .uri(uri -> uri.path("{remoteLinkId}/targets").build(remoteLinkId))
+                        .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(remoteLink)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .retrieve()
+                        .onStatus(HttpStatus::isError, this::onError)
+                        .bodyToMono(Void.class));
     }
 }
