@@ -54,8 +54,6 @@ public class ClientApi extends AbstractClientApi {
 
     public ClientApi(
             final GatewayDiscovery gatewayDiscovery,
-            //@Value("${dirigera.hostname}") final String hostname,
-            //@Value("${dirigera.port:8443}") final short port,
             final TokenStore tokenStore,
             final ObjectMapper objectMapper,
             final ClientDeviceApi device,
@@ -70,8 +68,6 @@ public class ClientApi extends AbstractClientApi {
             final ClientUserApi user
     ) throws SSLException {
         super(gatewayDiscovery, tokenStore);
-        //this.hostname = hostname;
-        //this.port = port;
         this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
