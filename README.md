@@ -79,29 +79,27 @@ public class MyApplication {
    dumps. However, only testing with real devices can verify whether the interface is implemented 
    correctly.
 
-### Build and run the Dump Application
+#### Run the Dump Application
+##### Prerequisites:
+* Java 17 (or higher) has to be installed
+  * Download Java the latest OpenJDK for your operating system [here](https://openjdk.org)
+  * Unpack the zip file to a location of your choosing
+  * Add `JAVA_HOME` to your environment variables with the following path `<PATH_TO_UNPACKED_ZIP_FILE>`
+  * Add `%JAVA_HOME%\bin` to your path variable
+  * Reboot your pc
+  * Execute `java -version`
+    * This should output something like:
+    ```
+      openjdk version "17.0.2" 2022-01-18
+      OpenJDK Runtime Environment (build 17.0.2+8-86)
+      OpenJDK 64-Bit Server VM (build 17.0.2+8-86, mixed mode, sharing)
+    ```
+* DIRIGERA Gateway is connected to the internet
+  * Find the IP address of your DIRIGERA Gateway in your router.
 
-1) Clone repository:
-
-```bash
-git clone git@github.com:dvdgeisler/DirigeraClient.git
-cd DirigeraClient
-```
-
-2) Build project:
-
-```bash
-./mvnw package
-```
-
-3) Run the Dump-Application:
-
-```bash
-java -jar ./dirigera-client-dump/target/dirigera-client-dump.jar
-```
-If the Dirigera Hub is not discovered automatically, 
-you may specify the address and port via the parameters 
-`--dirigera.hostname=<DIRIGERA-IP-ADDRESS>` and `--dirigera.hostname=8443`.
+##### Instructions
+1) Download the latest [dirigera-client-dump.jar](https://github.com/dvdgeisler/DirigeraClient/releases)
+2) Run `java -jar dirigira-client-dump.jar --dirigera.hostname=<ip address of DIRIGERA Gateway>`
 
 ## Integration to Home Assistant
 
