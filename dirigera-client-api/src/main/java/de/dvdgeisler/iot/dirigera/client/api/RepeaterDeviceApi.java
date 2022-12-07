@@ -13,8 +13,8 @@ public class RepeaterDeviceApi extends DefaultDeviceApi<
         RepeaterConfigurationAttributes,
         RepeaterDevice> {
 
-    public RepeaterDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public RepeaterDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

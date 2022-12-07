@@ -1,8 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.examples.scenetriggers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
@@ -19,10 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -32,13 +29,11 @@ import java.util.stream.Stream;
 @ComponentScan(basePackageClasses = {DirigeraApi.class})
 public class SceneTriggers {
     private final static Logger log = LoggerFactory.getLogger(SceneTriggers.class);
-    private final DirigeraApi dapi;
-    private final ClientApi capi;
+    private final DirigeraApi api;
     private final ObjectMapper json;
 
-    public SceneTriggers(final DirigeraApi dapi, final ClientApi capi, final ObjectMapper json) {
-        this.dapi = dapi;
-        this.capi = capi;
+    public SceneTriggers(final DirigeraApi api, final ObjectMapper json) {
+        this.api = api;
         this.json = json;
     }
 
@@ -46,54 +41,65 @@ public class SceneTriggers {
     public CommandLineRunner run() {
         return (String... args) -> {
             List<Scene> scenes;
-            this.dapi.pairIfRequired().block();
-
 
             scenes = new ArrayList<>();
 
-
             try {
-                this.dapi.device.controller.light // create dummy scenes for light controller
+                this.api.device.controller.light // create dummy scenes for light controller
                         .all()
                         .block()
                         .stream()
                         .flatMap(this::createDummyScenes)
                         .forEach(scenes::add);
-                this.dapi.device.controller.shortcut // create dummy scenes for shortcut controller
+                this.api.device.controller.shortcut // create dummy scenes for shortcut controller
                         .all()
                         .block()
                         .stream()
                         .flatMap(this::createDummyScenes)
                         .forEach(scenes::add);
-                this.dapi.device.controller.sound // create dummy scenes for sound controller
+                this.api.device.controller.sound // create dummy scenes for sound controller
                         .all()
                         .block()
                         .stream()
                         .flatMap(this::createDummyScenes)
                         .forEach(scenes::add);
-                this.dapi.device.motionSensor // create dummy scenes for motion sensors
+                this.api.device.motionSensor // create dummy scenes for motion sensors
                         .all()
                         .block()
                         .stream()
                         .flatMap(this::createDummyScenes)
                         .forEach(scenes::add);
                 log.info("Press button of any connected controller");
-                this.capi.websocket(this::logButtonPress)
-                        .block(Duration.ofSeconds(60));
+                this.api.scene.websocket(event -> {
+                    try {
+                        log.info("Received: {}\n{}", event.data.attributes.info.name, json.writeValueAsString(event));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                Thread.sleep(Duration.ofSeconds(60).toMillis());
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
 
             // clean up
             scenes.stream()
-                    .peek(scene -> log.info("Delete scene {}", scene.attributes.info.name))
-                    .map(this.dapi.scene::delete)
+                    .peek(scene -> log.info("Delete scene {}",
+                            Optional.of(scene)
+                                    .map(s -> s.attributes)
+                                    .map(a -> a.info)
+                                    .map(i -> i.name)))
+                    .map(this.api.scene::delete)
                     .forEach(Mono::block);
+            this.api.websocket.stop();
+
         };
     }
 
     /**
-     * Create button for dedicaterd trigger for specific button
+     * Create button for dedicated trigger for specific button
+     *
      * @param device
      * @param buttonIndex
      * @return
@@ -110,6 +116,7 @@ public class SceneTriggers {
 
     /**
      * Create a dummy scene to catch the given button press
+     *
      * @param device
      * @param button
      * @return
@@ -120,11 +127,11 @@ public class SceneTriggers {
 
         name = String.format("%s button %d", device.attributes.state.customName, button);
 
-        scene = this.dapi.scene.create(name, "Icon")
+        scene = this.api.scene.create(name, "Icon")
                 .doOnSuccess(s -> log.info("Created Scene {}: name={}, icon={}", s.id, s.attributes.info.name, s.attributes.info.icon))
                 .block(); // create dummy scene
 
-        return this.dapi.scene.setTrigger(scene, List.of(
+        return this.api.scene.setTrigger(scene, List.of(
                 new SceneTriggerApp(null, null, null, null),
                 createTrigger(device, button))
         ).block();
@@ -132,6 +139,7 @@ public class SceneTriggers {
 
     /**
      * Create dummy scenes for all possible buttons
+     *
      * @param device
      * @return
      */
@@ -140,29 +148,6 @@ public class SceneTriggers {
                 this.createDummyScene(device, 0),
                 this.createDummyScene(device, 1),
                 this.createDummyScene(device, 2)); // button 3 raises an error on the dirigera
-    }
-
-    /**
-     * Log the button press
-     * @param s
-     */
-    private void logButtonPress(final String s) {
-        final Map json, data, info;
-        final String type;
-
-        try {
-            json = this.json.readValue(s, Map.class);
-            type = json.get("type").toString();
-            if(!Objects.equals(type, "sceneUpdated")) {
-                log.info("Received: {}", s);
-                return;
-            }
-            data = (Map) json.get("data");
-            info = (Map) data.get("info");
-            log.info("Received: {}", info.get("name"));
-        } catch (Throwable e) {
-            log.error(e.getMessage());
-        }
     }
 
     public static void main(String[] args) {

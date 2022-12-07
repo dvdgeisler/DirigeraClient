@@ -14,8 +14,8 @@ public class MotionSensorDeviceApi extends ControllerDeviceApi<
         MotionSensorConfigurationAttributes,
         MotionSensorDevice> {
 
-    public MotionSensorDeviceApi(final ClientApi clientApi) {
-        super(clientApi);
+    public MotionSensorDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+        super(clientApi, webSocketApi);
     }
 
     @Override

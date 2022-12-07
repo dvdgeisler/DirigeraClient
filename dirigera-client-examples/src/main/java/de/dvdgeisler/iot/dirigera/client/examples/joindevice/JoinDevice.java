@@ -34,9 +34,6 @@ public class JoinDevice {
             final List<GatewayDevice> gateways;
             final Device device;
 
-            // pair gateway if required
-            api.pairIfRequired().block();
-
             // fetch all known devices
             devices = api.device.all()
                     .flatMapMany(Flux::fromIterable)

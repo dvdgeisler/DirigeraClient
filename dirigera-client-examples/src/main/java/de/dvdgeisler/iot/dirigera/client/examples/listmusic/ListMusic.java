@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.stream.Collectors;
+
 /**
  * Dump everything
  */
@@ -23,8 +25,14 @@ public class ListMusic {
             api.oauth.pairIfRequired().block();
 
             api.music.music().doOnSuccess(music -> {
-                log.info("Playlists: [{}]", String.join(", ", music.playlists));
-                log.info("Favorites: [{}]", String.join(", ", music.favorites));
+                log.info("Playlists: [{}]", music.playlists
+                        .stream()
+                        .map(p->p.title)
+                        .collect(Collectors.joining(", ")));
+                log.info("Favorites: [{}]", music.favorites
+                        .stream()
+                        .map(p->p.title)
+                        .collect(Collectors.joining(", ")));
             }).block();
         };
     }

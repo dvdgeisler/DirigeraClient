@@ -16,25 +16,30 @@ barely tested, and some are known as inoperable.
     * TRADFRI signal repeater
   * Light & Driver
     * STOFTMOLN ceiling/wall lamp WW24
+    * FLOALT panel WS 60x60
     * TRADFRI bulb E27 CWS 806lm
     * TRADFRI bulb E27 CWS opal 600lm
-    * TRADFRI bulb E27 WS globe opal 1055lm
     * TRADFRI bulb E27 WS opal 980lm
+    * TRADFRI bulb E27 WS opal 1000lm
+    * TRADFRI bulb E27 WS globe opal 1055lm
     * TRADFRI bulb T120 E27 WS opal 470lm
     * TRADFRI bulb E14 WS opal 400lm
     * TRADFRI bulb GU10 WS 400lm
+    * TRADFRI bulb GU10 WS 345lm
     * TRADFRI Driver 10W
     * TRADFRI Driver 30W
+    * GUNNARP panel round
   * Light-Controller
     * Remote Control N2
     * TRADFRI on/off switch
     * TRADFRI remote control
     * LEPTITER Recessed spot light
-  * Sound-Controller 
+    * TRADFRI wireless dimmer
+  * Sound-Controller
     * SYMFONISK Sound Controller
   * Blinds-Controller
     * TRADFRI open/close remote
-  * Motion-Sensor 
+  * Motion-Sensor
     * TRADFRI motion sensor
   * Shortcut-Controller
     * TRADFRI SHORTCUT Button
@@ -66,12 +71,10 @@ public class MyApplication {
     @Bean
     public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-          api.pairIfRequired().block(); // pair gateway if required
-
           api.device.light.all() // fetch all light devices from hub
                   .flatMapMany(Flux::fromIterable)
                   .flatMap(d -> api.device.light.turnOn(d)) // turn on lights
-                  .flatMap(d -> api.device.light.setLevel(d, 100)) // turn on lights
+                  .flatMap(d -> api.device.light.setLevel(d, 100)) // set light level to 100%
                   .flatMap(d -> api.device.light.setTemperature(d, d.attributes.state.color.temperatureMax)) // set color temperature
                   .blockLast();
         };
@@ -106,9 +109,18 @@ we can determine at which points the API data model deviates or is
 incomplete. You may submit the generated dump as an issue to GitHub.
 
 #### Build and run the Dump Application
+1) Clone repository:
+```bash
+git clone git@github.com:dvdgeisler/DirigeraClient.git
+cd DirigeraClient
+```
+2) Build project:
 ```bash
 ./mvnw package
-java -jar ./dirigera-client-dump/target/dirigera-client-dump-0.0.1-SNAPSHOT.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
+```
+3) Run the Dump-Application:
+```bash
+java -jar ./dirigera-client-dump/target/dirigera-client-dump.jar --dirigera.hostname=<DIRIGERA-IP-ADDRESS>
 ```
 
 ## Integration to Home Assistant

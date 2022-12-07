@@ -29,8 +29,6 @@ public class Dump {
     @Bean
     public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
-            api.pairIfRequired().block();
-
             api.dump()
                     .flatMap(this::toJSON)
                     .doOnSuccess(log::info)
