@@ -4,7 +4,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.user.User;
 import de.dvdgeisler.iot.dirigera.client.api.model.user.UserName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,10 +19,9 @@ public class ClientUserApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientUserApi.class);
 
     public ClientUserApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/users/", hostname, port), tokenStore);
+        super(gatewayDiscovery, "users/", tokenStore);
     }
 
 

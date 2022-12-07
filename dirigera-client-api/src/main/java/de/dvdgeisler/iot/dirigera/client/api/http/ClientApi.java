@@ -7,7 +7,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import de.dvdgeisler.iot.dirigera.client.api.model.events.PingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,8 @@ public class ClientApi extends AbstractClientApi {
     private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", ClientApi.class.getPackageName(), ClientApi.class.getClass().getSimpleName());
     private final static Duration WEBSOCKET_PING_DELAY = Duration.ofSeconds(10);
     private final static Duration WEBSOCKET_PING_TIMEOUT = WEBSOCKET_PING_DELAY.plusSeconds(1);
-    private final String hostname;
-    private final short port;
+    //private final String hostname;
+    //private final short port;
     private final ObjectMapper objectMapper;
 
     public final ClientDeviceApi device;
@@ -54,8 +53,9 @@ public class ClientApi extends AbstractClientApi {
     public final ClientUserApi user;
 
     public ClientApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
+            //@Value("${dirigera.hostname}") final String hostname,
+            //@Value("${dirigera.port:8443}") final short port,
             final TokenStore tokenStore,
             final ObjectMapper objectMapper,
             final ClientDeviceApi device,
@@ -69,9 +69,9 @@ public class ClientApi extends AbstractClientApi {
             final ClientStepApi step,
             final ClientUserApi user
     ) throws SSLException {
-        super(String.format("https://%s:%d/v1/", hostname, port), tokenStore);
-        this.hostname = hostname;
-        this.port = port;
+        super(gatewayDiscovery, tokenStore);
+        //this.hostname = hostname;
+        //this.port = port;
         this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
@@ -108,16 +108,16 @@ public class ClientApi extends AbstractClientApi {
     }
 
     public Mono<Void> websocket(final WebSocketHandler consumer) {
-        final URI uri;
-
-        uri = URI.create(String.format("https://%s:%d/v1/", this.hostname, this.port));
-        return this.oauth.pairIfRequired()
-                .map(token -> String.format("Bearer %s", token.access_token))
-                .map(bearer -> this.httpClient
-                        .headers(headers -> headers.add(HttpHeaders.AUTHORIZATION, bearer))
-                        .keepAlive(true))
-                .map(ReactorNettyWebSocketClient::new)
-                .flatMap(client -> client.execute(uri, consumer));
+        return this.gatewayDiscovery
+                .getApiUrl()
+                .map(URI::create)
+                .flatMap(uri -> this.oauth.pairIfRequired()
+                        .map(token -> String.format("Bearer %s", token.access_token))
+                        .map(bearer -> this.httpClient
+                                .headers(headers -> headers.add(HttpHeaders.AUTHORIZATION, bearer))
+                                .keepAlive(true))
+                        .map(ReactorNettyWebSocketClient::new)
+                        .flatMap(client -> client.execute(uri, consumer)));
     }
 
     public Mono<Void> websocket(final Consumer<Event> consumer, final BooleanSupplier run) {

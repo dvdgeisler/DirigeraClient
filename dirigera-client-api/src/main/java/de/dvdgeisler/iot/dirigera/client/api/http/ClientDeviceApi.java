@@ -3,7 +3,6 @@ package de.dvdgeisler.iot.dirigera.client.api.http;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +18,9 @@ public class ClientDeviceApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientDeviceApi.class);
 
     public ClientDeviceApi(
-            @Value("${dirigera.hostname}") final String hostname,
-            @Value("${dirigera.port:8443}") final short port,
+            final GatewayDiscovery gatewayDiscovery,
             final TokenStore tokenStore) throws SSLException {
-        super(String.format("https://%s:%d/v1/devices/", hostname, port), tokenStore);
+        super(gatewayDiscovery,"devices/", tokenStore);
     }
 
     public Mono<Void> deleteDevice(final String id) {
