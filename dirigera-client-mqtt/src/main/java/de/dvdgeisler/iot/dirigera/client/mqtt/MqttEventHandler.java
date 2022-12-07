@@ -29,8 +29,6 @@ public abstract class MqttEventHandler<E extends Event> {
         this.api = api;
         this.objectMapper = objectMapper;
 
-        this.api.pairIfRequired().block();
-
         log.info("Subscribe {} to Dirigera websocket: event={}", this.getClass().getSimpleName(), eventType.getSimpleName());
         this.api.websocket(this::onDirigeraEvent, eventType);
     }

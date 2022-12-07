@@ -1,10 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.examples.discolights;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,16 +25,8 @@ public class DiscoLights {
         this.api = api;
     }
 
-    @Bean
-    public CommandLineRunner run() {
-        return (String... args) -> this.api.pairIfRequired().block();
-    }
-
     @Scheduled(fixedDelay = 500)
     public void changeState() {
-        if (!this.api.isPaired())
-            return;
-
         this.api.device.light.all() // fetch all light devices from hub
                 .flatMapMany(Flux::fromIterable)
                 .flatMap(device ->
