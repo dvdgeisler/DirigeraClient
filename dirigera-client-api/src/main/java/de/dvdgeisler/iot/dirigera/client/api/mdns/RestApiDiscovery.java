@@ -9,8 +9,10 @@ import java.io.IOException;
 @Component
 public class RestApiDiscovery extends EndpointDiscovery {
     private final static String SERVICE_DOMAIN = "_ihsp._tcp.local.";
-    public RestApiDiscovery(@Value("${dirigera.hostname:}") final String hostname,
-                            @Value("${dirigera.port:0}") final short port) throws IOException {
+    public RestApiDiscovery(@Value("${dirigera.rest.hostname:}")
+                            final String hostname,
+                            @Value("${dirigera.rest.port:0}")
+                            final short port) throws IOException {
         super(hostname, port, SERVICE_DOMAIN);
     }
 
