@@ -3,7 +3,6 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.Home;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayEnvironment;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayPersistentMode;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayStatus;

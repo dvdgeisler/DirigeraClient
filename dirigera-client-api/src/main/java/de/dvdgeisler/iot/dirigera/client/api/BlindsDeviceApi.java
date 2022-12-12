@@ -3,7 +3,6 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blinds.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blinds.*;
 import reactor.core.publisher.Mono;
 
 public class BlindsDeviceApi extends DefaultDeviceApi<

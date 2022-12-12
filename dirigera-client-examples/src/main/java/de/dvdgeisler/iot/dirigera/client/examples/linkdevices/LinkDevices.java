@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.examples.linkdevices;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

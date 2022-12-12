@@ -6,7 +6,6 @@ import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceConfigurationDefaultAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceStateAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;

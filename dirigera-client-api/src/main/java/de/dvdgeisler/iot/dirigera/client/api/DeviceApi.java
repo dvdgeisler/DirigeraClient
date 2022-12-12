@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api;
 
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceEvent;
 import org.slf4j.Logger;

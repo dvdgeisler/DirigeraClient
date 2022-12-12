@@ -2,7 +2,6 @@ package de.dvdgeisler.iot.dirigera.client.api.http.rest;
 
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;

@@ -14,6 +14,8 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
+import static de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.ota.OtaState.*;
+
 /**
  *
  */

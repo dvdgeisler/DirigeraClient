@@ -1,11 +1,10 @@
 package de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway;
 
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceCapabilities;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceCategory;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceType;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.DeviceSet;
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.Identifier;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 
 import java.time.LocalDateTime;
 import java.util.List;

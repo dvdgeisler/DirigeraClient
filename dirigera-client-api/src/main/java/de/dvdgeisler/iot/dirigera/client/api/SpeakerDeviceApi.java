@@ -3,13 +3,14 @@ package de.dvdgeisler.iot.dirigera.client.api;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.speaker.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.speaker.*;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.music.MusicPlayItem;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.music.MusicPlayList;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.music.MusicPlaybackState;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
+
+import static de.dvdgeisler.iot.dirigera.client.api.http.rest.json.music.MusicPlaybackState.*;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class SpeakerDeviceApi extends DefaultDeviceApi<
