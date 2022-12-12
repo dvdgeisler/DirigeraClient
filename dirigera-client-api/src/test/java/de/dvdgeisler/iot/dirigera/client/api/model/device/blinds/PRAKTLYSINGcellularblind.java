@@ -1,6 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.blinds;
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blinds.BlindsDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

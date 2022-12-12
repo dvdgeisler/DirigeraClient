@@ -1,7 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.examples.rooms;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

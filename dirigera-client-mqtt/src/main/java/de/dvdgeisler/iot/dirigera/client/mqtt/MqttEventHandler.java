@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.Event;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;

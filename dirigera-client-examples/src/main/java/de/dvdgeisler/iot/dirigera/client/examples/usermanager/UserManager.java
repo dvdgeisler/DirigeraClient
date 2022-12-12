@@ -1,8 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.examples.usermanager;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.user.User;
-import de.dvdgeisler.iot.dirigera.client.api.model.user.UserName;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.User;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.UserName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

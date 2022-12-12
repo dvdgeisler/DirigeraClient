@@ -1,11 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterConfigurationAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.repeater.RepeaterStateAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterConfigurationAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterStateAttributes;
 
 public class RepeaterDeviceApi extends DefaultDeviceApi<
         RepeaterStateAttributes,

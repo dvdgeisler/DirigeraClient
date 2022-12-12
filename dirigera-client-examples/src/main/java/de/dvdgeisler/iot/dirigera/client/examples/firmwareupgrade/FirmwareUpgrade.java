@@ -1,7 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.examples.firmwareupgrade;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -14,8 +14,6 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.ota.OtaState.*;
-
 /**
  *
  */
@@ -25,7 +23,7 @@ public class FirmwareUpgrade {
     private final static Logger log = LoggerFactory.getLogger(FirmwareUpgrade.class);
 
     @Bean
-    public CommandLineRunner runListDevices(final DirigeraApi api) {
+    public CommandLineRunner run(final DirigeraApi api) {
         return (String... args) -> {
             final GatewayStatus status;
 

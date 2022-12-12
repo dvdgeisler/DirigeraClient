@@ -2,8 +2,8 @@ package de.dvdgeisler.iot.dirigera.client.mqtt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.*;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.*;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
 public abstract class MqttDeviceEventHandler<D extends Device> extends MqttEventHandler<DeviceEvent> {

@@ -3,14 +3,12 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.BlindsDeviceApi;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blinds.BlindsDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blinds.BlindsState;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blinds.BlindsDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blinds.BlindsState;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailability;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.blinds.BlindsConfig;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -2,6 +2,7 @@ package de.dvdgeisler.iot.dirigera.client.api.model.device;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

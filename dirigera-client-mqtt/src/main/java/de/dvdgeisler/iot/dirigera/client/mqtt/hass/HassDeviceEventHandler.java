@@ -2,11 +2,11 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceAddedEvent;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceConfigurationChangedEvent;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceRemovedEvent;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceStateChangedEvent;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceAddedEvent;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceConfigurationChangedEvent;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceRemovedEvent;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceStateChangedEvent;
 import de.dvdgeisler.iot.dirigera.client.mqtt.MqttDeviceEventHandler;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState;
 import org.eclipse.paho.client.mqttv3.MqttClient;

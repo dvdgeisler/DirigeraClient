@@ -1,11 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerConfigurationAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerStateAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerConfigurationAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerStateAttributes;
 
 public class BlindsControllerDeviceApi extends ControllerDeviceApi<
         BlindsControllerStateAttributes,

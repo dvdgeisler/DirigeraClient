@@ -1,8 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller;
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.soundcontroller.SoundControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.soundcontroller.SoundControllerDevice;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

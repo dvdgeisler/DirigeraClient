@@ -1,11 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerConfigurationAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.shortcutcontroller.ShortcutControllerStateAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.shortcutcontroller.ShortcutControllerAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.shortcutcontroller.ShortcutControllerConfigurationAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.shortcutcontroller.ShortcutControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.shortcutcontroller.ShortcutControllerStateAttributes;
 
 public class ShortcutControllerDeviceApi extends ControllerDeviceApi<
         ShortcutControllerStateAttributes,

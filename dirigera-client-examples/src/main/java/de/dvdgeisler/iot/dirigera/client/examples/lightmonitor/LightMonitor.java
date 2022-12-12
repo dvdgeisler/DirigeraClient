@@ -1,8 +1,8 @@
 package de.dvdgeisler.iot.dirigera.client.examples.lightmonitor;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceType;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.light.LightDevice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.RemoteLink;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.RemoteLink;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceConfigurationDefaultAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceStateAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +15,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCategory.CONTROLLER;
-import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceCategory.SENSOR;
+import static de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceCategory.CONTROLLER;
+import static de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceCategory.SENSOR;
 
 public abstract class ControllerDeviceApi<
         _DeviceStateAttributes extends DeviceStateAttributes,

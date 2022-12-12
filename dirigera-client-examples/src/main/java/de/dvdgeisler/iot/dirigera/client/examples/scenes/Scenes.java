@@ -1,7 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.examples.scenes;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.scene.Scene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

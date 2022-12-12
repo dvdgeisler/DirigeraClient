@@ -1,11 +1,11 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletConfigurationAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletDevice;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.outlet.OutletStateAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletConfigurationAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletStateAttributes;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;

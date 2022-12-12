@@ -1,9 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
-import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.DeviceSetEvent;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.Room;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.RoomAttributes;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceSetEvent;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

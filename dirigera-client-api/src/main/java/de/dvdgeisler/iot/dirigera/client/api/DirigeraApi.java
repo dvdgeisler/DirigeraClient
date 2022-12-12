@@ -1,12 +1,13 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.Home;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.Home;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.*;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayEnvironment;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayPersistentMode;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
-import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayEnvironment;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayPersistentMode;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayStatus;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.Event;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

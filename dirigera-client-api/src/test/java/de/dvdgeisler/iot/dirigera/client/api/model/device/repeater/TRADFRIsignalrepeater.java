@@ -1,6 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.repeater;
 
-import de.dvdgeisler.iot.dirigera.client.api.model.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceTest;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

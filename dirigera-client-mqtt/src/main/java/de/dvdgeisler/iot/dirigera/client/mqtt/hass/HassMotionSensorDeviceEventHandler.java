@@ -3,7 +3,7 @@ package de.dvdgeisler.iot.dirigera.client.mqtt.hass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.api.MotionSensorDeviceApi;
-import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.MotionSensorDevice;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.motionsensor.MotionSensorDevice;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailability;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceAvailabilityState;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.DeviceState;

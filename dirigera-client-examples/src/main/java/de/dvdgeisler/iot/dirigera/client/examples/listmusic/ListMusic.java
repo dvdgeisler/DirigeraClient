@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.listmusic;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
