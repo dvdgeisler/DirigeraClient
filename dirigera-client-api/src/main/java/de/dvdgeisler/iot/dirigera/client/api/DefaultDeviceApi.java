@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.DeviceConfigurationDefaultAttributes;
@@ -24,7 +24,7 @@ public abstract class DefaultDeviceApi<
                         _Device> {
     private final static Logger log = LoggerFactory.getLogger(DefaultDeviceApi.class);
 
-    public DefaultDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public DefaultDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

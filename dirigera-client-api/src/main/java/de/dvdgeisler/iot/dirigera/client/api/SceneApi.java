@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.SceneEvent;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.scene.Scene;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.scene.SceneAttributes;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class SceneApi {
-    private final ClientApi clientApi;
+    private final RestApi clientApi;
     private final WebSocketApi webSocketApi;
 
-    public SceneApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public SceneApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         this.clientApi = clientApi;
         this.webSocketApi = webSocketApi;
     }

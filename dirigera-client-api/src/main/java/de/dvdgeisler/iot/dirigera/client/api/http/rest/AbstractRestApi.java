@@ -15,13 +15,13 @@ import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
 
-public abstract class AbstractClientApi extends HTTPClientApi {
+public abstract class AbstractRestApi extends HTTPClientApi {
 
-    public AbstractClientApi(final RestApiDiscovery discovery, final String path) throws SSLException {
+    public AbstractRestApi(final RestApiDiscovery discovery, final String path) throws SSLException {
         super(discovery, path, getInsecureHttpClient());
     }
 
-    public AbstractClientApi(final RestApiDiscovery discovery) throws SSLException {
+    public AbstractRestApi(final RestApiDiscovery discovery) throws SSLException {
         this(discovery, null);
     }
 

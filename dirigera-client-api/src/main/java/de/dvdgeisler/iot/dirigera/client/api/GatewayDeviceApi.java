@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.*;
 import reactor.core.publisher.Mono;
@@ -15,7 +15,7 @@ public class GatewayDeviceApi extends DeviceApi<
         GatewayConfigurationAttributes,
         GatewayDevice> {
 
-    public GatewayDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public GatewayDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

@@ -34,38 +34,38 @@ import java.util.function.Consumer;
 
 @Component
 @ComponentScan(basePackageClasses = {RestApiDiscovery.class})
-public class ClientApi extends AbstractClientApi {
-    private final static Logger log = LoggerFactory.getLogger(ClientApi.class);
+public class RestApi extends AbstractRestApi {
+    private final static Logger log = LoggerFactory.getLogger(RestApi.class);
     private final static String WEBSOCKET_SPECVERSION = "1.1.0";
-    private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", ClientApi.class.getPackageName(), ClientApi.class.getClass().getSimpleName());
+    private final static String WEBSOCKET_SOURCE_URN = String.format("urn:%s:%s", RestApi.class.getPackageName(), RestApi.class.getClass().getSimpleName());
     private final static Duration WEBSOCKET_PING_DELAY = Duration.ofSeconds(10);
     private final static Duration WEBSOCKET_PING_TIMEOUT = WEBSOCKET_PING_DELAY.plusSeconds(1);
     private final ObjectMapper objectMapper;
 
-    public final ClientDeviceApi device;
-    public final ClientDeviceSetApi deviceSet;
-    public final ClientGatewayApi gateway;
-    public final ClientMusicApi music;
-    public final ClientOAuthApi oauth;
-    public final ClientRemoteLinkApi remoteLink;
-    public final ClientRoomApi room;
-    public final ClientSceneApi scene;
-    public final ClientStepApi step;
-    public final ClientUserApi user;
+    public final RestDeviceApi device;
+    public final RestDeviceSetApi deviceSet;
+    public final RestGatewayApi gateway;
+    public final RestMusicApi music;
+    public final RestOAuthApi oauth;
+    public final RestRemoteLinkApi remoteLink;
+    public final RestRoomApi room;
+    public final RestSceneApi scene;
+    public final RestStepApi step;
+    public final RestUserApi user;
 
-    public ClientApi(
+    public RestApi(
             final RestApiDiscovery discovery,
             final ObjectMapper objectMapper,
-            final ClientDeviceApi device,
-            final ClientDeviceSetApi deviceSet,
-            final ClientGatewayApi gateway,
-            final ClientMusicApi music,
-            final ClientOAuthApi oauth,
-            final ClientRemoteLinkApi remoteLink,
-            final ClientRoomApi room,
-            final ClientSceneApi scene,
-            final ClientStepApi step,
-            final ClientUserApi user
+            final RestDeviceApi device,
+            final RestDeviceSetApi deviceSet,
+            final RestGatewayApi gateway,
+            final RestMusicApi music,
+            final RestOAuthApi oauth,
+            final RestRemoteLinkApi remoteLink,
+            final RestRoomApi room,
+            final RestSceneApi scene,
+            final RestStepApi step,
+            final RestUserApi user
     ) throws SSLException {
         super(discovery);
         this.objectMapper = objectMapper;

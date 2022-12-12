@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.User;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.UserName;
 import reactor.core.publisher.Flux;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public class UserApi {
-    private final ClientApi clientApi;
+    private final RestApi clientApi;
 
-    public UserApi(final ClientApi clientApi) {
+    public UserApi(final RestApi clientApi) {
         this.clientApi = clientApi;
     }
 

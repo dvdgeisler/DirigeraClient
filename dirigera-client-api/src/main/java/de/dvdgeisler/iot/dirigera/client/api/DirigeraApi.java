@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.Home;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.*;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.gateway.GatewayEnvironment;
@@ -28,7 +28,7 @@ public class DirigeraApi {
         public final BlindsControllerDeviceApi blinds;
 
         public ControllerDeviceApiWrapper(
-                final ClientApi clientApi,
+                final RestApi clientApi,
                 final WebSocketApi webSocketApi,
                 final LightControllerDeviceApi light,
                 final ShortcutControllerDeviceApi shortcut,
@@ -63,7 +63,7 @@ public class DirigeraApi {
         public final SpeakerDeviceApi speaker;
 
         public DeviceApiWrapper(
-                final ClientApi clientApi,
+                final RestApi clientApi,
                 final WebSocketApi webSocketApi,
                 final GatewayDeviceApi gateway,
                 final LightControllerDeviceApi lightController,
@@ -105,7 +105,7 @@ public class DirigeraApi {
         }
     }
 
-    private final ClientApi clientApi;
+    private final RestApi clientApi;
     public final WebSocketApi websocket;
 
     public final DeviceApiWrapper device;
@@ -113,7 +113,7 @@ public class DirigeraApi {
     public final SceneApi scene;
     public final UserApi user;
 
-    public DirigeraApi(final ClientApi clientApi) {
+    public DirigeraApi(final RestApi clientApi) {
         this.clientApi = clientApi;
         this.websocket = new WebSocketApi(clientApi);
         this.device = new DeviceApiWrapper(

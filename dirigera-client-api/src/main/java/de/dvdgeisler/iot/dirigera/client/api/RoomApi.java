@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.Room;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.RoomAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceSetEvent;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class RoomApi {
-    private final ClientApi clientApi;
+    private final RestApi clientApi;
     private final WebSocketApi webSocketApi;
 
-    public RoomApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public RoomApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         this.clientApi = clientApi;
         this.webSocketApi = webSocketApi;
     }

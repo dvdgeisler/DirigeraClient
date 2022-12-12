@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +32,11 @@ public class WebSocketApi {
         }
     }
 
-    private final ClientApi api;
+    private final RestApi api;
     private final AtomicBoolean running;
     private final List<Consumer<Event>> listeners;
 
-    public WebSocketApi(final ClientApi api) {
+    public WebSocketApi(final RestApi api) {
         this.listeners = new ArrayList<>();
         this.api = api;
         this.running = new AtomicBoolean(false);

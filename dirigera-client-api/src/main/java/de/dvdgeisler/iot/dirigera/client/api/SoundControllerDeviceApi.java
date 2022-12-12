@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.soundcontroller.SoundControllerAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.soundcontroller.SoundControllerConfigurationAttributes;
@@ -13,7 +13,7 @@ public class SoundControllerDeviceApi extends ControllerDeviceApi<
         SoundControllerConfigurationAttributes,
         SoundControllerDevice> {
 
-    public SoundControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public SoundControllerDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

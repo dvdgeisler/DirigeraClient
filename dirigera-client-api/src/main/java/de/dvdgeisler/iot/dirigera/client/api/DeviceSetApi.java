@@ -1,7 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientDeviceSetApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestDeviceSetApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.DeviceSet;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.deviceset.DeviceSetAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.events.DeviceSetEvent;
@@ -13,11 +13,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class DeviceSetApi {
-    private final ClientDeviceSetApi deviceSetApi;
-    private final ClientApi clientApi;
+    private final RestDeviceSetApi deviceSetApi;
+    private final RestApi clientApi;
     private final WebSocketApi webSocketApi;
 
-    public DeviceSetApi(final ClientDeviceSetApi deviceSetApi, final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public DeviceSetApi(final RestDeviceSetApi deviceSetApi, final RestApi clientApi, final WebSocketApi webSocketApi) {
         this.deviceSetApi = deviceSetApi;
         this.clientApi = clientApi;
         this.webSocketApi = webSocketApi;

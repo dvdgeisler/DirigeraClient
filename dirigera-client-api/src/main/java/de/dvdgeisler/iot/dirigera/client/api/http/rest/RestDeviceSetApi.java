@@ -15,14 +15,14 @@ import reactor.core.publisher.Mono;
 import javax.net.ssl.SSLException;
 
 @Component
-public class ClientDeviceSetApi extends AbstractClientApi {
-    private final static Logger log = LoggerFactory.getLogger(ClientDeviceSetApi.class);
+public class RestDeviceSetApi extends AbstractRestApi {
+    private final static Logger log = LoggerFactory.getLogger(RestDeviceSetApi.class);
 
-    private final ClientOAuthApi oauth;
+    private final RestOAuthApi oauth;
 
-    public ClientDeviceSetApi(
+    public RestDeviceSetApi(
             final RestApiDiscovery discovery,
-            final ClientOAuthApi oauth) throws SSLException {
+            final RestOAuthApi oauth) throws SSLException {
         super(discovery, "device-set/");
         this.oauth = oauth;
     }

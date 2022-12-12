@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.motionsensor.*;
 import reactor.core.publisher.Mono;
@@ -14,7 +14,7 @@ public class MotionSensorDeviceApi extends ControllerDeviceApi<
         MotionSensorConfigurationAttributes,
         MotionSensorDevice> {
 
-    public MotionSensorDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public MotionSensorDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

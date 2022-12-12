@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.repeater.RepeaterConfigurationAttributes;
@@ -13,7 +13,7 @@ public class RepeaterDeviceApi extends DefaultDeviceApi<
         RepeaterConfigurationAttributes,
         RepeaterDevice> {
 
-    public RepeaterDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public RepeaterDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

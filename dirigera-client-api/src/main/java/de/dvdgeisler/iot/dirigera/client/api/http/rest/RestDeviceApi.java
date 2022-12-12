@@ -15,14 +15,14 @@ import javax.net.ssl.SSLException;
 import java.util.List;
 
 @Component
-public class ClientDeviceApi extends AbstractClientApi {
-    private final static Logger log = LoggerFactory.getLogger(ClientDeviceApi.class);
+public class RestDeviceApi extends AbstractRestApi {
+    private final static Logger log = LoggerFactory.getLogger(RestDeviceApi.class);
 
-    private final ClientOAuthApi oauth;
+    private final RestOAuthApi oauth;
 
-    public ClientDeviceApi(
+    public RestDeviceApi(
             final RestApiDiscovery discovery,
-            final ClientOAuthApi oauth) throws SSLException {
+            final RestOAuthApi oauth) throws SSLException {
         super(discovery, "devices/");
         this.oauth = oauth;
     }

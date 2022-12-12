@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.blindscontroller.BlindsControllerConfigurationAttributes;
@@ -13,7 +13,7 @@ public class BlindsControllerDeviceApi extends ControllerDeviceApi<
         BlindsControllerConfigurationAttributes,
         BlindsControllerDevice> {
 
-    public BlindsControllerDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public BlindsControllerDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

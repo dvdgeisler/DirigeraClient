@@ -31,8 +31,8 @@ import java.util.function.Predicate;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
 @Component
-public class ClientOAuthApi extends AbstractClientApi {
-    private final static Logger log = LoggerFactory.getLogger(ClientOAuthApi.class);
+public class RestOAuthApi extends AbstractRestApi {
+    private final static Logger log = LoggerFactory.getLogger(RestOAuthApi.class);
     private final static MessageDigest DIGEST;
     private final static Base64.Encoder BASE64_ENCODER;
     private final static Base64.Decoder BASE64_DECODER;
@@ -59,7 +59,7 @@ public class ClientOAuthApi extends AbstractClientApi {
     private final String clientName;
     private final TokenStore tokenStore;
 
-    public ClientOAuthApi(
+    public RestOAuthApi(
             final RestApiDiscovery discovery,
             @Value("${dirigera.clientname:}") final String clientName,
             final TokenStore tokenStore) throws SSLException {
@@ -68,7 +68,7 @@ public class ClientOAuthApi extends AbstractClientApi {
         this.clientName = Optional
                 .ofNullable(clientName)
                 .filter(Predicate.not(String::isBlank))
-                .orElseGet(ClientOAuthApi::defaultClientName);
+                .orElseGet(RestOAuthApi::defaultClientName);
         log.info("Dirigera client name: {}", this.clientName);
         this.tokenStore = tokenStore;
     }
@@ -157,7 +157,7 @@ public class ClientOAuthApi extends AbstractClientApi {
                         .retrieve()
                         .onStatus(HttpStatus::isError, this::onError)
                         .bodyToMono(Token.class)
-                        .doOnSuccess(ClientOAuthApi.this.tokenStore::setAccessToken));
+                        .doOnSuccess(RestOAuthApi.this.tokenStore::setAccessToken));
     }
 
     public boolean isPaired() {
@@ -168,8 +168,8 @@ public class ClientOAuthApi extends AbstractClientApi {
         final String codeVerifier;
         final String codeChallenge;
 
-        codeVerifier = ClientOAuthApi.generateCodeVerifier();
-        codeChallenge = ClientOAuthApi.calculateCodeChallenge(codeVerifier);
+        codeVerifier = RestOAuthApi.generateCodeVerifier();
+        codeChallenge = RestOAuthApi.calculateCodeChallenge(codeVerifier);
 
         return this.authorize(codeChallenge)
                 .doOnSuccess(authorize -> log.info("Press button on Dirigera Hub to finish pairing"))

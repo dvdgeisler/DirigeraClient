@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.usermanager;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.User;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.user.UserName;
 import org.slf4j.Logger;
@@ -18,12 +18,12 @@ import java.util.Scanner;
  * Manage users
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {ClientApi.class})
+@ComponentScan(basePackageClasses = {RestApi.class})
 public class UserManager {
     private final static Logger log = LoggerFactory.getLogger(UserManager.class);
-    private final ClientApi api;
+    private final RestApi api;
 
-    public UserManager(final ClientApi api) {
+    public UserManager(final RestApi api) {
         this.api = api;
     }
 

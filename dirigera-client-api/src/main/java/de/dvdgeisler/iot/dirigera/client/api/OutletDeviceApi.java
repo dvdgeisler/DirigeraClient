@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.Device;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.http.rest.json.device.outlet.OutletConfigurationAttributes;
@@ -15,7 +15,7 @@ public class OutletDeviceApi extends DefaultDeviceApi<
         OutletAttributes,
         OutletConfigurationAttributes,
         OutletDevice> {
-    public OutletDeviceApi(final ClientApi clientApi, final WebSocketApi webSocketApi) {
+    public OutletDeviceApi(final RestApi clientApi, final WebSocketApi webSocketApi) {
         super(clientApi, webSocketApi);
     }
 

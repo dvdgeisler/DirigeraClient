@@ -1,6 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.examples.listmusic;
 
-import de.dvdgeisler.iot.dirigera.client.api.http.rest.ClientApi;
+import de.dvdgeisler.iot.dirigera.client.api.http.rest.RestApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,12 +15,12 @@ import java.util.stream.Collectors;
  * Dump everything
  */
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {ClientApi.class})
+@ComponentScan(basePackageClasses = {RestApi.class})
 public class ListMusic {
     private final static Logger log = LoggerFactory.getLogger(ListMusic.class);
 
     @Bean
-    public CommandLineRunner run(final ClientApi api) {
+    public CommandLineRunner run(final RestApi api) {
         return (String... args) -> {
             api.oauth.pairIfRequired().block();
 
