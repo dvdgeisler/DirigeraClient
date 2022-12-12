@@ -76,7 +76,7 @@ public class EndpointDiscovery implements ServiceListener {
         this.port = (short) info.getPort();
     }
 
-    public Mono<String> getApiUrl() {
+    public Mono<String> getEndpoint() {
         return Mono.fromSupplier(() -> {
                     if (this.hostname == null || this.hostname.isBlank())
                         throw new RuntimeException("" +
@@ -90,7 +90,7 @@ public class EndpointDiscovery implements ServiceListener {
                                 "You may use the properties " +
                                 "\"dirigera.hostname\" and \"dirigera.port\" " +
                                 "to specify the gateway endpoint.");
-                    return String.format("https://%s:%d/v1/", this.hostname, this.port);
+                    return String.format("%s:%d", this.hostname, this.port);
                 })
                 .filter(Objects::nonNull)
                 .retryWhen(Retry.fixedDelay(20, Duration.ofSeconds(5)))

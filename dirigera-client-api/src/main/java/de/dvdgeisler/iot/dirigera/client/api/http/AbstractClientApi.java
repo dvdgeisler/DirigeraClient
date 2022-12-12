@@ -1,6 +1,5 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
-import de.dvdgeisler.iot.dirigera.client.api.mdns.EndpointDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Error;
 import io.netty.handler.ssl.SslContext;
@@ -19,7 +18,7 @@ import javax.net.ssl.SSLException;
 
 public abstract class AbstractClientApi {
 
-    protected final EndpointDiscovery discovery;
+    protected final RestApiDiscovery discovery;
     protected final SslContext sslContext;
     protected final HttpClient httpClient;
     protected final WebClient webClient;
