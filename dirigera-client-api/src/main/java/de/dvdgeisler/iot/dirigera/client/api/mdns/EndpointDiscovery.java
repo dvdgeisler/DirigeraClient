@@ -1,9 +1,7 @@
-package de.dvdgeisler.iot.dirigera.client.api.http;
+package de.dvdgeisler.iot.dirigera.client.api.mdns;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
@@ -18,24 +16,22 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Component
-public class GatewayDiscovery implements ServiceListener {
-    private final static Logger log = LoggerFactory.getLogger(GatewayDiscovery.class);
+public class EndpointDiscovery implements ServiceListener {
+    private final static Logger log = LoggerFactory.getLogger(EndpointDiscovery.class);
 
     private String hostname;
     private short port;
 
     private final JmDNS jmdns;
 
-    public GatewayDiscovery(@Value("${dirigera.hostname:}") final String hostname,
-                            @Value("${dirigera.port:0}") final short port) throws IOException {
+    public EndpointDiscovery(final String hostname, final short port, final String serviceDomain) throws IOException {
         this.hostname = hostname;
         this.port = port;
         this.jmdns = JmDNS.create(InetAddress.getLocalHost());
 
         if (this.hostname == null || this.hostname.isBlank() || port == 0) {
             log.info("Auto discover gateway");
-            this.jmdns.addServiceListener("_ihsp._tcp.local.", this);
+            this.jmdns.addServiceListener(serviceDomain, this);
         }
 
     }

@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.music.Music;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,9 @@ public class ClientMusicApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientMusicApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "music/");
+        super(discovery, "music/");
         this.oauth = oauth;
     }
 

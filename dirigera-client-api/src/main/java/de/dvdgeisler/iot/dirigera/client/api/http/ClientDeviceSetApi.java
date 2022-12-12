@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.DeviceSetAttributes;
 import org.slf4j.Logger;
@@ -20,9 +21,9 @@ public class ClientDeviceSetApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientDeviceSetApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "device-set/");
+        super(discovery, "device-set/");
         this.oauth = oauth;
     }
 

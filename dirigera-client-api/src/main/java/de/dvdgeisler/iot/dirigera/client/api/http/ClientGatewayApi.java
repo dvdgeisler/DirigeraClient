@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayEnvironment;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayPersistentMode;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayStatus;
@@ -19,9 +20,9 @@ public class ClientGatewayApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientGatewayApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "hub/");
+        super(discovery, "hub/");
         this.oauth = oauth;
     }
 

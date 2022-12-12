@@ -1,5 +1,7 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.EndpointDiscovery;
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Error;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -17,20 +19,20 @@ import javax.net.ssl.SSLException;
 
 public abstract class AbstractClientApi {
 
-    protected final GatewayDiscovery gatewayDiscovery;
+    protected final EndpointDiscovery discovery;
     protected final SslContext sslContext;
     protected final HttpClient httpClient;
     protected final WebClient webClient;
 
-    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery, final String path) throws SSLException {
-        this.gatewayDiscovery = gatewayDiscovery;
+    public AbstractClientApi(final RestApiDiscovery discovery, final String path) throws SSLException {
+        this.discovery = discovery;
         this.sslContext = SslContextBuilder
                 .forClient()
                 .trustManager(InsecureTrustManagerFactory.INSTANCE)
                 .build();
         this.httpClient = HttpClient.create().secure(t -> t.sslContext(this.sslContext));
 
-        this.webClient = gatewayDiscovery.getApiUrl()
+        this.webClient = this.discovery.getApiUrl()
                 .map(url -> url + path)
                 .map(url -> WebClient
                         .builder()
@@ -40,8 +42,8 @@ public abstract class AbstractClientApi {
                 .block();
     }
 
-    public AbstractClientApi(final GatewayDiscovery gatewayDiscovery) throws SSLException {
-        this(gatewayDiscovery, "");
+    public AbstractClientApi(final RestApiDiscovery discovery) throws SSLException {
+        this(discovery, "");
     }
 
 

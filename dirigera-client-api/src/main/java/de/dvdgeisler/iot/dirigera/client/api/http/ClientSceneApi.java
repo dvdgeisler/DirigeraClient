@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.Scene;
 import de.dvdgeisler.iot.dirigera.client.api.model.scene.SceneAttributes;
@@ -22,9 +23,9 @@ public class ClientSceneApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientSceneApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "scenes/");
+        super(discovery, "scenes/");
         this.oauth = oauth;
     }
 

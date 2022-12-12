@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.Room;
 import de.dvdgeisler.iot.dirigera.client.api.model.deviceset.RoomAttributes;
@@ -23,9 +24,9 @@ public class ClientRoomApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientRoomApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "rooms/");
+        super(discovery, "rooms/");
         this.oauth = oauth;
     }
 

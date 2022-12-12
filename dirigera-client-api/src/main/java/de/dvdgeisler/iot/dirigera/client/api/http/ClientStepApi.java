@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.StepAttributes;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType;
 import org.slf4j.Logger;
@@ -18,9 +19,9 @@ public class ClientStepApi extends AbstractClientApi {
     private final ClientOAuthApi oauth;
 
     public ClientStepApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ClientOAuthApi oauth) throws SSLException {
-        super(gatewayDiscovery, "step/");
+        super(discovery, "step/");
         this.oauth = oauth;
     }
 

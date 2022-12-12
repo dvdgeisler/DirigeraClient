@@ -2,11 +2,13 @@ package de.dvdgeisler.iot.dirigera.client.api.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.Home;
 import de.dvdgeisler.iot.dirigera.client.api.model.events.Event;
 import de.dvdgeisler.iot.dirigera.client.api.model.events.PingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
 @Component
+@ComponentScan(basePackageClasses = {RestApiDiscovery.class})
 public class ClientApi extends AbstractClientApi {
     private final static Logger log = LoggerFactory.getLogger(ClientApi.class);
     private final static String WEBSOCKET_SPECVERSION = "1.1.0";
@@ -51,7 +54,7 @@ public class ClientApi extends AbstractClientApi {
     public final ClientUserApi user;
 
     public ClientApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             final ObjectMapper objectMapper,
             final ClientDeviceApi device,
             final ClientDeviceSetApi deviceSet,
@@ -64,7 +67,7 @@ public class ClientApi extends AbstractClientApi {
             final ClientStepApi step,
             final ClientUserApi user
     ) throws SSLException {
-        super(gatewayDiscovery);
+        super(discovery);
         this.objectMapper = objectMapper;
         this.device = device;
         this.deviceSet = deviceSet;
@@ -105,7 +108,7 @@ public class ClientApi extends AbstractClientApi {
     }
 
     public Mono<Void> websocket(final WebSocketHandler consumer) {
-        return this.gatewayDiscovery
+        return this.discovery
                 .getApiUrl()
                 .map(URI::create)
                 .flatMap(uri -> this.oauth.pairIfRequired()

@@ -1,5 +1,6 @@
 package de.dvdgeisler.iot.dirigera.client.api.http;
 
+import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import de.dvdgeisler.iot.dirigera.client.api.model.auth.Authorize;
 import de.dvdgeisler.iot.dirigera.client.api.model.auth.Token;
 import org.slf4j.Logger;
@@ -59,10 +60,10 @@ public class ClientOAuthApi extends AbstractClientApi {
     private final TokenStore tokenStore;
 
     public ClientOAuthApi(
-            final GatewayDiscovery gatewayDiscovery,
+            final RestApiDiscovery discovery,
             @Value("${dirigera.clientname:}") final String clientName,
             final TokenStore tokenStore) throws SSLException {
-        super(gatewayDiscovery, "oauth/");
+        super(discovery, "oauth/");
 
         this.clientName = Optional
                 .ofNullable(clientName)
