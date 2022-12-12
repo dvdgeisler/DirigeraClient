@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class EndpointDiscovery implements ServiceListener {
+public abstract class EndpointDiscovery implements ServiceListener {
     private final static Logger log = LoggerFactory.getLogger(EndpointDiscovery.class);
 
     private String hostname;
@@ -96,4 +96,6 @@ public class EndpointDiscovery implements ServiceListener {
                 .retryWhen(Retry.fixedDelay(20, Duration.ofSeconds(5)))
                 .doOnError(e -> log.error(e.getMessage()));
     }
+
+    public abstract Mono<String> getApiUrl();
 }
