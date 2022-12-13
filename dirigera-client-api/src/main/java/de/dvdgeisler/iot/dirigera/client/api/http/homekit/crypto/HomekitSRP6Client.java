@@ -1,4 +1,4 @@
-package de.dvdgeisler.iot.dirigera.client.examples.homekit.crypto;
+package de.dvdgeisler.iot.dirigera.client.api.http.homekit.crypto;
 
 import com.nimbusds.srp6.*;
 
@@ -12,10 +12,11 @@ import java.security.NoSuchAlgorithmException;
 import static com.nimbusds.srp6.BigIntegerUtils.bigIntegerFromBytes;
 import static com.nimbusds.srp6.BigIntegerUtils.bigIntegerToBytes;
 
-
 public class HomekitSRP6Client
         extends SRP6ClientSession
         implements ClientEvidenceRoutine, ServerEvidenceRoutine, XRoutine, URoutine {
+    private final static int BIT_SIZE = 3072;
+    private final static String HASH_METHOD = "SHA-512";
     public HomekitSRP6Client(final SRP6CryptoParams config) {
         super();
         this.config = config;
@@ -23,6 +24,10 @@ public class HomekitSRP6Client
         this.setServerEvidenceRoutine(this);
         this.setXRoutine(this);
         this.setHashedKeysRoutine(this);
+    }
+
+    public HomekitSRP6Client() {
+        this(SRP6CryptoParams.getInstance(BIT_SIZE, HASH_METHOD));
     }
 
     private static MessageDigest getMessageDigest(final String H) {

@@ -15,6 +15,6 @@ public class HomekitDiscovery extends EndpointDiscovery {
     }
 
     public Mono<String> getApiUrl() {
-        return super.getEndpoint().map(url -> String.format("http://%s", url));
+        return super.getEndpoint().map(url -> String.format("http://%s/", url));
     }
 }

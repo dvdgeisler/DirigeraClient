@@ -30,7 +30,7 @@ public abstract class EndpointDiscovery implements ServiceListener {
         this.jmdns = JmDNS.create(InetAddress.getLocalHost());
 
         if (this.hostname == null || this.hostname.isBlank() || port == 0) {
-            log.info("Auto discover gateway");
+            log.info("Auto discover gateway on domain {}", serviceDomain);
             this.jmdns.addServiceListener(serviceDomain, this);
         }
 
