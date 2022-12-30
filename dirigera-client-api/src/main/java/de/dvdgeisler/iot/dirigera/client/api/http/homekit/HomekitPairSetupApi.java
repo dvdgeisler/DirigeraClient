@@ -29,7 +29,7 @@ import static de.dvdgeisler.iot.dirigera.client.api.utils.ByteUtils.concat;
 
 @Component
 @ComponentScan(basePackageClasses = {AuthenticationStore.class})
-public class HomekitPairSetupApi extends AbstractHomekitApi {
+public class HomekitPairSetupApi extends HomekitPairApi {
     private final static Logger log = LoggerFactory.getLogger(HomekitPairSetupApi.class);
 
     private final static byte[] PAIR_SETUP_ENCRYPT_SALT = "Pair-Setup-Encrypt-Salt".getBytes(StandardCharsets.UTF_8);

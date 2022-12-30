@@ -7,17 +7,16 @@ import de.dvdgeisler.iot.dirigera.client.api.mdns.RestApiDiscovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.ComponentScan;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
 @ComponentScan(basePackageClasses = {RestApiDiscovery.class})
-public abstract class AbstractHomekitApi extends HTTPClientApi {
-    private final static Logger log = LoggerFactory.getLogger(AbstractHomekitApi.class);
+public abstract class HomekitPairApi extends HTTPClientApi {
+    private final static Logger log = LoggerFactory.getLogger(HomekitPairApi.class);
 
-    public AbstractHomekitApi(final HomekitDiscovery discovery, final String path) {
-        super(discovery, path, null);
+    public HomekitPairApi(final HomekitDiscovery discovery, final String path) {
+        super(discovery, path);
     }
 
     protected Mono<DirigeraTLV> send(final DirigeraTLV message) {
@@ -31,12 +30,10 @@ public abstract class AbstractHomekitApi extends HTTPClientApi {
                         throw new RuntimeException(e);
                     }
                 })
-                .flatMap(payload -> this.webClient.post()
+                .flatMap(payload -> this.webClient
+                        .post()
                         .contentLength(payload.length) // crucial
-                        .body((request, context) -> request.writeWith((s) ->
-                                Flux.just(payload)
-                                        .map(p -> request.bufferFactory().wrap(p))
-                                        .subscribe(s)))
+                        .bodyValue(payload)
                         .retrieve()
                         .bodyToMono(byte[].class))
                 .flatMap(bytes -> {
@@ -56,5 +53,4 @@ public abstract class AbstractHomekitApi extends HTTPClientApi {
                 })
                 .doOnSuccess(tlv -> log.debug("Received TLV message:\n{}", tlv));
     }
-
 }

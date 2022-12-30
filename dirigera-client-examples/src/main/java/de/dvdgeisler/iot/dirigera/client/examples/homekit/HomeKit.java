@@ -1,9 +1,9 @@
 package de.dvdgeisler.iot.dirigera.client.examples.homekit;
 
 import de.dvdgeisler.iot.dirigera.client.api.http.homekit.AuthenticationStore;
+import de.dvdgeisler.iot.dirigera.client.api.http.homekit.HomekitApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.homekit.HomekitPairSetupApi;
 import de.dvdgeisler.iot.dirigera.client.api.http.homekit.HomekitPairVerificationApi;
-import de.dvdgeisler.iot.dirigera.client.api.http.homekit.crypto.Cryptographer;
 import de.dvdgeisler.iot.dirigera.client.api.http.homekit.crypto.EdDSASigner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+
+import java.util.Map;
 
 /**
  *
@@ -31,12 +33,11 @@ public class HomeKit {
     }
 
     @Bean
-    public CommandLineRunner run() {
+    public CommandLineRunner run(final HomekitApi api, final HomekitPairVerificationApi pvApi) {
         return (String... args) -> {
-            final Cryptographer cryptographer;
 
-            cryptographer = this.pairVerificationApi.getCryptographer().block();
-
+            pvApi.getCryptographer().block();
+            Map res = api.test();
 
             System.out.println();
         };

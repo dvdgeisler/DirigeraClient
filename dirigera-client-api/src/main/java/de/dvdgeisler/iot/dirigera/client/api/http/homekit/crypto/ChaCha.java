@@ -159,6 +159,10 @@ public class ChaCha {
         return new ChaCha(key, nonce).encrypt(data);
     }
 
+    public static byte[] encryptData(final byte[] data, final byte[] additionalData, final byte[] key, final byte[] nonce) throws IOException {
+        return new ChaCha(key, nonce).encrypt(data, additionalData);
+    }
+
     public static byte[] decryptData(final byte[] encrypted, final byte[] key, final byte[] nonce) throws IOException {
         return new ChaCha(key, nonce).decrypt(encrypted);
     }

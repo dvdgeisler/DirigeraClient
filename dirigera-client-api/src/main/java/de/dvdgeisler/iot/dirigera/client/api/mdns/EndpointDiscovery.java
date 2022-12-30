@@ -11,6 +11,7 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,7 +25,10 @@ public abstract class EndpointDiscovery implements ServiceListener {
 
     private final JmDNS jmdns;
 
-    public EndpointDiscovery(final String hostname, final short port, final String serviceDomain) throws IOException {
+    public EndpointDiscovery(
+            final String hostname,
+            final short port,
+            final String serviceDomain) throws IOException {
         this.hostname = hostname;
         this.port = port;
         this.jmdns = JmDNS.create(InetAddress.getLocalHost());
@@ -33,7 +37,6 @@ public abstract class EndpointDiscovery implements ServiceListener {
             log.info("Auto discover gateway on domain {}", serviceDomain);
             this.jmdns.addServiceListener(serviceDomain, this);
         }
-
     }
 
     @Override
@@ -76,7 +79,7 @@ public abstract class EndpointDiscovery implements ServiceListener {
         this.port = (short) info.getPort();
     }
 
-    public Mono<String> getEndpoint() {
+    public Mono<InetSocketAddress> getSocketAddress() {
         return Mono.fromSupplier(() -> {
                     if (this.hostname == null || this.hostname.isBlank())
                         throw new RuntimeException("" +
@@ -90,12 +93,11 @@ public abstract class EndpointDiscovery implements ServiceListener {
                                 "You may use the properties " +
                                 "\"dirigera.hostname\" and \"dirigera.port\" " +
                                 "to specify the gateway endpoint.");
-                    return String.format("%s:%d", this.hostname, this.port);
+                    return new InetSocketAddress(this.hostname, this.port);
                 })
                 .filter(Objects::nonNull)
                 .retryWhen(Retry.fixedDelay(20, Duration.ofSeconds(5)))
                 .doOnError(e -> log.error(e.getMessage()));
     }
 
-    public abstract Mono<String> getApiUrl();
 }

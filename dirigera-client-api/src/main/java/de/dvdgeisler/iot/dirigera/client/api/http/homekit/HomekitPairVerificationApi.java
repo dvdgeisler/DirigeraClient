@@ -19,7 +19,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.time.Duration;
-import java.util.Optional;
 import java.util.Random;
 
 import static com.nimbusds.srp6.BigIntegerUtils.bigIntegerFromBytes;
@@ -28,7 +27,7 @@ import static de.dvdgeisler.iot.dirigera.client.api.http.homekit.tlv.DirigeraTLV
 import static de.dvdgeisler.iot.dirigera.client.api.http.homekit.tlv.DirigeraTLVPairingMethod.PAIR_PIN;
 
 @Component
-public class HomekitPairVerificationApi extends AbstractHomekitApi {
+public class HomekitPairVerificationApi extends HomekitPairApi {
     private final static Logger log = LoggerFactory.getLogger(HomekitPairVerificationApi.class);
     private final static byte[] PAIR_VERIFY_ENCRYPT_SALT = "Pair-Verify-Encrypt-Salt".getBytes(StandardCharsets.UTF_8);
     private final static byte[] PAIR_VERIFY_ENCRYPT_INFO = "Pair-Verify-Encrypt-Info".getBytes(StandardCharsets.UTF_8);
@@ -41,10 +40,12 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
     private final AuthenticationStore astore;
     private final byte[] privateKey;
     private final byte[] publicKey;
-    private Cryptographer cryptographer;
+    private final Cryptographer cryptographer;
 
     public HomekitPairVerificationApi(final HomekitDiscovery discovery,
-                                      final HomekitPairSetupApi pairSetupApi, final AuthenticationStore astore) {
+                                      final HomekitPairSetupApi pairSetupApi,
+                                      final AuthenticationStore astore,
+                                      final Cryptographer cryptographer) {
         super(discovery, "pair-verify");
         this.pairSetupApi = pairSetupApi;
         this.astore = astore;
@@ -55,7 +56,7 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
         new Random().nextBytes(this.privateKey);
         Curve25519.keygen(this.publicKey, null, this.privateKey);
 
-        this.cryptographer = null;
+        this.cryptographer = cryptographer;
     }
 
     private Mono<DirigeraTLV> start() {
@@ -77,7 +78,7 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
                 });
     }
 
-    private Mono<Cryptographer> finish(final DirigeraTLV startResponse) {
+    private Mono<Void> finish(final DirigeraTLV startResponse) {
         return Mono.fromSupplier(() -> {
                     // decrypt message
                     try {
@@ -136,7 +137,7 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
                     } catch (IllegalAccessException |
                              NoSuchAlgorithmException |
                              InvalidKeyException |
-                             SignatureException | IOException e) {
+                             SignatureException e) {
                         throw new RuntimeException(e);
                     }
                 })
@@ -184,7 +185,7 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
                     log.debug("Send finish verification request");
                     return this.send(message);
                 })
-                .map(finishResponse -> {
+                .doOnSuccess(finishResponse -> {
                     final byte[] sharedSecret;
                     final byte[] readKey;
                     final byte[] writeKey;
@@ -206,15 +207,20 @@ public class HomekitPairVerificationApi extends AbstractHomekitApi {
                             CONTROL_WRITE_ENCRYPTION_INFO,
                             32);
 
-                    return this.cryptographer = new Cryptographer(readKey, writeKey);
-                });
+                    log.info("Pair verification was successful. Cryptographer is set up.");
+                    this.cryptographer.enable(writeKey, readKey);
+                })
+                .then();
     }
 
     public Mono<Cryptographer> getCryptographer() {
-        return Optional.ofNullable(this.cryptographer)
-                .map(Mono::just)
-                .orElseGet(() -> this.start()
+        return Mono.just(this.cryptographer)
+                .filter(Cryptographer::isEnabled)
+                .switchIfEmpty(this.start()
                         .delayElement(Duration.ofSeconds(1))
-                        .flatMap(this::finish));
+                        .flatMap(this::finish)
+                        .then(Mono.just(this.cryptographer))
+                        .filter(Cryptographer::isEnabled)
+                        .switchIfEmpty(Mono.error(new IOException("Cannot initialize cryptographer"))));
     }
 }
