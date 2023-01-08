@@ -122,7 +122,7 @@ Prerequisites:
 
 ##### Instructions
 1) Download the latest [dirigera-client-dump.jar](https://github.com/dvdgeisler/DirigeraClient/releases)
-2) Run `java -jar dirigira-client-dump.jar`</br>
+2) Run `java -jar dirigera-client-dump.jar`</br>
    If the autodiscovery fails and no DIRIGERA is found in your Network, you may pass the DIRIGERA's connection details 
    by the parameters `--dirigera.hostname=<ip address of DIRIGERA Gateway>` and
    `--dirigera.port=8443`.
