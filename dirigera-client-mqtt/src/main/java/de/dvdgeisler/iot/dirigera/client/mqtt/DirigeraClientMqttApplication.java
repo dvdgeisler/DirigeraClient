@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import javax.net.ssl.SSLSocketFactory;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
@@ -52,13 +53,20 @@ public class DirigeraClientMqttApplication implements MqttCallback {
         final String uri;
 
         publisherId = api.status().map(s -> s.id).block();
-        uri = String.format("tcp://%s:%d", host, port);
+        options = new MqttConnectOptions();
+
+        if (port == 8883) {
+            uri = String.format("ssl://%s:%d", host, port);
+            options.setSocketFactory(SSLSocketFactory.getDefault());
+        } else {
+            uri = String.format("tcp://%s:%d", host, port);
+        }
+
         client = new MqttClient(uri, publisherId);
 
         log.info("Connect to MQTT broker: host={}, port={}, publisherId={}, reconnect={}, timeout={}",
                 host, port, publisherId, reconnect, timeout);
 
-        options = new MqttConnectOptions();
         options.setKeepAliveInterval(keepAliveInterval);
         options.setMaxReconnectDelay(reconnectDelay);
         options.setAutomaticReconnect(reconnect);
