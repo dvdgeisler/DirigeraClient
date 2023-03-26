@@ -8,6 +8,7 @@ import de.dvdgeisler.iot.dirigera.client.api.model.Identifier;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.airpurifier.AirPurifierDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.blinds.BlindsDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.blindscontroller.BlindsControllerDevice;
+import de.dvdgeisler.iot.dirigera.client.api.model.device.environmentsensor.EnvironmentSensorDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.gateway.GatewayDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.light.LightDevice;
 import de.dvdgeisler.iot.dirigera.client.api.model.device.lightcontroller.LightControllerDevice;
@@ -34,6 +35,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = LightControllerDevice.class, name = "lightController"),
         @JsonSubTypes.Type(value = SoundControllerDevice.class, name = "soundController"),
         @JsonSubTypes.Type(value = MotionSensorDevice.class, name = "motionSensor"),
+        @JsonSubTypes.Type(value = EnvironmentSensorDevice.class, name = "environmentSensor"),
         @JsonSubTypes.Type(value = OutletDevice.class, name = "outlet"),
         @JsonSubTypes.Type(value = ShortcutControllerDevice.class, name = "shortcutController"),
         @JsonSubTypes.Type(value = RepeaterDevice.class, name = "repeater"),

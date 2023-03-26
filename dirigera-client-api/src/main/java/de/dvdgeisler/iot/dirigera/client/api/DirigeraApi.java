@@ -53,6 +53,7 @@ public class DirigeraApi {
         public final LightControllerDeviceApi lightController;
         public final LightDeviceApi light;
         public final MotionSensorDeviceApi motionSensor;
+        public final EnvironmentSensorDeviceApi environmentSensor;
         public final OutletDeviceApi outlet;
         public final RepeaterDeviceApi repeater;
         public final ShortcutControllerDeviceApi shortcutController;
@@ -69,6 +70,7 @@ public class DirigeraApi {
                 final LightControllerDeviceApi lightController,
                 final LightDeviceApi light,
                 final MotionSensorDeviceApi motionSensor,
+                final EnvironmentSensorDeviceApi environmentSensor,
                 final OutletDeviceApi outlet,
                 final RepeaterDeviceApi repeater,
                 final ShortcutControllerDeviceApi shortcutController,
@@ -90,6 +92,7 @@ public class DirigeraApi {
             this.lightController = lightController;
             this.light = light;
             this.motionSensor = motionSensor;
+            this.environmentSensor = environmentSensor;
             this.outlet = outlet;
             this.repeater = repeater;
             this.shortcutController = shortcutController;
@@ -123,6 +126,7 @@ public class DirigeraApi {
                 new LightControllerDeviceApi(clientApi, this.websocket),
                 new LightDeviceApi(clientApi, this.websocket),
                 new MotionSensorDeviceApi(clientApi, this.websocket),
+                new EnvironmentSensorDeviceApi(clientApi, this.websocket),
                 new OutletDeviceApi(clientApi, this.websocket),
                 new RepeaterDeviceApi(clientApi, this.websocket),
                 new ShortcutControllerDeviceApi(clientApi, this.websocket),
