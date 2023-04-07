@@ -42,6 +42,7 @@ public class DirigeraClientMqttApplication implements MqttCallback {
                                     @Value("${dirigera.mqtt.port:1883}") final Short port,
                                     @Value("${dirigera.mqtt.username:}") final String username,
                                     @Value("${dirigera.mqtt.password:}") final String password,
+                                    @Value("${dirigera.mqtt.use-ssl:false}") final Boolean useSsl,
                                     @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
                                     @Value("${dirigera.mqtt.timeout:0}") final Integer timeout,
                                     @Value("${dirigera.mqtt.keep-alive:2}") final Integer keepAliveInterval,
@@ -55,7 +56,7 @@ public class DirigeraClientMqttApplication implements MqttCallback {
         publisherId = api.status().map(s -> s.id).block();
         options = new MqttConnectOptions();
 
-        if (port == 8883) {
+        if (useSsl) {
             uri = String.format("ssl://%s:%d", host, port);
             options.setSocketFactory(SSLSocketFactory.getDefault());
         } else {
@@ -64,8 +65,8 @@ public class DirigeraClientMqttApplication implements MqttCallback {
 
         client = new MqttClient(uri, publisherId);
 
-        log.info("Connect to MQTT broker: host={}, port={}, publisherId={}, reconnect={}, timeout={}",
-                host, port, publisherId, reconnect, timeout);
+        log.info("Connect to MQTT broker: host={}, port={}, publisherId={}, reconnect={}, timeout={}, useSsl={}",
+                host, port, publisherId, reconnect, timeout, useSsl);
 
         options.setKeepAliveInterval(keepAliveInterval);
         options.setMaxReconnectDelay(reconnectDelay);
