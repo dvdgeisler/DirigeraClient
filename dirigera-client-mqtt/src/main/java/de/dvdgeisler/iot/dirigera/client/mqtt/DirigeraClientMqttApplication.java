@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import javax.net.ssl.SSLSocketFactory;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
@@ -41,6 +42,7 @@ public class DirigeraClientMqttApplication implements MqttCallback {
                                     @Value("${dirigera.mqtt.port:1883}") final Short port,
                                     @Value("${dirigera.mqtt.username:}") final String username,
                                     @Value("${dirigera.mqtt.password:}") final String password,
+                                    @Value("${dirigera.mqtt.use-ssl:false}") final Boolean useSsl,
                                     @Value("${dirigera.mqtt.reconnect:true}") final Boolean reconnect,
                                     @Value("${dirigera.mqtt.timeout:0}") final Integer timeout,
                                     @Value("${dirigera.mqtt.keep-alive:2}") final Integer keepAliveInterval,
@@ -52,13 +54,20 @@ public class DirigeraClientMqttApplication implements MqttCallback {
         final String uri;
 
         publisherId = api.status().map(s -> s.id).block();
-        uri = String.format("tcp://%s:%d", host, port);
+        options = new MqttConnectOptions();
+
+        if (useSsl) {
+            uri = String.format("ssl://%s:%d", host, port);
+            options.setSocketFactory(SSLSocketFactory.getDefault());
+        } else {
+            uri = String.format("tcp://%s:%d", host, port);
+        }
+
         client = new MqttClient(uri, publisherId);
 
-        log.info("Connect to MQTT broker: host={}, port={}, publisherId={}, reconnect={}, timeout={}",
-                host, port, publisherId, reconnect, timeout);
+        log.info("Connect to MQTT broker: host={}, port={}, publisherId={}, reconnect={}, timeout={}, useSsl={}",
+                host, port, publisherId, reconnect, timeout, useSsl);
 
-        options = new MqttConnectOptions();
         options.setKeepAliveInterval(keepAliveInterval);
         options.setMaxReconnectDelay(reconnectDelay);
         options.setAutomaticReconnect(reconnect);
