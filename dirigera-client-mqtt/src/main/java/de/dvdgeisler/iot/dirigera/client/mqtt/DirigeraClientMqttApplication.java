@@ -2,9 +2,13 @@ package de.dvdgeisler.iot.dirigera.client.mqtt;
 
 import de.dvdgeisler.iot.dirigera.client.api.DirigeraApi;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.HassLightDeviceEventHandler;
-import de.dvdgeisler.iot.dirigera.client.mqtt.hass.HassMotionSensorDeviceEventHandler;
 import de.dvdgeisler.iot.dirigera.client.mqtt.hass.HassOutletDeviceEventHandler;
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +23,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackageClasses = {
         DirigeraApi.class,
         HassLightDeviceEventHandler.class,
-        HassMotionSensorDeviceEventHandler.class,
         HassOutletDeviceEventHandler.class})
 public class DirigeraClientMqttApplication implements MqttCallback {
     private final static Logger log = LoggerFactory.getLogger(DirigeraClientMqttApplication.class);
