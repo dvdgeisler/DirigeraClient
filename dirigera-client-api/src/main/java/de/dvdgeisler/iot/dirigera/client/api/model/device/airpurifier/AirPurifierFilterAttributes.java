@@ -15,4 +15,7 @@ public class AirPurifierFilterAttributes {
         this.alarmStatus = alarmStatus;
         this.lifetime = lifetime;
     }
+
+    public AirPurifierFilterAttributes() {
+    }
 }
