@@ -11,12 +11,14 @@ public class AirPurifierConfig {
   public String name;
   public Device device;
   public String payload_off;
+  public String payload_on;
   public String payload_low;
   public String payload_medium;
   public String payload_high;
   public String payload_auto;
   public String command_topic;
   public String state_off;
+  public String state_on;
   public String state_low;
   public String state_medium;
   public String state_high;

@@ -44,11 +44,13 @@ public class HassAirPurifierEventHandler extends HassDeviceEventHandler<AirPurif
         config.command_topic = this.getTopic(device, HASS_COMPONENT, TOPIC_SET);
         config.state_topic = this.getTopic(device, HASS_COMPONENT, TOPIC_STATE);
         config.payload_off = this.toJSON(AirPurifierFanMode.OFF);
+        config.payload_on = this.toJSON(AirPurifierFanMode.ON);
         config.payload_low = this.toJSON(AirPurifierFanMode.LOW);
         config.payload_medium = this.toJSON(AirPurifierFanMode.MEDIUM);
         config.payload_high = this.toJSON(AirPurifierFanMode.HIGH);
         config.payload_auto = this.toJSON(AirPurifierFanMode.AUTO);
         config.state_off =  this.toJSON(AirPurifierFanMode.OFF);
+        config.state_on =  this.toJSON(AirPurifierFanMode.ON);
         config.state_low =  this.toJSON(AirPurifierFanMode.LOW);
         config.state_medium = this.toJSON(AirPurifierFanMode.MEDIUM);
         config.state_high = this.toJSON(AirPurifierFanMode.HIGH);
