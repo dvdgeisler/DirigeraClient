@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HassAirPurifierEventHandler extends HassDeviceEventHandler<AirPurifierDevice> {
-    private final static String HASS_COMPONENT = "air_quality";
+    private final static String HASS_COMPONENT = "fan";
 
     private final AirPurifierDeviceApi api;
 
