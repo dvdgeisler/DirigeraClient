@@ -10,5 +10,7 @@ public enum AirPurifierFanMode {
     @JsonProperty("high")
     HIGH,
     @JsonProperty("auto")
-    AUTO
+    AUTO,
+    @JsonProperty("off")
+    OFF
 }
