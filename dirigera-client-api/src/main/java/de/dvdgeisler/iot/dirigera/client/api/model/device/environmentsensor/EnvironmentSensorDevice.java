@@ -11,9 +11,6 @@ import static de.dvdgeisler.iot.dirigera.client.api.model.device.DeviceType.ENVI
 
 public class EnvironmentSensorDevice extends Device<EnvironmentSensorAttributes, EnvironmentSensorConfigurationAttributes> {
 
-    public EnvironmentSensorDevice() {
-    }
-
     public EnvironmentSensorDevice(
             final String id,
             final LocalDateTime createdAt,
@@ -25,5 +22,8 @@ public class EnvironmentSensorDevice extends Device<EnvironmentSensorAttributes,
             final EnvironmentSensorConfigurationAttributes environmentSensorConfigurationAttributes
     ) {
         super(id, SENSOR, ENVIRONMENT_SENSOR, createdAt, isReachable, lastSeen, attributes, capabilities, remoteLinks, environmentSensorConfigurationAttributes);
+    }
+
+    public EnvironmentSensorDevice() {
     }
 }
