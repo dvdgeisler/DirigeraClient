@@ -6,7 +6,6 @@ import de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor.*;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.time.LocalTime;
 
 public class MotionSensorDeviceApi extends ControllerDeviceApi<
         MotionSensorStateAttributes,
@@ -58,7 +57,8 @@ public class MotionSensorDeviceApi extends ControllerDeviceApi<
         return this.setConfigurationAttribute(device, attributes);
     }
 
-    public Mono<MotionSensorDevice> setSchedule(final MotionSensorDevice device, final LocalTime from, final LocalTime to) {
+    public Mono<MotionSensorDevice> setSchedule(final MotionSensorDevice device, final String from, final int offSetFrom,
+                                                final String to, final int offSetTo) {
         final MotionSensorConfigurationAttributes attributes;
 
         attributes = new MotionSensorConfigurationAttributes();
@@ -66,8 +66,8 @@ public class MotionSensorDeviceApi extends ControllerDeviceApi<
                 null,
                 null,
                 new MotionSensorSchedule(
-                        new MotionSensorScheduleEntry(from),
-                        new MotionSensorScheduleEntry(to)
+                        new MotionSensorScheduleEntry(from, offSetFrom),
+                        new MotionSensorScheduleEntry(to, offSetTo)
                 )
         );
 
