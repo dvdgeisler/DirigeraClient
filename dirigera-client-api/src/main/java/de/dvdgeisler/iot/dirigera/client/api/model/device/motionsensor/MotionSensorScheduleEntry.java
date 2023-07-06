@@ -1,17 +1,14 @@
 package de.dvdgeisler.iot.dirigera.client.api.model.device.motionsensor;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalTime;
-
 public class MotionSensorScheduleEntry {
-    @JsonFormat(pattern="HH:mm")
-    public LocalTime time;
+    public String time;
+    public int offset;
 
     public MotionSensorScheduleEntry() {
     }
 
-    public MotionSensorScheduleEntry(final LocalTime time) {
+    public MotionSensorScheduleEntry(String time, int offset) {
         this.time = time;
+        this.offset = offset;
     }
 }
