@@ -32,19 +32,6 @@ public class BlindsDeviceApi extends DefaultDeviceApi<
                 .flatMap(d -> this.setStateAttribute(d, attributes));
     }
 
-    public Mono<BlindsDevice> setCurrentLevel(final BlindsDevice device, final Integer currentLevel) {
-        final BlindsStateAttributes attributes;
-
-        if (currentLevel < 0 || currentLevel > 100)
-            return Mono.error(new IllegalArgumentException("Target level must be between 0 and 100"));
-
-        attributes = new BlindsStateAttributes();
-        attributes.blindsCurrentLevel = currentLevel;
-
-        return this.assertCapability(device, "blindsCurrentLevel")
-                .flatMap(d -> this.setStateAttribute(d, attributes));
-    }
-
     public Mono<BlindsDevice> setState(final BlindsDevice device, final BlindsState state) {
         final BlindsStateAttributes attributes;
 
