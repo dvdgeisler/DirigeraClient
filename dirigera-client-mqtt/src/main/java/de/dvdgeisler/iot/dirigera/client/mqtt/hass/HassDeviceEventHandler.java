@@ -68,7 +68,9 @@ public abstract class HassDeviceEventHandler<D extends Device> extends MqttDevic
                         .map(d->d.attributes)
                         .map(a->a.model)
                         .filter(n -> !n.isBlank())
-                        .orElse(device.id));
+                        // MQTT entities aren't allowed to have the same Device ID as Entity ID in HASS from version 2024.2.0
+                        // As a fallback to not having a custom name set, we add 'dirigera_' in front of the device ID
+                        .orElse(String.format("%s_%s", "dirigera_", device.id)));
     }
 
     public de.dvdgeisler.iot.dirigera.client.mqtt.hass.model.Device getDeviceConfig(final D device) {
