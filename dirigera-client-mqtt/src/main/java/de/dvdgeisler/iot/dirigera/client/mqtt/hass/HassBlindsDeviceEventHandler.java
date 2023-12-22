@@ -63,8 +63,8 @@ public class HassBlindsDeviceEventHandler extends HassDeviceEventHandler<BlindsD
 
         config.availability = new DeviceAvailability();
         config.availability.topic = this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY);
-        config.availability.payload_available = this.toJSON(DeviceAvailabilityState.ONLINE);
-        config.availability.payload_not_available = this.toJSON(DeviceAvailabilityState.OFFLINE);
+        config.availability.payload_available = DeviceAvailabilityState.ONLINE.toString();
+        config.availability.payload_not_available = DeviceAvailabilityState.OFFLINE.toString();
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_CONFIG), config);
 
         this.subscribe(
@@ -86,12 +86,12 @@ public class HassBlindsDeviceEventHandler extends HassDeviceEventHandler<BlindsD
         getPosition(device).ifPresent(position ->
                 this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_POSITION), position));
         getAvailability(device).ifPresent(s ->
-                this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s));
+                this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s.toString()));
     }
 
     @Override
     protected void onDeviceRemoved(final BlindsDevice device) {
-        this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE);
+        this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE.toString());
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_REMOVE), null);
         this.unsubscribe(this.getTopic(device, HASS_COMPONENT, TOPIC_SET));
     }

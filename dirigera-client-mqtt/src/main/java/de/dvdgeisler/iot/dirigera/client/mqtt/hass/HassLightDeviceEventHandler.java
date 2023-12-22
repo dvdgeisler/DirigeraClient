@@ -71,8 +71,8 @@ public class HassLightDeviceEventHandler extends HassDeviceEventHandler<LightDev
 
         config.availability = new DeviceAvailability();
         config.availability.topic = this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY);
-        config.availability.payload_available = this.toJSON(DeviceAvailabilityState.ONLINE);
-        config.availability.payload_not_available = this.toJSON(DeviceAvailabilityState.OFFLINE);
+        config.availability.payload_available = DeviceAvailabilityState.ONLINE.toString();
+        config.availability.payload_not_available = DeviceAvailabilityState.OFFLINE.toString();
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_CONFIG), config);
 
         this.subscribe(this.getTopic(device, HASS_COMPONENT, TOPIC_SET),
@@ -133,12 +133,12 @@ public class HassLightDeviceEventHandler extends HassDeviceEventHandler<LightDev
                 status);
 
         getAvailability(device).ifPresent(s ->
-                this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s));
+                this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s.toString()));
     }
 
     @Override
     protected void onDeviceRemoved(final LightDevice device) {
-        this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE);
+        this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE.toString());
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_REMOVE), null);
     }
 

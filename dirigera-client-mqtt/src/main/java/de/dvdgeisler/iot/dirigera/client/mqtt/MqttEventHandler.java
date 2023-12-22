@@ -42,12 +42,13 @@ public abstract class MqttEventHandler<E extends Event> {
     }
 
     protected <T> void publish(final String topic, final T payload, final int qos, final boolean retained) {
-        final String json;
+        publishString(topic, this.toJSON(payload), qos, retained);
+    }
 
-        json = this.toJSON(payload);
+    protected void publishString(final String topic, final String payload, final int qos, final boolean retained) {
         try {
-            log.debug("Publish to MQTT: topic={}, payload={}, qos={}, retained={}", topic, json, qos, retained);
-            this.mqtt.publish(topic, json.getBytes(StandardCharsets.UTF_8), qos, retained);
+            log.debug("Publish to MQTT: topic={}, payload={}, qos={}, retained={}", topic, payload, qos, retained);
+            this.mqtt.publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, retained);
         } catch (MqttException e) {
             log.error("Error while publishing to MQTT topic: {}", e.getMessage());
         }
@@ -55,6 +56,10 @@ public abstract class MqttEventHandler<E extends Event> {
 
     protected <T> void publish(final String topic, final T payload) {
         this.publish(topic, payload, 1, true);
+    }
+
+    protected void publishString(final String topic, final String payload) {
+        this.publishString(topic, payload, 1, true);
     }
 
     protected <T> void subscribe(final String topic, final Class<T> payloadType, final Consumer<T> consumer) {
