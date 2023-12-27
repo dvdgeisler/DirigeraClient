@@ -59,8 +59,8 @@ public class HassAirPurifierEventHandler extends HassDeviceEventHandler<AirPurif
 
         config.availability = new DeviceAvailability();
         config.availability.topic = this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY);
-        config.availability.payload_available = this.toJSON(DeviceAvailabilityState.ONLINE);
-        config.availability.payload_not_available = this.toJSON(DeviceAvailabilityState.OFFLINE);
+        config.availability.payload_available = DeviceAvailabilityState.ONLINE.toString();
+        config.availability.payload_not_available = DeviceAvailabilityState.OFFLINE.toString();
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_CONFIG), config);
 
         this.subscribe(
@@ -80,12 +80,12 @@ public class HassAirPurifierEventHandler extends HassDeviceEventHandler<AirPurif
         getState(device).ifPresent(state ->
                 this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_STATE), state));
         getAvailability(device).ifPresent(s ->
-                this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s));
+                this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), s.toString()));
     }
 
     @Override
     protected void onDeviceRemoved(final AirPurifierDevice device) {
-        this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE);
+        this.publishString(this.getTopic(device, HASS_COMPONENT, TOPIC_AVAILABILITY), DeviceAvailabilityState.OFFLINE.toString());
         this.publish(this.getTopic(device, HASS_COMPONENT, TOPIC_REMOVE), null);
         this.unsubscribe(this.getTopic(device, HASS_COMPONENT, TOPIC_SET));
     }
